@@ -1,0 +1,11 @@
+<div *ngIf="cargando">Buscando hora planetaria actual...</div>
+
+<div *ngIf="!cargando && planetaActual" class="hora-card">
+  <h1>{{ planetaActual.nombre }}</h1>
+  <p><strong>Horario:</strong> {{ planetaActual.horaInicio }} - {{ planetaActual.horaFin }}</p>
+  <p>{{ planetaActual.descripcion }}</p>
+</div>
+
+<div *ngIf="!cargando && !planetaActual">
+  <p>No se encontró la hora planetaria actual.</p>
+</div>

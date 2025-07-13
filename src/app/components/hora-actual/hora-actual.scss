@@ -1,0 +1,30 @@
+.hora-card {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #F6F2FB;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+  text-align: center;
+  color: #3B1E54;
+
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    color: #9B7EBD;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+  }
+
+  strong {
+    color: #555;
+  }
+}

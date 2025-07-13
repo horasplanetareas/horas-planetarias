@@ -1,0 +1,60 @@
+.header {
+  text-align: center;
+  padding: 2rem 1rem 3rem 1rem;
+  color: #3B1E54;
+}
+
+.header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header .subdia {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #9B7EBD;
+  margin: 0.2rem 0 1rem 0;
+}
+
+.fecha-hora {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fecha-hora p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #21232F;
+  margin: 0;
+}
+
+.fecha-hora .hora {
+  color: #555;
+}
+
+.separador {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .header h2 {
+    font-size: 2rem;
+  }
+
+  .header .subdia {
+    font-size: 1.2rem;
+  }
+
+  .fecha-hora p {
+    font-size: 1rem;
+  }
+
+  .separador {
+    font-size: 1rem;
+  }
+}

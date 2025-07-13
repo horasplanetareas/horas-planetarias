@@ -1,0 +1,15 @@
+<div class="contenedor">
+  <div class="planetas-wrapper">
+    <div *ngIf="loading" class="loading">Cargando horas planetarias...</div>
+    <ng-container *ngIf="!loading">
+      <div class="planetas">
+        <div *ngFor="let planeta of planetas" (click)="verDetalle(planeta)" class="tarjeta">
+          <h2>{{ planeta.nombre }}</h2>
+          <p>{{ planeta.tipo }}</p>
+          <p>{{ planeta.horaInicio }} - {{ planeta.horaFin }}</p>
+          <p class="descripcion">{{ planeta.descripcion }}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

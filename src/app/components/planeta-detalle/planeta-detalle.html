@@ -1,0 +1,10 @@
+<div *ngIf="planeta; else noEncontrado" [ngClass]="['detalle-card', planeta.nombre.toLowerCase()]">
+  <h1>{{ planeta.nombre }}</h1>
+  <h3>{{ planeta.tipo }}</h3>
+  <p><strong>Horario:</strong> {{ planeta.horaInicio }} - {{ planeta.horaFin }}</p>
+  <p>{{ planeta.descripcion }}</p>
+</div>
+
+<ng-template #noEncontrado>
+  <p>Planeta no encontrado.</p>
+</ng-template>

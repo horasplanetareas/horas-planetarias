@@ -1,0 +1,41 @@
+.detalle-card {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 3px solid #ccc;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  text-align: center;
+  color: #3B1E54;
+  transition: border-color 0.3s ease;
+  background-color: #fff;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    color: #9B7EBD;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.05rem;
+    margin: 0.4rem 0;
+  }
+
+  strong {
+    color: #555;
+  }
+}
+
+/* Colores por planeta */
+.luna    { border-color: #AAC6EC; }     // Azul claro
+.marte   { border-color: #E57373; }     // Rojo suave
+.mercurio{ border-color: #B0BEC5; }     // Gris celeste
+.jupiter { border-color: #F9A825; }     // Dorado
+.venus   { border-color: #F48FB1; }     // Rosa
+.saturno { border-color: #9575CD; }     // Violeta
+.sol     { border-color: #FFD54F; }     // Amarillo
