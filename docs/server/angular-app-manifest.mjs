@@ -1,8 +1,8 @@
 
 export default {
   bootstrap: () => import('./main.server.mjs').then(m => m.default),
-  inlineCriticalCss: true,
-  baseHref: '/horas-planetarias/',
+  inlineCriticalCss: true
+  baseHref: 'https://horasplanetareas.github.io/horas-planetarias
   locale: undefined,
   routes: [
   {
@@ -30,11 +30,11 @@ export default {
 ],
   entryPointToBrowserMapping: undefined,
   assets: {
-    'index.csr.html': {size: 5032, hash: '12974b0eefe3e43e68ee9f4147154ec4c02de2ae4d09ba44d8f87d8b82fb7956', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
-    'index.server.html': {size: 5545, hash: '585bf1f5b35da1c72ca0dda0a6062da0efe0939ceff331ddd5799791e3a3585c', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
-    'detalle-hora/index.html': {size: 9587, hash: '6446d6ec202f9f081a111ddfbebe767caa8481c35c08756533322aee13fe20f0', text: () => import('./assets-chunks/detalle-hora_index_html.mjs').then(m => m.default)},
-    'hora-actual/index.html': {size: 9361, hash: '1ff43f2808c8db9149582c7ce8230f2fb4acde19da895b67ed7a28849aa61bb8', text: () => import('./assets-chunks/hora-actual_index_html.mjs').then(m => m.default)},
-    'lista-horas/index.html': {size: 16555, hash: 'f7f22bfe52b270f81ac080d188eac73c17d25bbe22169d385bcf254c49af72e6', text: () => import('./assets-chunks/lista-horas_index_html.mjs').then(m => m.default)},
+    'index.csr.html': {size: 5065, hash: 'b36afbc6f3e95e1fdf5d74c2c22b75605966d5061a877b339eed252c61d92b3e', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
+    'index.server.html': {size: 5578, hash: 'baf414f7326a47f7236bf634e23444d4260e6e492e7d1cb9d84f8f2e7e3c2e9f', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
+    'detalle-hora/index.html': {size: 9688, hash: '85006e1320aea1570ee50ac10fcc75d537354217e50ad46a9fd87e7a6ce95909', text: () => import('./assets-chunks/detalle-hora_index_html.mjs').then(m => m.default)},
+    'lista-horas/index.html': {size: 16656, hash: '441e5d58846d604b797816990784b302ca97c3f72f6fb5caa08a49be96aaec5a', text: () => import('./assets-chunks/lista-horas_index_html.mjs').then(m => m.default)},
+    'hora-actual/index.html': {size: 9468, hash: '1236febf1b0207826ae7ae0c10139f3d06fae08fb4e393f6222daf435d9a2c4b', text: () => import('./assets-chunks/hora-actual_index_html.mjs').then(m => m.default)},
     'styles-5INURTSO.css': {size: 0, hash: 'menYUTfbRu8', text: () => import('./assets-chunks/styles-5INURTSO_css.mjs').then(m => m.default)}
   },
 };

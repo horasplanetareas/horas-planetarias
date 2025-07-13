@@ -1,6 +1,6 @@
 
 export default {
-  basePath: '/horas-planetarias',
+  basePath: 'https://horasplanetareas.github.io/horas-planetarias',
   supportedLocales: {
   "en-US": ""
 },
