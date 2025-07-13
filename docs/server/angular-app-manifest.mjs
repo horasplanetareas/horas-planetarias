@@ -1,8 +1,8 @@
 
 export default {
   bootstrap: () => import('./main.server.mjs').then(m => m.default),
-  inlineCriticalCss: true,
-  baseHref: 'https://horasplanetareas.github.io/horas-planetarias/',
+  inlineCriticalCss: true
+  baseHref: 'https://horasplanetareas.github.io/horas-planetarias
   locale: undefined,
   routes: [
   {
