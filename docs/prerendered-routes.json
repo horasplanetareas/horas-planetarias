@@ -1,0 +1,8 @@
+{
+  "routes": {
+    "/horas-planetarias": {},
+    "/horas-planetarias/detalle-hora": {},
+    "/horas-planetarias/hora-actual": {},
+    "/horas-planetarias/lista-horas": {}
+  }
+}
