@@ -1,21 +1,14 @@
-.planetas {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
+/* Estilos base */
 .tarjeta {
   display: block;
-  background: #D4BEE4;
   border-radius: 16px;
   padding: 1.5rem;
   text-decoration: none;
   color: #21232F;
   box-shadow: 0 4px 12px rgba(59, 30, 84, 0.15);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
+  border: 4px solid transparent;
+  margin-bottom: 1rem;
 }
 
 .tarjeta:hover {
@@ -23,18 +16,31 @@
   box-shadow: 0 8px 20px rgba(59, 30, 84, 0.25);
 }
 
-.tarjeta h2 {
-  font-size: 1.6rem;
-  margin: 0 0 0.5rem;
+/* Colores por planeta */
+.luna {
+  border-color: silver;
 }
 
-.tarjeta p {
-  margin: 0.2rem 0;
-  font-size: 1rem;
+.mercurio {
+  border-color: gold;
 }
 
-.tarjeta .horario {
-  color: #9B7EBD;
-  font-style: italic;
-  font-size: 0.9rem;
+.venus {
+  border-color: green;
+}
+
+.sol {
+  border-color: goldenrod;
+}
+
+.marte {
+  border-color: red;
+}
+
+.júpiter {
+  border-color: blue;
+}
+
+.saturno {
+  border-color: black;
 }

@@ -32,10 +32,31 @@
 }
 
 /* Colores por planeta */
-.luna    { border-color: #AAC6EC; }     // Azul claro
-.marte   { border-color: #E57373; }     // Rojo suave
-.mercurio{ border-color: #B0BEC5; }     // Gris celeste
-.jupiter { border-color: #F9A825; }     // Dorado
-.venus   { border-color: #F48FB1; }     // Rosa
-.saturno { border-color: #9575CD; }     // Violeta
-.sol     { border-color: #FFD54F; }     // Amarillo
+
+.luna {
+  border-color: silver;
+}
+
+.mercurio {
+  border-color: gold;
+}
+
+.venus {
+  border-color: green;
+}
+
+.sol {
+  border-color: goldenrod;
+}
+
+.marte {
+  border-color: red;
+}
+
+.júpiter {
+  border-color: blue;
+}
+
+.saturno {
+  border-color: black;
+}

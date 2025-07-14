@@ -1,4 +1,4 @@
-import { Component, OnInit , ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlanetaService } from '../../services/planeta.service';
 
@@ -16,40 +16,33 @@ export class HoraActualComponent implements OnInit {
   constructor(private planetaService: PlanetaService, private cdr: ChangeDetectorRef) {}
 
   async ngOnInit() {
-    try {
-      const planetas = await this.planetaService.obtenerHorasPlanetarias();
-      const ahora = new Date();
+  try {
+    const planetas = await this.planetaService.obtenerHorasPlanetarias();
 
-      // Hora actual en UTC timestamp
-      const ahoraUTC = Date.UTC(
-        ahora.getUTCFullYear(),
-        ahora.getUTCMonth(),
-        ahora.getUTCDate(),
-        ahora.getUTCHours(),
-        ahora.getUTCMinutes(),
-        ahora.getUTCSeconds()
-      );
+    // Obtener hora local actual (sin transformación)
+    const ahora = new Date();
+    //console.log('Hora local actual:', ahora.toString());
 
-      this.planetaActual = planetas.find(p => {
-        const inicio = p.inicioDate.getTime();
-        let fin = p.finDate.getTime();
+    const planetasValidos = planetas.filter(p => p.inicioDate && p.finDate);
+    this.planetaActual = planetasValidos.find(p => {
+      //console.log(`Verificando ${p.nombre}: inicio ${p.inicioDate}, fin ${p.finDate}`);
+      //console.log(`Hora actual: ${ahora.toString()}`);
 
-        // Ajustar fin si menor que inicio (caso tramo noche que pasa a otro día)
-        if (fin < inicio) fin += 24 * 60 * 60 * 1000;
+      // Comparación directa, todas en hora local
+      return ahora >= p.inicioDate && ahora < p.finDate;
+    });
 
-        return ahoraUTC >= inicio && ahoraUTC < fin;
-      });
-
-      if (!this.planetaActual) {
-        console.log('No se encontró la hora planetaria actual.');
-      } else {
-        console.log('Hora planetaria actual:', this.planetaActual.nombre);
-      }
-    } catch (e) {
-      console.error('Error cargando hora actual:', e);
-    } finally {
-      this.cargando = false;
-      this.cdr.detectChanges();
+    if (!this.planetaActual) {
+      console.warn('No se encontró la hora planetaria actual.');
+    } else {
+      console.log('Hora planetaria actual encontrada:', this.planetaActual.nombre);
     }
+  } catch (e) {
+    console.error('Error:', e);
+  } finally {
+    this.cargando = false;
+    this.cdr.detectChanges();
   }
+}
+
 }
