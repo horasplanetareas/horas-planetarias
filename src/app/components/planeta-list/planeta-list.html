@@ -4,19 +4,20 @@
     <ng-container *ngIf="!loading">
       <div class="planetas">
         <ng-container *ngFor="let planeta of planetas; let i = index">
-          <div (click)="verDetalle(planeta)"class="tarjeta"[ngClass]="planeta.nombre.toLowerCase()">
-            <h2>{{ planeta.nombre }}</h2>
-            <p>{{ planeta.tipo }}</p>
-            <p>Fecha: {{ planeta.fecha }} - {{ planeta.horaInicio }} - {{ planeta.horaFin }}</p>
-            <p class="descripcion">{{ planeta.descripcion }}</p>
-          </div>
-          <ng-container *ngIf="esBrowser">
+            <div *ngIf="!planeta.esAnuncio">
+              <div (click)="verDetalle(planeta)" class="tarjeta" [ngClass]="planeta.nombre.toLowerCase()">
+                <h2>{{ planeta.nombre }}</h2>
+                <p>{{ planeta.tipo }}</p>
+                <p>Fecha: {{ planeta.fecha }} - {{ planeta.horaInicio }} - {{ planeta.horaFin }}</p>
+                <p class="descripcion">{{ planeta.descripcion }}</p>
+              </div>
+            </div>
             <app-adsense-banner
-              *ngIf="i < planetas.length - 1 && planeta.subdia !== planetas[i + 1].subdia">
+              *ngIf="planeta.esAnuncio">
             </app-adsense-banner>
           </ng-container>
-        </ng-container>
       </div>
     </ng-container>
   </div>
 </div>
+

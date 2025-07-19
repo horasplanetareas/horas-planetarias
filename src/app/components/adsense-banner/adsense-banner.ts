@@ -8,15 +8,27 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
   templateUrl: './adsense-banner.html',
 })
 export class AdsenseBannerComponent implements AfterViewInit {
+  mostrarBanner = false;
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      try {
-        // @ts-ignore
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {
-        console.error('Error al cargar AdSense:', e);
+      const esLocalhost = window.location.hostname === 'localhost';
+      const estaLogueado = !!localStorage.getItem('token'); // o 'usuario', según cómo guardes el login
+
+      // Mostrar solo si NO está en localhost y NO está logueado
+      this.mostrarBanner = !esLocalhost && !estaLogueado;
+
+      if (this.mostrarBanner) {
+        try {
+          // @ts-ignore
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+          console.error('Error al cargar AdSense:', e);
+        }
+      } else {
+        console.log('Adsense oculto:', { esLocalhost, estaLogueado });
       }
     }
   }

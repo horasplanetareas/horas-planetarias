@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {Component,OnInit,ChangeDetectorRef,Inject,PLATFORM_ID} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { PlanetaService } from '../../services/planeta.service';
 import { AdsenseBannerComponent } from '../adsense-banner/adsense-banner';
@@ -15,16 +15,14 @@ import { AdsenseBannerComponent } from '../adsense-banner/adsense-banner';
 export class PlanetaList implements OnInit {
   planetas: any[] = [];
   loading = true;
-  esBrowser: boolean;
+  isLocalhost: boolean = false;
 
   constructor(
     private planetaService: PlanetaService,
     private cdr: ChangeDetectorRef,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.esBrowser = isPlatformBrowser(this.platformId); // detecta si corre en el navegador
-  }
+  ) {}
 
   verDetalle(planeta: any) {
     this.router.navigate(['/detalle-hora'], { state: { planeta } });
@@ -39,7 +37,7 @@ export class PlanetaList implements OnInit {
       alert('No se pudo obtener la ubicación. Por favor, habilitá la geolocalización.');
     } finally {
       this.loading = false;
-      this.cdr.detectChanges();  // <- Forzar actualización de vista
+      this.cdr.detectChanges();
       console.log('loading desactivado');
     }
   }

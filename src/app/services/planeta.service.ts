@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class PlanetaService {
-  private ordenPlanetario = ['Saturno', 'Júpiter', 'Marte', 'Sol', 'Venus', 'Mercurio', 'Luna'];
+  private ordenPlanetario = ['Marte','Júpiter','Saturno','Luna','Mercurio', 'Venus','Sol'];
 
   private planetaInicioPorDia: { [key: string]: string } = {
     'Lunes': 'Luna',

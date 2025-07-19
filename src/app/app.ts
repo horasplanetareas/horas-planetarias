@@ -2,10 +2,11 @@ import { Component,  } from '@angular/core';
 import { RouterOutlet} from '@angular/router';
 import { HomeComponent } from "./components/home/home.component";
 import { MenuComponent } from './components/menu/menu';
+import { AdsenseBannerComponent } from "./components/adsense-banner/adsense-banner";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HomeComponent,MenuComponent],
+  imports: [RouterOutlet, HomeComponent, MenuComponent, AdsenseBannerComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
