@@ -13,36 +13,28 @@ export class HoraActualComponent implements OnInit {
   planetaActual: any = null;
   cargando = true;
 
-  constructor(private planetaService: PlanetaService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private planetaService: PlanetaService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  async ngOnInit() {
-  try {
-    const planetas = await this.planetaService.obtenerHorasPlanetarias();
+  async ngOnInit(): Promise<void> {
+    try {
+      const planetas = await this.planetaService.obtenerHorasPlanetarias();
+      const ahora = new Date();
 
-    // Obtener hora local actual (sin transformación)
-    const ahora = new Date();
-    //console.log('Hora local actual:', ahora.toString());
+      this.planetaActual = planetas.find(p =>
+        ahora >= p.inicioDate && ahora < p.finDate
+      );
 
-    const planetasValidos = planetas.filter(p => p.inicioDate && p.finDate);
-    this.planetaActual = planetasValidos.find(p => {
-      //console.log(`Verificando ${p.nombre}: inicio ${p.inicioDate}, fin ${p.finDate}`);
-      //console.log(`Hora actual: ${ahora.toString()}`);
-
-      // Comparación directa, todas en hora local
-      return ahora >= p.inicioDate && ahora < p.finDate;
-    });
-
-    if (!this.planetaActual) {
-      console.warn('No se encontró la hora planetaria actual.');
-    } else {
-      console.log('Hora planetaria actual encontrada:', this.planetaActual.nombre);
+      if (!this.planetaActual) {
+        console.warn('No se encontró la hora planetaria actual.');
+      }
+    } catch (error) {
+      console.error('Error al obtener hora planetaria actual:', error);
+    } finally {
+      this.cargando = false;
+      this.cdr.detectChanges();
     }
-  } catch (e) {
-    console.error('Error:', e);
-  } finally {
-    this.cargando = false;
-    this.cdr.detectChanges();
   }
-}
-
 }

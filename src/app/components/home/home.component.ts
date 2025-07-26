@@ -23,10 +23,14 @@ export class HomeComponent implements OnInit {
     const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
     try {
+      // Obtener ubicación actual
       const coords = await this.planetaService.getUbicacion();
-      const amanecerStr = await this.planetaService.getAmanecer(coords.lat, coords.lng, ahora);
-      const amanecer = new Date(amanecerStr);
 
+      // Obtener datos solares para esa ubicación y fecha
+      const solData = await this.planetaService.getSolData(coords.lat, coords.lng, ahora);
+      const amanecer = new Date(solData.sunrise);
+
+      // Ajustar el subdía si aún no amaneció
       let fechaParaSubDia = ahora;
       if (ahora < amanecer) {
         fechaParaSubDia = new Date(ahora);
@@ -44,20 +48,18 @@ export class HomeComponent implements OnInit {
         'Lunes': 'Miércoles',
         'Martes': 'Viernes',
         'Miércoles': 'Domingo',
-        'Jueves': 'Jueves',
+        'Jueves': 'Martes',
         'Viernes': 'Jueves',
         'Sábado': 'Sábado',
         'Domingo': 'Lunes',
       };
       const subDia = subdiasMap[diasSemana[fechaParaSubDia.getDay()]];
 
-      // ✅ Ahora sí actualizamos el estado
       this.diaActual = nombreDiaReal;
       this.subDia = subDia;
       this.fechaActual = fecha;
       this.horaActual = hora;
 
-      // ✅ Forzamos la detección de cambios
       this.cdr.detectChanges();
 
     } catch (error) {

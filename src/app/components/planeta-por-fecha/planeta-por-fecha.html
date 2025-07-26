@@ -1,0 +1,27 @@
+<div class="contenedor">
+  <h2>Horas Planetarias por Fecha</h2>
+
+  <div class="formulario">
+    <label>Fecha:
+      <input type="date" [(ngModel)]="fechaSeleccionada" />
+    </label>
+
+    <button (click)="consultar()">Consultar</button>
+  </div>
+  <div *ngIf="cargando">Cargando...</div>
+  <ul *ngIf="!cargando && planetas.length">
+  <li *ngFor="let p of planetas">
+    <!-- Caso normal: planeta -->
+    <div *ngIf="!p.esAnuncio" [ngClass]="['tarjeta', p.nombre.toLowerCase()]">
+      <h2>{{ p.nombre }}</h2>
+      <p>{{ p.tipo }}</p>
+      <p>Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }}</p>
+    </div>
+    <!-- Caso anuncio -->
+    <div *ngIf="p.esAnuncio" class="tarjeta anuncio">
+      <app-adsense-banner></app-adsense-banner>
+    </div>
+  </li>
+</ul>
+
+</div>

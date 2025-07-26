@@ -1,23 +1,19 @@
 <div class="contenedor">
   <div class="planetas-wrapper">
-    <div *ngIf="loading" class="loading">Cargando horas planetarias...</div>
-    <ng-container *ngIf="!loading">
-      <div class="planetas">
-        <ng-container *ngFor="let planeta of planetas; let i = index">
-            <div *ngIf="!planeta.esAnuncio">
-              <div (click)="verDetalle(planeta)" class="tarjeta" [ngClass]="planeta.nombre.toLowerCase()">
-                <h2>{{ planeta.nombre }}</h2>
-                <p>{{ planeta.tipo }}</p>
-                <p>Fecha: {{ planeta.fecha }} - {{ planeta.horaInicio }} - {{ planeta.horaFin }}</p>
-                <p class="descripcion">{{ planeta.descripcion }}</p>
-              </div>
-            </div>
-            <app-adsense-banner
-              *ngIf="planeta.esAnuncio">
-            </app-adsense-banner>
-          </ng-container>
-      </div>
-    </ng-container>
+    <div *ngIf="loading" class="loading">Cargando...</div>
+      <ul *ngIf="!loading && planetas.length">
+  <li *ngFor="let p of planetas">
+    <!-- Caso normal: planeta -->
+    <div *ngIf="!p.esAnuncio" (click)="verDetalle(p)" [ngClass]="['tarjeta', p.nombre.toLowerCase()]">
+      <h2>{{ p.nombre }}</h2>
+      <p>{{ p.tipo }}</p>
+      <p>Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }}</p>
+    </div>
+    <!-- Caso anuncio -->
+    <div *ngIf="p.esAnuncio" class="tarjeta anuncio">
+      <app-adsense-banner></app-adsense-banner>
+    </div>
+  </li>
+</ul>
   </div>
 </div>
-

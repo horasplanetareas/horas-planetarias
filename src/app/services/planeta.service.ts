@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class PlanetaService {
-  private ordenPlanetario = ['Marte','Júpiter','Saturno','Luna','Mercurio', 'Venus','Sol'];
+  private readonly ordenPlanetario = ['Marte', 'Júpiter', 'Saturno', 'Luna', 'Mercurio', 'Venus', 'Sol'];
 
-  private planetaInicioPorDia: { [key: string]: string } = {
+  private readonly planetaInicioPorDia: Record<string, string> = {
     'Lunes': 'Luna',
     'Martes': 'Marte',
     'Miércoles': 'Mercurio',
@@ -18,66 +18,55 @@ export class PlanetaService {
   };
 
   constructor(
-  private http: HttpClient,
-  @Inject(PLATFORM_ID) private platformId: Object
-) {}
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   async obtenerHorasPlanetarias(): Promise<any[]> {
-  const coords = await this.getUbicacion();
-  const ahora = new Date();
+    const coords = await this.getUbicacion();
+    const ahora = new Date();
+    const hoySol = await this.getSolData(coords.lat, coords.lng, ahora);
 
-  // Obtener datos solares de hoy y mañana
-  const solHoy = await this.getSolData(coords.lat, coords.lng, ahora);
+    const amanecer = new Date(hoySol.sunrise);
+    const usarFecha = ahora < amanecer ? new Date(ahora.setDate(ahora.getDate() - 1)) : ahora;
 
-  const amanecerHoy = new Date(solHoy.sunrise);
-  const anochecerHoy = new Date(solHoy.sunset);
+    const solDataHoy = await this.getSolData(coords.lat, coords.lng, usarFecha);
+    const solDataManiana = await this.getSolData(coords.lat, coords.lng, new Date(usarFecha.getTime() + 86400000));
 
-  // Si la hora actual es antes del amanecer, usar día anterior para el cálculo
-  let fechaParaCalculo = new Date(ahora);
-  if (ahora < amanecerHoy) {
-    fechaParaCalculo.setDate(fechaParaCalculo.getDate() - 1);
+    const subDia = this.obtenerSubDia(usarFecha);
+    const horasDia = this.generarHorasPlanetarias(new Date(solDataHoy.sunrise), new Date(solDataHoy.sunset), subDia);
+    const horasNoche = this.generarHorasPlanetarias(new Date(solDataHoy.sunset), new Date(solDataManiana.sunrise), subDia);
+
+    return [...horasDia, this.anuncio(), ...horasNoche];
   }
 
-  // Obtener datos solares para la fecha usada en cálculo y la siguiente para la noche
-  const solCalculo = await this.getSolData(coords.lat, coords.lng, fechaParaCalculo);
-  const fechaSiguiente = new Date(fechaParaCalculo);
-  fechaSiguiente.setDate(fechaParaCalculo.getDate() + 1);
-  const solSiguiente = await this.getSolData(coords.lat, coords.lng, fechaSiguiente);
+  async obtenerHorasPorFecha(fecha: Date): Promise<any[]> {
+    const coords = await this.getUbicacion();
+    const solHoy = await this.getSolData(coords.lat, coords.lng, fecha);
+    const solManiana = await this.getSolData(coords.lat, coords.lng, new Date(fecha.getTime() + 86400000));
 
-  const subDia = this.obtenerSubDia(fechaParaCalculo);
+    const subDia = this.obtenerSubDia(fecha);
+    const horasDia = this.generarHorasPlanetarias(new Date(solHoy.sunrise), new Date(solHoy.sunset), subDia);
+    const horasNoche = this.generarHorasPlanetarias(new Date(solHoy.sunset), new Date(solManiana.sunrise), subDia);
 
-  const horasDia = this.generarHorasPlanetarias(new Date(solCalculo.sunrise), new Date(solCalculo.sunset), subDia);
-  const horasNoche = this.generarHorasPlanetarias(new Date(solCalculo.sunset), new Date(solSiguiente.sunrise), subDia);
-
-  const anuncio = {
-    nombre: 'ANUNCIO',
-    tipo: 'Ad',
-    esAnuncio: true
-  };
-
-  return [...horasDia, anuncio, ...horasNoche];
-}
-
-
-  async getUbicacion(): Promise<{ lat: number; lng: number }> {
-  if (!isPlatformBrowser(this.platformId)) {
-    // Valor por defecto si está en SSR
-    return { lat: -34.9011, lng: -56.1645 }; // Montevideo, por ejemplo
+    return [...horasDia, this.anuncio(), ...horasNoche];
   }
 
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(
-      pos => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-      err => reject('Ubicación no permitida')
-    );
-  });
+  public async getUbicacion(): Promise<{ lat: number; lng: number }> {
+    if (!isPlatformBrowser(this.platformId)) {
+      return { lat: -34.9011, lng: -56.1645 };
+    }
+
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        pos => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+        () => reject('Ubicación no permitida')
+      );
+    });
   }
 
-  private async getSolData(lat: number, lng: number, fecha: Date): Promise<{ sunrise: string; sunset: string }> {
-    const yyyy = fecha.getFullYear();
-    const mm = String(fecha.getMonth() + 1).padStart(2, '0');
-    const dd = String(fecha.getDate()).padStart(2, '0');
-    const dateStr = `${yyyy}-${mm}-${dd}`;
+  public  async getSolData(lat: number, lng: number, fecha: Date): Promise<{ sunrise: string; sunset: string }> {
+    const dateStr = fecha.toISOString().split('T')[0];
 
     const res: any = await lastValueFrom(
       this.http.get(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${dateStr}&formatted=0`)
@@ -90,52 +79,47 @@ export class PlanetaService {
   }
 
   private obtenerSubDia(fecha: Date): string {
-    const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    const dia = diasSemana[fecha.getDay()];
-    const mapa: { [key: string]: string } = {
+    const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const diaNombre = dias[fecha.getDay()];
+
+    const mapa: Record<string, string> = {
       'Lunes': 'Miércoles',
       'Martes': 'Viernes',
       'Miércoles': 'Domingo',
-      'Jueves': 'Jueves',
+      'Jueves': 'Martes',
       'Viernes': 'Jueves',
       'Sábado': 'Sábado',
       'Domingo': 'Lunes'
     };
-    return mapa[dia];
+
+    return mapa[diaNombre];
   }
 
   private generarHorasPlanetarias(inicio: Date, fin: Date, subDia: string): any[] {
-  const duracionMs = fin.getTime() - inicio.getTime();
-  const duracionHora = duracionMs / 12;
+    const duracionHora = (fin.getTime() - inicio.getTime()) / 12;
+    const planetaInicial = this.planetaInicioPorDia[subDia];
+    const indiceInicial = this.ordenPlanetario.indexOf(planetaInicial);
 
-  const planetaInicial = this.planetaInicioPorDia[subDia];
-  const indiceInicial = this.ordenPlanetario.indexOf(planetaInicial);
+    return Array.from({ length: 12 }, (_, i) => {
+      const horaInicio = new Date(inicio.getTime() + i * duracionHora);
+      const horaFin = new Date(inicio.getTime() + (i + 1) * duracionHora);
+      const planeta = this.ordenPlanetario[(indiceInicial + i) % 7];
 
-  const lista: any[] = [];
-
-  for (let i = 0; i < 12; i++) {
-    const horaInicio = new Date(inicio.getTime() + i * duracionHora);
-    const horaFin = new Date(inicio.getTime() + (i + 1) * duracionHora);
-
-    const planeta = this.ordenPlanetario[(indiceInicial + i) % 7];
-
-    lista.push({
-      nombre: planeta.toUpperCase(),
-      tipo: 'Hora Planetaria',
-      horaInicio: horaInicio.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' }),
-      horaFin: horaFin.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' }),
-      inicioDate: horaInicio, // ya es UTC
-      finDate: horaFin,       // ya es UTC
-      descripcion: this.obtenerDescripcion(planeta),
-      fecha: horaInicio.toLocaleDateString('es-UY', { day: '2-digit', month: '2-digit', year: 'numeric' })
+      return {
+        nombre: planeta.toUpperCase(),
+        tipo: 'Hora Planetaria',
+        horaInicio: horaInicio.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' }),
+        horaFin: horaFin.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' }),
+        inicioDate: horaInicio,
+        finDate: horaFin,
+        descripcion: this.obtenerDescripcion(planeta),
+        fecha: horaInicio.toLocaleDateString('es-UY')
+      };
     });
   }
 
-  return lista;
-  }
-
   private obtenerDescripcion(planeta: string): string {
-    const descripciones: { [key: string]: string } = {
+    const descripciones: Record<string, string> = {
       'Luna': 'Emociones, intuición, lo femenino.',
       'Marte': 'Energía, acción, impulso.',
       'Mercurio': 'Comunicación, mente, lógica.',
@@ -147,17 +131,11 @@ export class PlanetaService {
     return descripciones[planeta] || '';
   }
 
-  async getAmanecer(lat: number, lng: number, fecha: Date): Promise<string> {
-    const yyyy = fecha.getFullYear();
-    const mm = String(fecha.getMonth() + 1).padStart(2, '0');
-    const dd = String(fecha.getDate()).padStart(2, '0');
-    const dateStr = `${yyyy}-${mm}-${dd}`;
-
-    const res: any = await lastValueFrom(
-      this.http.get(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${dateStr}&formatted=0`)
-    );
-
-    return res.results.sunrise;
+  private anuncio(): any {
+    return {
+      nombre: 'ANUNCIO',
+      tipo: 'Ad',
+      esAnuncio: true
+    };
   }
 }
-
