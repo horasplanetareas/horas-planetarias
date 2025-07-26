@@ -5,4 +5,5 @@ export interface Planeta {
   horaFin: string;
   descripcion?: string;
   fecha: string;
+  dia: boolean;
 }
