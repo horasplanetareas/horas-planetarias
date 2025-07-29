@@ -1,10 +1,7 @@
-import { Component, inject, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
-import { RouterModule } from '@angular/router';
-
-// Declarar bootstrap
-declare const bootstrap: any;
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -13,22 +10,13 @@ declare const bootstrap: any;
   standalone: true,
   imports: [CommonModule, RouterModule],
 })
-export class MenuComponent implements AfterViewInit {
+export class MenuComponent {
   isLoggedIn = false;
   platformId = inject(PLATFORM_ID);
-
-  // Referencia al botón toggle
-  @ViewChild('dropdownToggle') dropdownToggle!: ElementRef<HTMLAnchorElement>;
-  dropdownInstance: any;
+  router = inject(Router);
 
   constructor() {
     this.isLoggedIn = this.checkLogin();
-  }
-
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId) && this.dropdownToggle) {
-      this.dropdownInstance = new bootstrap.Dropdown(this.dropdownToggle.nativeElement);
-    }
   }
 
   checkLogin(): boolean {
@@ -39,14 +27,10 @@ export class MenuComponent implements AfterViewInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    this.isLoggedIn = false;
-    this.closeDropdown();
-  }
-
-  closeDropdown() {
-    if (this.dropdownInstance) {
-      this.dropdownInstance.hide();
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('token');
+      this.isLoggedIn = false;
+      this.router.navigate(['/login']);
     }
   }
 }
