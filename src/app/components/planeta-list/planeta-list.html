@@ -2,12 +2,18 @@
   <div class="planetas-wrapper">
     <div *ngIf="loading" class="loading">Cargando...</div>
       <div *ngIf="!loading && planetas.length">
-        <div *ngFor="let p of planetas">
+        <div class="contenedor" *ngFor="let p of planetas">
           <!-- Caso normal: planeta -->
           <div *ngIf="!p.esAnuncio" (click)="verDetalle(p)" [ngClass]="['tarjeta', p.nombre.toLowerCase()]">
             <h2>{{ p.nombre }}</h2> 
             <p>{{ p.tipo }}</p>
-            <p>Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }} <span *ngIf="p.dia">☀️</span> <span *ngIf="!p.dia">🌙</span></p>
+            <p  class="fecha-con-icono">
+              <span class="texto-fecha">
+                Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }} 
+              </span>
+              <span class="icono" *ngIf="p.dia"><i class="bi bi-brightness-low-fill" style="font-size: 2rem; color: #FFC107;"></i></span> 
+              <span class="icono" *ngIf="!p.dia"><i class="bi bi-moon-stars-fill" style="font-size: 2rem; color: #6C757D" ></i></span>
+            </p>
           </div>
           <!-- Caso anuncio -->
           <div *ngIf="p.esAnuncio" class="tarjeta anuncio">

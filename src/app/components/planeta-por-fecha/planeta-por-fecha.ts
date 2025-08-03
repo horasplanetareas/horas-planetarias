@@ -61,9 +61,9 @@ export class PlanetaPorFecha implements OnInit {
     } finally {
       // Cuando termina (éxito o error), se desactiva el spinner
       this.cargando = false;
+      console.log('cargando', this.cargando);
       // Se fuerza la actualización de la vista
       this.cdr.detectChanges();
     }
   }
-
 }

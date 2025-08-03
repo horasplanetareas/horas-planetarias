@@ -1,0 +1,128 @@
+.auth-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-container label {
+  margin: 0.5rem 0 0.2rem;
+}
+
+.auth-container input {
+  padding: 0.5rem;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  margin-bottom: 0.8rem;
+}
+
+.auth-container button {
+  padding: 0.6rem;
+  margin-top: 0.5rem;
+  border: none;
+  background-color: #9B7EBD;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.auth-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.auth-container button:hover:not(:disabled) {
+  background-color: #3B1E54;
+}
+
+.auth-container .error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-container p {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.auth-container a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
+
+.code-confirm {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ccc;
+}
+.invalid-input {
+  border-color: red !important;
+  outline: none;
+  box-shadow: 0 0 5px red;
+}
+
+.title {
+  color: #9B7EBD;
+}
+
+.inputs {
+  color: #3B1E54;
+}
+
+.button-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 480px) {
+  .button-row {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: white;
+  color: #444;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.google-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.google-btn:hover {
+  background-color: #f5f5f5;
+}

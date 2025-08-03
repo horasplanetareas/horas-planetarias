@@ -2,29 +2,29 @@
   <ul>
     <!-- Opciones de usuario -->
     <li *ngIf="!isLoggedIn">
-      <a routerLink="/login" class="btn btn-outline-primary btn-sm" style="margin-left: 1rem;">
-        👤
+      <a routerLink="/login" routerLinkActive="activo" style="margin-left: 1rem;">
+        <span class="icon"><i class="bi bi-person-fill"></i> </span>
       </a>
     </li>
     <li *ngIf="isLoggedIn">
       <button (click)="logout()" class="btn btn-danger btn-sm" style="margin-left: 1rem;">
-        🔓
+        <span class="icon"><i class="bi bi-lock-fill"></i> </span>
       </button>
     </li>
     <!-- Enlaces de navegación -->
     <li>
       <a routerLink="/hora-actual" routerLinkActive="activo">
-        <span class="icon">🕒</span>
+        <span class="icon"><i class="bi bi-clock-fill"></i></span>
       </a>
     </li>
     <li>
       <a routerLink="/lista-horas" routerLinkActive="activo">
-        <span class="icon">📋</span>
+        <span class="icon"><i class="bi bi-card-list"></i></span>
       </a>
     </li>
     <li>
       <a routerLink="/por-fecha" routerLinkActive="activo">
-        <span class="icon">📅</span>
+        <span class="icon"><i class="bi bi-calendar-fill"></i></span>
       </a>
     </li>
   </ul>

@@ -100,4 +100,24 @@
   .saturno {
     border-color: black;
   }
+
+  .fecha-con-icono {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fecha-con-icono .icono {
+  /* Esto pone el icono a la derecha */
+  font-size: 2rem; /* Opcional, para que el icono se vea un poco más grande */
+}
+
+.fecha-con-icono .icono.bi-sun {
+  color: #FFC107;
+}
+
+.fecha-con-icono .icono.bi-moon {
+  color: #6C757D;
+}
+
 }

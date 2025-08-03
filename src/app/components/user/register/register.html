@@ -1,0 +1,70 @@
+<div class="auth-container">
+  <h2 class="title">Registrarse</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label class="inputs" for="email">Email</label>
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      placeholder="ejemplo@dominio.com"
+      title="Ingrese su email"
+      [class.invalid-input]="email?.invalid && email?.touched"
+    />
+    <div *ngIf="email?.invalid && email?.touched" class="error">
+      Email inválido
+    </div>
+
+    <label class="inputs" for="username">Usuario</label>
+    <input
+      id="username"
+      type="text"
+      formControlName="username"
+      placeholder="Ingrese su usuario"
+      title="Nombre de usuario"
+      [class.invalid-input]="username?.invalid && username?.touched"
+    />
+    <div *ngIf="username?.invalid && username?.touched" class="error">
+      Usuario requerido
+    </div>
+
+    <label class="inputs" for="password">Contraseña</label>
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      placeholder="Mínimo 6 caracteres"
+      title="Ingrese su contraseña"
+      [class.invalid-input]="password?.invalid && password?.touched"
+    />
+    <div *ngIf="password?.invalid && password?.touched" class="error">
+      Contraseña requerida (mínimo 6 caracteres)
+    </div>
+
+    <div class="button-row">
+      <button type="submit" [disabled]="form.invalid">Registrar</button>
+
+      <button type="button" class="google-btn" (click)="loginWithGoogle()">
+        <i class="bi bi-google"></i>
+      </button>
+    </div>
+
+  </form>
+
+  <div *ngIf="codeSent" class="code-confirm">
+    <p>Código enviado a {{ form.value.email }}: <strong>{{ sentCode }}</strong></p>
+    <label for="codeInput">Ingresá el código</label>
+    <input
+      id="codeInput"
+      [(ngModel)]="inputCode"
+      placeholder="Código de confirmación"
+      title="Código de confirmación"
+    />
+    <button (click)="confirmCode()">Confirmar</button>
+    <p *ngIf="codeError" class="error">Código incorrecto</p>
+  </div>
+
+  <p>
+    <a class="title" [routerLink]="'/login'">Ya tengo cuenta</a>
+  </p>
+</div>
