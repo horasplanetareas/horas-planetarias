@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PlanetaService } from '../../services/planeta.service';
+import { PlanetaService } from '../../services/planeta/planeta.service';
 import { AdsenseBannerComponent } from "../adsense-banner/adsense-banner";
 
 @Component({

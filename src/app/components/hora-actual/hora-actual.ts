@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PlanetaService } from '../../services/planeta.service';
+import { PlanetaService } from '../../services/planeta/planeta.service';
 
 @Component({
   selector: 'app-hora-actual',    

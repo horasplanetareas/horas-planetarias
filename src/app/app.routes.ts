@@ -8,14 +8,14 @@ import { LoginComponent } from './components/user/login/login';
 import { RegisterComponent } from './components/user/register/register';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'hora-actual', pathMatch: 'full' },
   { path: 'hora-actual', component: HoraActualComponent },
   { path: 'lista-horas', component: PlanetaList },
-  { path: '', redirectTo: 'hora-actual', pathMatch: 'full' },
   { path: 'detalle-hora', component: PlanetaDetalleComponent },
-  { path: 'por-fecha', component: PlanetaPorFecha },
+  { path: 'por-fecha', component: PlanetaPorFecha }, //omly for authenticated users
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '**', redirectTo: 'hora-actual' } // manejo de ruta no encontrada
+  { path: '**', redirectTo: 'hora-actual' }, // manejo de ruta no encontrada
 ];
 
 @NgModule({

@@ -1,21 +1,21 @@
 <div class="auth-container">
-  <h2 class="title">Iniciar Sesión</h2>
+  <h2>Iniciar Sesión</h2>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <label class="inputs" for="username">Usuario</label>
+    <label for="email">Usuario</label>
     <input
-      id="username"
+      id="email"
       type="text"
-      formControlName="username"
+      formControlName="email"
       placeholder="Ingrese su usuario"
       title="Nombre de usuario"
-      [class.invalid-input]="username?.invalid && username?.touched"
+      [class.invalid-input]="email?.invalid && email?.touched"
     />
-    <div *ngIf="username?.invalid && username?.touched" class="error">
-      Usuario requerido
+    <div *ngIf="email?.invalid && email?.touched" class="error">
+      Email requerido
     </div>
 
-    <label class="inputs" for="password">Contraseña</label>
+    <label for="password">Contraseña</label>
     <input
       id="password"
       type="password"

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { PlanetaService } from '../../services/planeta.service';
+import { PlanetaService } from '../../services/planeta/planeta.service';
 
 @Component({
   selector: 'app-home',

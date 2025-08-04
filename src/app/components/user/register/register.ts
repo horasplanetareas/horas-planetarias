@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth/auth';
 
 @Component({
   selector: 'app-register',
@@ -14,13 +14,12 @@ import { CommonModule } from '@angular/common';
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
-  mode = 'register';
-  sentCode: string = '123456'; // código simulado
+  sentCode: string = '123456'; // Podés quitar esto si no vas a usar verificación ficticia
   inputCode: string = '';
-  codeSent: boolean = false;
-  codeError: boolean = false;
+  codeSent = false;
+  codeError = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -31,10 +30,19 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.codeSent = true;
-      console.log('Enviando código de confirmación a:', this.form.value.email);
-    }
+    if (this.form.invalid) return;
+
+    const { email, password } = this.form.value;
+
+    this.auth.register(email, password)
+      .then(() => {
+        alert('¡Usuario registrado con éxito!');
+        this.router.navigate(['/login']);
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Error al registrar: ' + err.message);
+      });
   }
 
   confirmCode() {
@@ -45,18 +53,28 @@ export class RegisterComponent implements OnInit {
       this.codeError = true;
     }
   }
-  get email() {
-  return this.form.get('email');
-}
-get username() {
-  return this.form.get('username');
-}
-get password() {
-  return this.form.get('password');
-}
 
-loginWithGoogle() {
-  // Implementá tu lógica con Firebase Auth o lo que uses
-  console.log('Iniciar registro con Google');
-}
+  get email() {
+    return this.form.get('email');
+  }
+
+  get username() {
+    return this.form.get('username');
+  }
+
+  get password() {
+    return this.form.get('password');
+  }
+
+  loginWithGoogle() {
+    this.auth.loginWithGoogle()
+      .then(() => {
+        alert('Login con Google exitoso');
+        this.router.navigate(['/']);
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Error con Google: ' + err.message);
+      });
+  }
 }

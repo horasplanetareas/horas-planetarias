@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { PlanetaService } from '../../services/planeta.service';
+import { PlanetaService } from '../../services/planeta/planeta.service';
 import { AdsenseBannerComponent } from '../adsense-banner/adsense-banner';
 
 @Component({
