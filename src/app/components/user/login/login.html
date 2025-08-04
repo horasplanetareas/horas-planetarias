@@ -1,36 +1,25 @@
 <div class="auth-container">
   <h2>Iniciar Sesión</h2>
-
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <label for="email">Usuario</label>
-    <input
-      id="email"
-      type="text"
-      formControlName="email"
-      placeholder="Ingrese su usuario"
-      title="Nombre de usuario"
-      [class.invalid-input]="email?.invalid && email?.touched"
-    />
+    <input id="email" type="text" formControlName="email" placeholder="Ingrese su usuario" title="Nombre de usuario"
+      [class.invalid-input]="email?.invalid && email?.touched" />
     <div *ngIf="email?.invalid && email?.touched" class="error">
       Email requerido
     </div>
-
     <label for="password">Contraseña</label>
-    <input
-      id="password"
-      type="password"
-      formControlName="password"
-      placeholder="Mínimo 6 caracteres"
-      title="Ingrese su contraseña"
-      [class.invalid-input]="password?.invalid && password?.touched"
-    />
+    <input id="password" type="password" formControlName="password" placeholder="Mínimo 6 caracteres"
+      title="Ingrese su contraseña" [class.invalid-input]="password?.invalid && password?.touched" />
     <div *ngIf="password?.invalid && password?.touched" class="error">
       Contraseña requerida (mínimo 6 caracteres)
     </div>
-
-    <button type="submit" [disabled]="form.invalid">Ingresar</button>
+    <div class="button-row">
+      <button type="submit" [disabled]="form.invalid">Ingresar</button>
+      <button type="button" class="google-btn" (click)="loginWithGoogle()">
+        <i class="bi bi-google"></i>
+      </button>
+    </div>
   </form>
-
   <p>
     <a [routerLink]="'/register'">Crear cuenta</a>
   </p>

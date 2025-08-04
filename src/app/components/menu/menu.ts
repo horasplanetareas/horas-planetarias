@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { PLATFORM_ID } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
+//import { AuthService } from '../../services/auth/auth'; // Ajusta la ruta según tu proyecto
 
 @Component({
   selector: 'app-menu',
@@ -11,26 +12,17 @@ import { RouterModule, Router } from '@angular/router';
   imports: [CommonModule, RouterModule],
 })
 export class MenuComponent {
-  isLoggedIn = false;
-  platformId = inject(PLATFORM_ID);
-  router = inject(Router);
+  // Observable que indica si está logueado
+  //isLoggedIn$: Observable<boolean>;
+  isLoggedIn$ = false; // Cambia a true o false según tu lógica de autenticación
 
-  constructor() {
-    this.isLoggedIn = this.checkLogin();
-  }
-
-  checkLogin(): boolean {
-    if (isPlatformBrowser(this.platformId)) {
-      return !!localStorage.getItem('token');
-    }
-    return false;
+  constructor(/*private authService: AuthService*/) {
+    // Nos suscribimos al estado de autenticación reactivo del AuthService
+    //this.isLoggedIn$ = this.authService.isLoggedIn$;
+    this.isLoggedIn$ = false;
   }
 
   logout() {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('token');
-      this.isLoggedIn = false;
-      this.router.navigate(['/login']);
-    }
+    //this.authService.logout();
   }
 }

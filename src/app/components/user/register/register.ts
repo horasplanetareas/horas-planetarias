@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   codeSent = false;
   codeError = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {}
+  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
