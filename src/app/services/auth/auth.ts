@@ -1,5 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -15,11 +16,13 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.loggedIn.asObservable();
 
-  private auth?: Auth; // ya no lo inyectamos en el constructor
+  private auth?: Auth;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router
+  ) {
     if (isPlatformBrowser(this.platformId)) {
-      // Inyección perezosa: solo en navegador
       this.auth = inject(Auth);
       this.loggedIn.next(this.hasToken());
     }
@@ -61,6 +64,9 @@ export class AuthService {
     await signOut(this.auth);
     localStorage.removeItem('authToken');
     this.loggedIn.next(false);
+
+    // Navegar a raíz sin recargar
+    this.router.navigate(['/']);
   }
 
   isAuthenticated(): boolean {
