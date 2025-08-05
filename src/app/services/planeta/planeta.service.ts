@@ -166,7 +166,7 @@ export class PlanetaService {
     const nombreKey = nombrePlaneta.toLowerCase();
     const imagenes: string[] = [];
     for (let i = 1; i <= cantidad; i++) {
-      imagenes.push(`assets/planetas/${nombreKey}${i}.jpg`);
+      imagenes.push(`assets/planetas/${nombreKey}${i}.png`);
     }
     return imagenes;
   }

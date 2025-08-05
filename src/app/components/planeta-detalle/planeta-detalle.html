@@ -4,7 +4,7 @@
   <p><strong>Horario:</strong> {{ planeta.horaInicio }} - {{ planeta.horaFin }}</p>
   <p>{{ planeta.descripcion }}</p>
 
-  <div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel" *ngIf="planeta.imagenes?.length > 0">
+  <!--<div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel" *ngIf="planeta.imagenes?.length > 0">
     <div class="carousel-inner">
       <div *ngFor="let img of planeta.imagenes; let i = index"
            [class.carousel-item]="true"
@@ -21,7 +21,7 @@
       <span class="carousel-control-next-icon"></span>
       <span class="visually-hidden">Siguiente</span>
     </button>
-  </div>
+  </div>-->
 </div>
 
 <ng-template #noEncontrado>
