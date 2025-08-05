@@ -1,28 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
-//import { AuthService } from '../../services/auth/auth'; // Ajusta la ruta según tu proyecto
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.html',
   styleUrls: ['./menu.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
 })
-export class MenuComponent {
-  // Observable que indica si está logueado
-  //isLoggedIn$: Observable<boolean>;
-  isLoggedIn$ = false; // Cambia a true o false según tu lógica de autenticación
+export class MenuComponent implements OnInit {
+  isLoggedIn = false; // valor booleano que se actualizará
 
-  constructor(/*private authService: AuthService*/) {
-    // Nos suscribimos al estado de autenticación reactivo del AuthService
-    //this.isLoggedIn$ = this.authService.isLoggedIn$;
-    this.isLoggedIn$ = false;
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    // Suscribirse al estado reactivo del AuthService
+    this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+    });
   }
 
   logout() {
-    //this.authService.logout();
+    this.authService.logout();
   }
 }

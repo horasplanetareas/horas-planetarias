@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -11,57 +12,57 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  // Estado reactivo: los componentes se pueden suscribir a esto
-  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
-
-  // Observable público para que otros componentes lo usen
+  private loggedIn = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.loggedIn.asObservable();
 
-  constructor(private auth: Auth) {}
+  private auth?: Auth; // ya no lo inyectamos en el constructor
 
-  // Revisa si hay token en el localStorage
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      // Inyección perezosa: solo en navegador
+      this.auth = inject(Auth);
+      this.loggedIn.next(this.hasToken());
+    }
+  }
+
   private hasToken(): boolean {
-    return !!localStorage.getItem('authToken');
+    return isPlatformBrowser(this.platformId) && !!localStorage.getItem('authToken');
   }
 
-  register(email: string, password: string) {
-    return createUserWithEmailAndPassword(this.auth, email, password).then(cred => {
-      return cred.user.getIdToken().then(token => {
-        localStorage.setItem('authToken', token);
-        this.loggedIn.next(true); // Actualiza el estado reactivo
-        return cred;
-      });
-    });
+  async register(email: string, password: string) {
+    if (!this.auth) return;
+    const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+    const token = await cred.user.getIdToken();
+    localStorage.setItem('authToken', token);
+    this.loggedIn.next(true);
+    return cred;
   }
 
-  login(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password).then(cred => {
-      return cred.user.getIdToken().then(token => {
-        localStorage.setItem('authToken', token);
-        this.loggedIn.next(true);
-        return cred;
-      });
-    });
+  async login(email: string, password: string) {
+    if (!this.auth) return;
+    const cred = await signInWithEmailAndPassword(this.auth, email, password);
+    const token = await cred.user.getIdToken();
+    localStorage.setItem('authToken', token);
+    this.loggedIn.next(true);
+    return cred;
   }
 
-  loginWithGoogle() {
-    return signInWithPopup(this.auth, new GoogleAuthProvider()).then(cred => {
-      return cred.user.getIdToken().then(token => {
-        localStorage.setItem('authToken', token);
-        this.loggedIn.next(true);
-        return cred;
-      });
-    });
+  async loginWithGoogle() {
+    if (!this.auth) return;
+    const cred = await signInWithPopup(this.auth, new GoogleAuthProvider());
+    const token = await cred.user.getIdToken();
+    localStorage.setItem('authToken', token);
+    this.loggedIn.next(true);
+    return cred;
   }
 
-  logout() {
-    return signOut(this.auth).then(() => {
-      localStorage.removeItem('authToken');
-      this.loggedIn.next(false); // Notifica logout
-    });
+  async logout() {
+    if (!this.auth) return;
+    await signOut(this.auth);
+    localStorage.removeItem('authToken');
+    this.loggedIn.next(false);
   }
 
-  // Método sincrónico para validaciones rápidas
   isAuthenticated(): boolean {
     return this.hasToken();
   }
