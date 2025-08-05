@@ -6,4 +6,5 @@ export interface Planeta {
   descripcion?: string;
   fecha: string;
   dia: boolean;
+  imagenes?: string[];
 }

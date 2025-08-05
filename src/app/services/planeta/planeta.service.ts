@@ -22,7 +22,7 @@ export class PlanetaService {
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   // Devuelve las 24 horas planetarias del día actual según la ubicación
   async obtenerHorasPlanetarias(): Promise<any[]> {
@@ -44,10 +44,10 @@ export class PlanetaService {
     const subDia = this.obtenerSubDia(usarFecha);
 
     // Calcula 12 horas planetarias para el día (entre amanecer y anochecer)
-    const horasDia = this.generarHorasPlanetarias(new Date(solDataHoy.sunrise), new Date(solDataHoy.sunset), subDia,true);
+    const horasDia = this.generarHorasPlanetarias(new Date(solDataHoy.sunrise), new Date(solDataHoy.sunset), subDia, true);
 
     // Calcula 12 horas planetarias para la noche (entre anochecer de hoy y amanecer de mañana)
-    const horasNoche = this.generarHorasPlanetarias(new Date(solDataHoy.sunset), new Date(solDataManiana.sunrise), subDia,false);
+    const horasNoche = this.generarHorasPlanetarias(new Date(solDataHoy.sunset), new Date(solDataManiana.sunrise), subDia, false);
 
     // Devuelve las horas planetarias del día y la noche con un anuncio entre medio
     return [...horasDia, this.anuncio(), ...horasNoche];
@@ -60,8 +60,8 @@ export class PlanetaService {
     const solManiana = await this.getSolData(coords.lat, coords.lng, new Date(fecha.getTime() + 86400000));
 
     const subDia = this.obtenerSubDia(fecha);
-    const horasDia = this.generarHorasPlanetarias(new Date(solHoy.sunrise), new Date(solHoy.sunset), subDia,true);
-    const horasNoche = this.generarHorasPlanetarias(new Date(solHoy.sunset), new Date(solManiana.sunrise), subDia,false);
+    const horasDia = this.generarHorasPlanetarias(new Date(solHoy.sunrise), new Date(solHoy.sunset), subDia, true);
+    const horasNoche = this.generarHorasPlanetarias(new Date(solHoy.sunset), new Date(solManiana.sunrise), subDia, false);
 
     return [...horasDia, this.anuncio(), ...horasNoche];
   }
@@ -114,7 +114,7 @@ export class PlanetaService {
   }
 
   // Genera un array de 12 objetos con la información de cada hora planetaria
-  private generarHorasPlanetarias(inicio: Date, fin: Date, subDia: string, dia:boolean): any[] {
+  private generarHorasPlanetarias(inicio: Date, fin: Date, subDia: string, dia: boolean): any[] {
     const duracionHora = (fin.getTime() - inicio.getTime()) / 12;
     const planetaInicial = this.planetaInicioPorDia[subDia];
     const indiceInicial = this.ordenPlanetario.indexOf(planetaInicial);
@@ -133,7 +133,8 @@ export class PlanetaService {
         finDate: horaFin,
         descripcion: this.obtenerDescripcion(planeta),
         fecha: horaInicio.toLocaleDateString('es-UY'),
-        dia : dia,
+        dia: dia,
+        imagenes: this.generarImagenesPorPlaneta(planeta)
       };
     });
   }
@@ -160,4 +161,14 @@ export class PlanetaService {
       esAnuncio: true
     };
   }
+
+  private generarImagenesPorPlaneta(nombrePlaneta: string, cantidad: number = 3): string[] {
+    const nombreKey = nombrePlaneta.toLowerCase();
+    const imagenes: string[] = [];
+    for (let i = 1; i <= cantidad; i++) {
+      imagenes.push(`assets/planetas/${nombreKey}${i}.jpg`);
+    }
+    return imagenes;
+  }
+
 }

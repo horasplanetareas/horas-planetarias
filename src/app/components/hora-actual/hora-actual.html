@@ -1,13 +1,31 @@
 <div *ngIf="cargando">Cargando...</div>
 
 <div *ngIf="!cargando && planetaActual" 
-    [ngClass]="['hora-card', planetaActual.nombre.toLowerCase()]">
+     [ngClass]="['hora-card', planetaActual.nombre.toLowerCase()]">
   <h1>{{ planetaActual.nombre }}</h1>
   <p><strong>Horario:</strong> {{ planetaActual.horaInicio }} - {{ planetaActual.horaFin }}</p>
   <p>{{ planetaActual.descripcion }}</p>
+
+  <div id="carouselHoraActual" class="carousel slide" data-bs-ride="carousel" *ngIf="planetaActual.imagenes?.length > 0">
+    <div class="carousel-inner">
+      <div *ngFor="let img of planetaActual.imagenes; let i = index"
+           [class.carousel-item]="true"
+           [class.active]="i === 0">
+        <img [src]="img" class="d-block w-100" alt="{{planetaActual.nombre}}">
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+  </div>
 </div>
 
 <div *ngIf="!cargando && !planetaActual">
   <p>No se encontró la hora planetaria actual.</p>
 </div>
-
