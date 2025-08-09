@@ -72,4 +72,6 @@ export class AuthService {
   isAuthenticated(): boolean {
     return this.hasToken();
   }
+
+  
 }
