@@ -29,7 +29,7 @@ export class PlanetaPorFecha implements OnInit {
   constructor(
     private planetaService: PlanetaService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   // Se ejecuta al iniciar el componente
   ngOnInit(): void {
@@ -39,40 +39,39 @@ export class PlanetaPorFecha implements OnInit {
   }
   // Función que se dispara cuando el usuario consulta por una fecha específica
   async consultar() {
-  // Si no hay fecha seleccionada, no continuar
-  if (!this.fechaSeleccionada) return;
+    // Si no hay fecha seleccionada, no continuar
+    if (!this.fechaSeleccionada) return;
 
-  // Indicar que está cargando datos y limpiar resultados anteriores
-  this.cargando = true;
-  this.planetas = [];
+    // Indicar que está cargando datos y limpiar resultados anteriores
+    this.cargando = true;
+    this.planetas = [];
 
-  try {
-    /* La fecha seleccionada viene como string "YYYY-MM-DD"
-    Si creamos un Date directamente con ese string, JS lo interpreta en UTC a la medianoche,
-    lo que puede generar que la fecha local sea el día anterior (por desfase horario).
-    Para evitarlo, creamos el objeto Date con hora fija a mediodía local (12:00),
-    así no habrá desfase que cause tomar el día anterior o siguiente.*/
-    const parts = this.fechaSeleccionada.split('-'); // ["YYYY", "MM", "DD"]
-    const fecha = new Date(
-      +parts[0],       // Año (número)
-      +parts[1] - 1,   // Mes (0-based, por eso -1)
-      +parts[2],       // Día
-      12, 0, 0         // Hora 12:00:00 local para evitar desfase UTC
-    );
+    try {
+      /* La fecha seleccionada viene como string "YYYY-MM-DD"
+      Si creamos un Date directamente con ese string, JS lo interpreta en UTC a la medianoche,
+      lo que puede generar que la fecha local sea el día anterior (por desfase horario).
+      Para evitarlo, creamos el objeto Date con hora fija a mediodía local (12:00),
+      así no habrá desfase que cause tomar el día anterior o siguiente.*/
+      const parts = this.fechaSeleccionada.split('-'); // ["YYYY", "MM", "DD"]
+      const fecha = new Date(
+        +parts[0],       // Año (número)
+        +parts[1] - 1,   // Mes (0-based, por eso -1)
+        +parts[2],       // Día
+        12, 0, 0         // Hora 12:00:00 local para evitar desfase UTC
+      );
 
-    // Llamar al servicio para obtener horas planetarias para la fecha corregida
-    this.planetas = await this.planetaService.obtenerHorasPorFecha(fecha);
+      // Llamar al servicio para obtener horas planetarias para la fecha corregida
+      this.planetas = await this.planetaService.obtenerHorasPorFecha(fecha);
 
-  } catch (error) {
-    // Mostrar alerta si hubo un error, por ejemplo con geolocalización
-    alert('No se pudo obtener la ubicación. Por favor, habilitá la geolocalización en tu dispositivo.');
-    console.error('Error:', error);
+    } catch (error) {
+      // Mostrar alerta si hubo un error, por ejemplo con geolocalización
+      alert('No se pudo obtener la ubicación. Por favor, habilitá la geolocalización en tu dispositivo.');
+      console.error('Error:', error);
 
-  } finally {
-    // Termina la carga, actualizar la vista
-    this.cargando = false;
-    this.cdr.detectChanges();
+    } finally {
+      // Termina la carga, actualizar la vista
+      this.cargando = false;
+      this.cdr.detectChanges();
+    }
   }
-}
-
 }
