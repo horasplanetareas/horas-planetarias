@@ -59,7 +59,6 @@ export class PlanetaPorFecha implements OnInit {
         +parts[2],       // Día
         12, 0, 0         // Hora 12:00:00 local para evitar desfase UTC
       );
-
       // Llamar al servicio para obtener horas planetarias para la fecha corregida
       this.planetas = await this.planetaService.obtenerHorasPorFecha(fecha);
 
