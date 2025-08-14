@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth/auth';
   imports: [CommonModule, RouterLink, RouterLinkActive],
 })
 export class MenuComponent implements OnInit {
-  isLoggedIn = false; // valor booleano que se actualizará
+  isLoggedIn = false;
 
   constructor(private authService: AuthService) {}
 

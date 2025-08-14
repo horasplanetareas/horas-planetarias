@@ -1,29 +1,63 @@
 <div *ngIf="cargando">Cargando...</div>
 
-<div *ngIf="!cargando && planetaActual" 
-     [ngClass]="['hora-card', planetaActual.nombre.toLowerCase()]">
+<div *ngIf="!cargando && planetaActual" [ngClass]="['hora-card', planetaActual.nombre.toLowerCase()]">
   <h1>{{ planetaActual.nombre }}</h1>
   <p><strong>Horario:</strong> {{ planetaActual.horaInicio }} - {{ planetaActual.horaFin }}</p>
-  <p>{{ planetaActual.descripcion }}</p>
 
-  <div id="carouselHoraActual" class="carousel slide" data-bs-ride="carousel" *ngIf="planetaActual.imagenes?.length > 0">
-    <div class="carousel-inner">
-      <div *ngFor="let img of planetaActual.imagenes; let i = index"
-           [class.carousel-item]="true"
-           [class.active]="i === 0">
-        <img [src]="img" class="d-block w-100" alt="{{planetaActual.nombre}}">
+  <!-- Vista logueado -->
+  <ng-container *ngIf="isLoggedIn; else vistaNoLogueado">
+    <p>{{ planetaActual.descripcion }}</p>
+
+    <div id="carouselHoraActual" class="carousel slide" data-bs-ride="carousel" *ngIf="planetaActual.actividades?.length > 0">
+      <div class="carousel-inner">
+        <div *ngFor="let act of planetaActual.actividades; let i = index"
+             [class.carousel-item]="true"
+             [class.active]="i === 0">
+          <img [src]="act.imagen" class="d-block w-100" alt="{{act.titulo}}">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+            <h5>{{ act.titulo }}</h5>
+            <p>{{ act.descripcion }}</p>
+          </div>
+        </div>
       </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
     </div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-      <span class="visually-hidden">Siguiente</span>
-    </button>
-  </div>
+    <p>{{ planetaActual.parrafoFinal }}</p>
+  </ng-container>
+
+  <!-- Vista no logueado -->
+  <ng-template #vistaNoLogueado>
+    <div id="carouselHoraActual" class="carousel slide" data-bs-ride="carousel" *ngIf="planetaActual.actividades?.length > 0">
+      <div class="carousel-inner">
+        <div *ngFor="let act of planetaActual.actividades; let i = index"
+             [class.carousel-item]="true"
+             [class.active]="i === 0">
+          <img [src]="act.imagen" class="d-block w-100" alt="{{act.titulo}}">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+            <h5>{{ act.titulo }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </ng-template>
 </div>
 
 <div *ngIf="!cargando && !planetaActual">

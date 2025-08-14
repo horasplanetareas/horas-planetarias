@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlanetaService } from '../../services/planeta/planeta.service';
+import { AuthService } from '../../services/auth/auth';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hora-actual',    
@@ -17,13 +19,24 @@ export class HoraActualComponent implements OnInit {
   // Indicador de carga para mostrar estado visual mientras se obtienen los datos
   cargando = true;
 
+  // Estado de login: true si el usuario está logueado, false si no
+    isLoggedIn = false;
+  
+    // Guardaremos la suscripción para poder cancelarla luego
+    private authSub?: Subscription;
+
   constructor(
     private planetaService: PlanetaService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {}
+  
 
   // Método que se ejecuta automáticamente al iniciar el componente
   async ngOnInit(): Promise<void> {
+    this.authSub = this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status; // Actualizamos el estado local
+    });
     try {
       // Obtener la lista de horas planetarias desde el servicio
       const planetas = await this.planetaService.obtenerHorasPlanetarias();
