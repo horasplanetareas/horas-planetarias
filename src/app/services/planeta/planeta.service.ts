@@ -119,9 +119,7 @@ export class PlanetaService {
           imagen: 'assets/planetas/sol8.png'
         }
       ]
-    }
-    ,
-
+    },
     // 🌙 LUNA 
     luna: {
       descripcion: `La Luna representa el mundo de las emociones, el inconsciente, la intuición, la memoria y nuestra necesidad innata de seguridad y nutrición. Asociada con el arquetipo materno y el hogar, su influencia se intensifica durante su hora planetaria, momento considerado propicio para conectar con estas facetas y realizar actividades que armonicen con su energía receptiva y protectora.`,
@@ -163,9 +161,7 @@ export class PlanetaService {
           imagen: 'assets/planetas/luna7.png'
         }
       ]
-    }
-    ,
-
+    },
     // ♂️ MARTE
     marte: {
       descripcion: `Marte es el arquetipo del guerrero interior. Representa energía vital, impulso para la acción, asertividad, deseo, competitividad y capacidad para poner límites. Su influencia se intensifica durante su hora planetaria, momento ideal para actividades que requieran coraje, decisión y un alto gasto energético.`,
@@ -212,9 +208,7 @@ export class PlanetaService {
           imagen: 'assets/planetas/marte8.png'
         }
       ]
-    }
-    ,
-
+    },
     // ☿️ MERCURIO
     mercurio: {
       descripcion: `Mercurio es el arquetipo del mensajero, el intelecto y el conector. Gobierna la mente racional, la comunicación en todas sus formas, el aprendizaje, el comercio, el intercambio de información y la capacidad de adaptarnos. Su hora planetaria es ideal para actividades que requieren agilidad mental, elocuencia y la creación de puentes entre ideas y personas.`,
@@ -261,9 +255,7 @@ export class PlanetaService {
           imagen: 'assets/planetas/mercurio8.png'
         }
       ]
-    }
-    ,
-
+    },
     // ♀️ VENUS
     venus: {
       descripcion: `Venus es la personificación del principio de atracción, la armonía, la belleza, el placer y las relaciones. Representa nuestra capacidad para amar y ser amados, el sentido estético, los valores personales y el impulso hacia la unión. Su influencia, suave y magnética, se intensifica durante su hora planetaria, momento perfecto para cultivar belleza en todas sus formas, fomentar relaciones y disfrutar de los sentidos.`,
@@ -310,11 +302,9 @@ export class PlanetaService {
           imagen: 'assets/planetas/venus8.png'
         }
       ]
-    }
-    ,
-
+    },
     // ♃ JÚPITER
-    júpiter: {
+    jupiter: {
       descripcion: `Júpiter es el arquetipo del maestro, el benefactor y el gran expansor. Representa la abundancia, la sabiduría, la justicia, la prosperidad y la fe en el futuro. Su hora planetaria es un momento propicio para abrirnos a nuevas oportunidades, tomar decisiones importantes y actuar con visión de largo plazo, confiando en que el universo favorece el crecimiento y la expansión.`,
       parrafoFinal: `Conectar con la energía de Júpiter nos recuerda que la vida se amplía en la medida en que nos atrevemos a soñar en grande, actuar con generosidad y confiar en que siempre hay más posibilidades de las que imaginamos.`,
       actividades: [
@@ -406,8 +396,7 @@ export class PlanetaService {
           imagen: 'assets/planetas/saturno8.png'
         }
       ]
-    }
-    ,
+    },
   };
 
   // =========================
