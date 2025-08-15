@@ -36,7 +36,6 @@ export class RegisterComponent implements OnInit {
 
     this.auth.register(email, password)
       .then(() => {
-        alert('¡Usuario registrado con éxito!');
         this.router.navigate(['/login']);
       })
       .catch(err => {
@@ -69,7 +68,6 @@ export class RegisterComponent implements OnInit {
   loginWithGoogle() {
     this.auth.loginWithGoogle()
       .then(() => {
-        alert('Login con Google exitoso');
         this.router.navigate(['/']);
       })
       .catch(err => {

@@ -1,3 +1,6 @@
+/* ========================= */
+/* ESTILO GENERAL HEADER      */
+/* ========================= */
 .header {
   text-align: center;
   padding: 2rem 1rem 3rem 1rem;
@@ -13,10 +16,11 @@
 .header .subdia {
   font-size: 1.5rem;
   font-weight: 500;
-  color: #3B1E54  ;
+  color: #3B1E54;
   margin: 0.2rem 0 1rem 0;
 }
 
+/* Fecha y hora */
 .fecha-hora {
   display: flex;
   justify-content: center;
@@ -40,21 +44,100 @@
   color: #ccc;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
-  .header h2 {
-    font-size: 2rem;
-  }
+/* ========================= */
+/* TARJETA DETALLE PLANETA    */
+/* ========================= */
+.detalle-card {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 3px solid #ccc;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  text-align: center;
+  color: #3B1E54;
+  transition: border-color 0.3s ease;
+  background-color: #fff;
+}
 
-  .header .subdia {
-    font-size: 1.2rem;
-  }
+.detalle-card h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
 
-  .fecha-hora p {
-    font-size: 1rem;
-  }
+.detalle-card h3 {
+  font-size: 1.2rem;
+  color: #9B7EBD;
+  margin-bottom: 1rem;
+}
 
-  .separador {
-    font-size: 1rem;
-  }
+.detalle-card p {
+  font-size: 1.05rem;
+  margin: 0.4rem 0;
+}
+
+.detalle-card strong {
+  color: #555;
+}
+
+/* ========================= */
+/* COLORES POR PLANETA        */
+/* ========================= */
+.luna { border-color: silver; }
+.mercurio { border-color: gold; }
+.venus { border-color: green; }
+.sol { border-color: goldenrod; }
+.marte { border-color: red; }
+.júpiter { border-color: blue; }
+.saturno { border-color: black; }
+
+/* ========================= */
+/* TEXTO SOBRE IMAGEN (PC/TABLET) */
+/* ========================= */
+.custom-caption {
+  bottom: 10px;
+  background-color: rgba(0,0,0,0.5);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.custom-caption h5 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.custom-caption p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* ========================= */
+/* TEXTO DEBAJO IMAGEN (MÓVILES) */
+/* ========================= */
+.caption-mobile {
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+.caption-mobile h5 {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.caption-mobile p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* ========================= */
+/* RESPONSIVE                 */
+/* ========================= */
+@media (min-width: 768px) {
+  .caption-mobile { display: none; } /* Ocultar en tablets/PC */
+}
+
+@media (max-width: 767px) {
+  .custom-caption { display: none; } /* Ocultar sobre imagen en móviles */
 }

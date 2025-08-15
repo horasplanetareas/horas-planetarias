@@ -1,47 +1,79 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { PlanetaService } from '../../services/planeta/planeta.service';
+import { PlanetaService, Planeta } from '../../services/planeta/planeta.service';
+import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
+  imports: [CommonModule]
 })
 export class HomeComponent implements OnInit {
-  diaActual: string = '';
-  subDia: string = '';
-  fechaActual: string = '';
-  horaActual: string = '';
+  // =========================
+  // VARIABLES DEL COMPONENTE
+  // =========================
+  isLoggedIn = false;// Estado de login: true si el usuario está logueado, false si no
+  private authSub?: Subscription;// Guardaremos la suscripción para poder cancelarla luego
+  diaActual: string = '';     // Nombre del día actual (Lunes, Martes, etc.)
+  subDia: string = '';        // Nombre del subdía (según tu lógica en PlanetaService)
+  planeta: Planeta | null = null; // Planeta correspondiente al subdía
+  fechaActual: string = '';   // Fecha en formato dd/mm/yyyy
+  horaActual: string = '';    // Hora actual en formato HH:MM
 
   constructor(
     private planetaService: PlanetaService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
+  // =========================
+  // CICLO DE VIDA
+  // =========================
   async ngOnInit() {
+    // Nos suscribimos al observable de AuthService para detectar cambios en el login
+    // Esto nos permite reaccionar si el usuario inicia o cierra sesión
+    this.authSub = this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status; // Actualizamos el estado local
+    });
     try {
-      // Obtenemos las horas planetarias de hoy (ya calcula todo internamente)
+      // 1️⃣ Obtener todas las horas planetarias del día (con contenido rico)
       const horas = await this.planetaService.obtenerHorasPlanetarias();
 
       if (horas.length > 0) {
         const ahora = new Date();
-        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-        const nombreDiaReal = diasSemana[ahora.getDay()];
+        // 2️⃣ Obtener nombre del día
+        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        this.diaActual = diasSemana[ahora.getDay()];
+
+        // 3️⃣ Formatear fecha actual dd/mm/yyyy
         const dia = String(ahora.getDate()).padStart(2, '0');
         const mes = String(ahora.getMonth() + 1).padStart(2, '0');
         const anio = ahora.getFullYear();
-        const fecha = `${dia}/${mes}/${anio}`;
-        const hora = ahora.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' });
+        this.fechaActual = `${dia}/${mes}/${anio}`;
 
-        // Usamos el primer bloque de horas para extraer el subdía
-        const subDia = horas[0].nombre ? horas[0].nombre : '';
+        // 4️⃣ Formatear hora actual HH:MM
+        this.horaActual = ahora.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' });
 
-        this.diaActual = nombreDiaReal;
-        this.subDia = this.planetaService['obtenerSubDia'](ahora); // Si quieres mantener subdía real
-        this.fechaActual = fecha;
-        this.horaActual = hora;
+        // 5️⃣ Obtener subdía usando la lógica de tu PlanetaService
+        this.subDia = this.planetaService.obtenerSubDia(ahora);
+        const planetaNombre = this.planetaService.planetaInicioPorDia[this.subDia];
 
+        // 6️⃣ Obtener planeta correspondiente al subdía
+        const contenido = this.planetaService.obtenerContenidoPlaneta(planetaNombre);
+
+        // Devolvemos el objeto completo listo para la vista de detalle
+        this.planeta = {
+          nombre: planetaNombre.toUpperCase(), // mantenemos tu formato actual
+          tipo: 'Hora Planetaria',
+          descripcion: contenido.descripcion,
+          actividades: contenido.actividades,
+          parrafoFinal: contenido.parrafoFinal,
+        };
+        // 7️⃣ Detectar cambios para actualizar la vista
         this.cdr.detectChanges();
       }
     } catch (error) {

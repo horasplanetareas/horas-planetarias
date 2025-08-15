@@ -1,24 +1,23 @@
 <div *ngIf="planeta; else noEncontrado" [ngClass]="['detalle-card', planeta.nombre.toLowerCase()]">
 
-  <h1>{{ planeta.nombre }}</h1>
-  <h3>{{ planeta.tipo }}</h3>
-  <p><strong>Horario:</strong> {{ planeta.horaInicio }} - {{ planeta.horaFin }}</p>
+  <h3>{{ planeta.nombre }}</h3>
 
   <!-- Vista logueado -->
   <ng-container *ngIf="isLoggedIn; else vistaNoLogueado">
-    <!-- Párrafo inicial -->
     <p>{{ planeta.descripcion }}</p>
 
-    <!-- Carrusel con título + descripción -->
     <div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel" *ngIf="planeta.actividades?.length > 0">
       <div class="carousel-inner">
-        <div *ngFor="let act of planeta.actividades; let i = index"
-             [class.carousel-item]="true"
-             [class.active]="i === 0">
+        <div *ngFor="let act of planeta.actividades; let i = index" [class.carousel-item]="true" [class.active]="i === 0">
 
           <img [src]="act.imagen" class="d-block w-100" alt="{{act.titulo}}">
 
+          <!-- Texto dentro en PC, debajo en móviles -->
           <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+            <h5>{{ act.titulo }}</h5>
+            <p>{{ act.descripcion }}</p>
+          </div>
+          <div class="caption-mobile d-lg-none p-2 text-center bg-dark text-white">
             <h5>{{ act.titulo }}</h5>
             <p>{{ act.descripcion }}</p>
           </div>
@@ -36,7 +35,6 @@
       </button>
     </div>
 
-    <!-- Párrafo final -->
     <p>{{ planeta.parrafoFinal }}</p>
   </ng-container>
 
@@ -44,13 +42,14 @@
   <ng-template #vistaNoLogueado>
     <div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel" *ngIf="planeta.actividades?.length > 0">
       <div class="carousel-inner">
-        <div *ngFor="let act of planeta.actividades; let i = index"
-             [class.carousel-item]="true"
-             [class.active]="i === 0">
+        <div *ngFor="let act of planeta.actividades; let i = index" [class.carousel-item]="true" [class.active]="i === 0">
 
           <img [src]="act.imagen" class="d-block w-100" alt="{{act.titulo}}">
 
           <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+            <h5>{{ act.titulo }}</h5>
+          </div>
+          <div class="caption-mobile d-lg-none p-2 text-center bg-dark text-white">
             <h5>{{ act.titulo }}</h5>
           </div>
 

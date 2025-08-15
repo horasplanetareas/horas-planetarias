@@ -39,3 +39,27 @@
 .marte      { border-color: red; }
 .júpiter    { border-color: blue; }
 .saturno    { border-color: black; }
+/* Tablets y PC */
+@media (min-width: 768px) {
+  .caption-mobile {
+    display: none; /* Ocultamos texto debajo en tablets y PC */
+  }
+  .custom-caption {
+    font-size: 0.95rem;
+    padding: 0.5rem;
+  }
+  .custom-caption h5 {
+    font-size: 1.1rem;
+  }
+  .custom-caption p {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+}
+
+/* Teléfonos */
+@media (max-width: 767px) {
+  .custom-caption {
+    display: none; /* Ocultamos texto sobre imagen en teléfonos */
+  }
+}

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { lastValueFrom, BehaviorSubject } from 'rxjs';
-
 // === MODELOS NUEVOS (puedes moverlos a un archivo models si querés) ===
 export interface Actividad {
   titulo: string;
@@ -12,14 +11,14 @@ export interface Actividad {
 
 export interface Planeta {
   nombre: string;          // 'SOL', 'MARTE', etc. (en mayúsculas lo estás devolviendo)
-  tipo: string;            // 'Hora Planetaria'
-  horaInicio: string;      // hh:mm
-  horaFin: string;         // hh:mm
+  tipo?: string;            // 'Hora Planetaria'
+  horaInicio?: string;      // hh:mm
+  horaFin?: string;         // hh:mm
   descripcion?: string;    // párrafo inicial largo
   actividades?: Actividad[];  // actividades con imagen
   parrafoFinal?: string;      // párrafo final
-  fecha: string;              // dd/mm/aaaa
-  dia: boolean;               // si pertenece al bloque diurno
+  fecha?: string;              // dd/mm/aaaa
+  dia?: boolean;               // si pertenece al bloque diurno
   // Extras operativos que ya traías (los mantenemos)
   inicioDate?: Date;
   finDate?: Date;
@@ -40,7 +39,7 @@ export class PlanetaService {
   private readonly ordenPlanetario = ['Marte', 'Júpiter', 'Saturno', 'Luna', 'Mercurio', 'Venus', 'Sol'];
 
   // Planeta que inicia el subdía según el día de la semana
-  private readonly planetaInicioPorDia: Record<string, string> = {
+  public readonly planetaInicioPorDia: Record<string, string> = {
     'Lunes': 'Luna',
     'Martes': 'Marte',
     'Miércoles': 'Mercurio',
@@ -74,6 +73,7 @@ export class PlanetaService {
   // CONTENIDOS POR PLANETA
   // =========================
   private readonly contenidos: Record<string, ContenidoPlaneta> = {
+    // 🌞 SOL
     sol: {
       descripcion: `El Sol es el arquetipo central del ser. Representa nuestra identidad consciente, la vitalidad, el propósito de vida, la autoexpresión, la creatividad y la capacidad de liderazgo. Es el núcleo de nuestra personalidad, el "héroe" de nuestro propio viaje. Su energía radiante y afirmativa se manifiesta con una potencia particular durante su hora planetaria, un momento astrológico ideal para brillar, afirmar nuestra individualidad y tomar el centro del escenario en nuestras vidas. La hora planetaria del Sol, cuyo inicio y duración varían diariamente según la salida y puesta del sol en cada ubicación, es un período en el que la energía solar vital, segura y carismática está en su apogeo. Es el momento perfecto para actividades que requieran confianza, visibilidad y expresión auténtica.`,
       parrafoFinal: `La energía del Sol es un acto de afirmación del propio valor y de alineación con nuestro propósito vital. La hora planetaria del Sol nos brinda la oportunidad de dejar de lado las dudas, ocupar nuestro espacio con seguridad y permitir que nuestra luz interior brille con toda su intensidad. Aprovechar este período es sintonizar con la fuerza de nuestro corazón, liderar nuestra propia vida con coraje y expresar al mundo, sin reservas, quiénes somos realmente.`,
@@ -520,7 +520,7 @@ export class PlanetaService {
     return data;
   }
 
-  private obtenerSubDia(fecha: Date): string {
+  public obtenerSubDia(fecha: Date): string {
     const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const diaNombre = dias[fecha.getDay()];
     const mapa: Record<string, string> = {
@@ -583,7 +583,7 @@ export class PlanetaService {
    * Devuelve el contenido rico para un planeta (case-insensitive).
    * Si no encontrás el contenido aún, vuelve un esqueleto vacío para no romper la UI.
    */
-  private obtenerContenidoPlaneta(nombrePlaneta: string): ContenidoPlaneta {
+  public obtenerContenidoPlaneta(nombrePlaneta: string): ContenidoPlaneta {
     const key = nombrePlaneta.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); // quita acentos y baja a lowercase
     // Claves esperadas: 'sol', 'marte', 'jupiter'/'júpiter', 'saturno', 'luna', 'mercurio', 'venus'
     const contenido = this.contenidos[key as keyof typeof this.contenidos];
@@ -593,23 +593,5 @@ export class PlanetaService {
       parrafoFinal: '',
       actividades: []
     };
-  }
-
-  // ==============
-  // (Opcional) Este método era el resumen corto por planeta.
-  // Ya no es necesario si vas a usar 'descripcion' + 'actividades' + 'parrafoFinal'.
-  // Lo dejo por si lo seguís usando en algún lugar de la UI.
-  // ==============
-  private obtenerDescripcion(planeta: string): string {
-    const descripciones: Record<string, string> = {
-      'Luna': 'Emociones, intuición, lo femenino.',
-      'Marte': 'Energía, acción, impulso.',
-      'Mercurio': 'Comunicación, mente, lógica.',
-      'Júpiter': 'Expansión, sabiduría, crecimiento.',
-      'Venus': 'Amor, belleza, placer.',
-      'Saturno': 'Disciplina, responsabilidad, límites.',
-      'Sol': 'Identidad, voluntad, vitalidad.'
-    };
-    return descripciones[planeta] || '';
   }
 }
