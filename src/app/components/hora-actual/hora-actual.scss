@@ -1,44 +1,45 @@
-.hora-card {
+.detalle-card {
   max-width: 500px;
   margin: 2rem auto;
-  background: #F6F2FB;
   padding: 2rem;
+  border: 3px solid #ccc;
   border-radius: 16px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   text-align: center;
   color: #3B1E54;
-  border: 3px solid transparent;
   transition: border-color 0.3s ease;
+  background-color: #fff;
+}
 
-  h1 {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-  }
+.detalle-card h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
 
-  h3 {
-    font-size: 1.3rem;
-    color: #9B7EBD;
-    margin-bottom: 1rem;
-  }
+.detalle-card h3 {
+  font-size: 1.2rem;
+  color: #9B7EBD;
+  margin-bottom: 1rem;
+}
 
-  p {
-    font-size: 1.1rem;
-    margin: 0.5rem 0;
-  }
+.detalle-card p {
+  font-size: 1.05rem;
+  margin: 0.4rem 0;
+}
 
-  strong {
-    color: #555;
-  }
+.detalle-card strong {
+  color: #555;
 }
 
 /* Colores por planeta */
-.luna       { border-color: silver; }
-.mercurio   { border-color: gold; }
-.venus      { border-color: green; }
-.sol        { border-color: goldenrod; }
-.marte      { border-color: red; }
-.júpiter    { border-color: blue; }
-.saturno    { border-color: black; }
+.luna { border-color: silver; }
+.mercurio { border-color: gold; }
+.venus { border-color: green; }
+.sol { border-color: goldenrod; }
+.marte { border-color: red; }
+.júpiter { border-color: blue; }
+.saturno { border-color: black; }
+
 /* Ajustes del texto sobre imagen (PC y tablets) */
 .custom-caption {
   bottom: 10px;
