@@ -1,6 +1,6 @@
 <div *ngIf="cargando">Cargando...</div>
 
-<div *ngIf="!cargando && planetaActual" [ngClass]="['hora-card', planetaActual.nombre.toLowerCase()]">
+<div *ngIf="!cargando && planetaActual" [ngClass]="['detalle-card', planetaActual.nombre.toLowerCase()]">
   
   <h1>Hora de {{ planetaActual.nombre }}</h1>
   <p><strong>Horario:</strong> {{ planetaActual.horaInicio }} - {{ planetaActual.horaFin }}</p>

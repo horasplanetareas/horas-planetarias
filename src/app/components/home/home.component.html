@@ -6,12 +6,6 @@
     <span class="separador">|</span>
     <p class="hora">{{ horaActual }}</p>
   </div>
-
-  <!-- Mostrar información del planeta del subdía -->
-  <!-- ===================================================== -->
-<!-- TARJETA DEL PLANETA DEL SUBDÍA                        -->
-<!-- Se muestra si hay un planeta; sino se muestra #noEncontrado -->
-<!-- ===================================================== -->
 <div *ngIf="planeta; else noEncontrado" 
      [ngClass]="['detalle-card', planeta?.nombre?.toLowerCase()]">
 

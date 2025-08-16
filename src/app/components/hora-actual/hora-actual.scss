@@ -1,3 +1,52 @@
+/* ========================= */
+/* ESTILO GENERAL HEADER      */
+/* ========================= */
+.header {
+  text-align: center;
+  padding: 2rem 1rem 3rem 1rem;
+  color: #9B7EBD;
+}
+
+.header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header .subdia {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #3B1E54;
+  margin: 0.2rem 0 1rem 0;
+}
+
+/* Fecha y hora */
+.fecha-hora {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fecha-hora p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #21232F;
+  margin: 0;
+}
+
+.fecha-hora .hora {
+  color: #555;
+}
+
+.separador {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* ========================= */
+/* TARJETA DETALLE PLANETA    */
+/* ========================= */
 .detalle-card {
   max-width: 500px;
   margin: 2rem auto;
@@ -31,7 +80,9 @@
   color: #555;
 }
 
-/* Colores por planeta */
+/* ========================= */
+/* COLORES POR PLANETA        */
+/* ========================= */
 .luna { border-color: silver; }
 .mercurio { border-color: gold; }
 .venus { border-color: green; }
@@ -40,48 +91,53 @@
 .júpiter { border-color: blue; }
 .saturno { border-color: black; }
 
-/* Ajustes del texto sobre imagen (PC y tablets) */
+/* ========================= */
+/* TEXTO SOBRE IMAGEN (PC/TABLET) */
+/* ========================= */
 .custom-caption {
   bottom: 10px;
+  background-color: rgba(0,0,0,0.5);
+  padding: 0.5rem;
+  border-radius: 8px;
 }
 
-/* Texto debajo de la imagen (solo teléfonos) */
+.custom-caption h5 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.custom-caption p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* ========================= */
+/* TEXTO DEBAJO IMAGEN (MÓVILES) */
+/* ========================= */
 .caption-mobile {
   background-color: #f8f9fa;
   padding: 0.5rem;
   border-radius: 8px;
   margin-top: 0.5rem;
 }
+
 .caption-mobile h5 {
   font-size: 1rem;
   margin-bottom: 0.2rem;
 }
+
 .caption-mobile p {
   font-size: 0.85rem;
   margin: 0;
 }
 
-/* Tablets y PC */
+/* ========================= */
+/* RESPONSIVE                 */
+/* ========================= */
 @media (min-width: 768px) {
-  .caption-mobile {
-    display: none; /* Ocultamos texto debajo en tablets y PC */
-  }
-  .custom-caption {
-    font-size: 0.95rem;
-    padding: 0.5rem;
-  }
-  .custom-caption h5 {
-    font-size: 1.1rem;
-  }
-  .custom-caption p {
-    font-size: 0.9rem;
-    margin-bottom: 0;
-  }
+  .caption-mobile { display: none; } /* Ocultar en tablets/PC */
 }
 
-/* Teléfonos */
 @media (max-width: 767px) {
-  .custom-caption {
-    display: none; /* Ocultamos texto sobre imagen en teléfonos */
-  }
+  .custom-caption { display: none; } /* Ocultar sobre imagen en móviles */
 }
