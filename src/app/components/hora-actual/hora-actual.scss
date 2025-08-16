@@ -39,6 +39,27 @@
 .marte      { border-color: red; }
 .júpiter    { border-color: blue; }
 .saturno    { border-color: black; }
+/* Ajustes del texto sobre imagen (PC y tablets) */
+.custom-caption {
+  bottom: 10px;
+}
+
+/* Texto debajo de la imagen (solo teléfonos) */
+.caption-mobile {
+  background-color: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+.caption-mobile h5 {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+.caption-mobile p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
 /* Tablets y PC */
 @media (min-width: 768px) {
   .caption-mobile {

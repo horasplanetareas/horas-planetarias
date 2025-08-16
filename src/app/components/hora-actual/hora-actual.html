@@ -11,10 +11,10 @@
 
     <div id="carouselHoraActual" class="carousel slide" data-bs-ride="carousel" *ngIf="planetaActual.actividades?.length > 0">
       <div class="carousel-inner">
-        <div *ngFor="let act of planetaActual.actividades; let i = index"
-             [class.carousel-item]="true"
-             [class.active]="i === 0">
+        <div *ngFor="let act of planetaActual.actividades; let i = index"[class.carousel-item]="true"[class.active]="i === 0">
           <img [src]="act.imagen" class="d-block w-100" alt="{{act.titulo}}">
+
+          <!-- Texto dentro en PC, debajo en móviles -->
           <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
             <h5>{{ act.titulo }}</h5>
             <p>{{ act.descripcion }}</p>
