@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://horas-planetarias.vercel.app/sitemap.xml
