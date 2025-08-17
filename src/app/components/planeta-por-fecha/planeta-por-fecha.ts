@@ -5,18 +5,19 @@ import { FormsModule } from '@angular/forms';
 import { PlanetaService } from '../../services/planeta/planeta.service';
 import { AdsenseBannerComponent } from "../adsense-banner/adsense-banner";
 import { Router } from '@angular/router';
+import { Title, Meta } from '@angular/platform-browser';
 
 // Declaración del componente Angular
 @Component({
-  selector: 'app-planeta-por-fecha', // Selector usado en el HTML
-  standalone: true,                  // Componente independiente
-  imports: [                         // Módulos necesarios para funcionar
+  selector: 'app-planeta-por-fecha',
+  standalone: true,
+  imports: [
     CommonModule,
     FormsModule,
     AdsenseBannerComponent
   ],
-  templateUrl: './planeta-por-fecha.html', // Archivo de plantilla HTML
-  styleUrl: './planeta-por-fecha.scss',    // Estilos específicos del componente
+  templateUrl: './planeta-por-fecha.html',
+  styleUrl: './planeta-por-fecha.scss',
 })
 export class PlanetaPorFecha implements OnInit {
 
@@ -31,9 +32,11 @@ export class PlanetaPorFecha implements OnInit {
 
   // Constructor con inyecciones de dependencias
   constructor(
-    private planetaService: PlanetaService, // Servicio que calcula las horas planetarias
-    private cdr: ChangeDetectorRef,         // Permite forzar la detección de cambios en la vista
-    private router: Router                  // Permite navegar entre rutas
+    private planetaService: PlanetaService,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private titleService: Title,
+    private metaService: Meta,
   ) {}
 
   // Método que se ejecuta al hacer clic en una tarjeta de planeta
@@ -44,6 +47,21 @@ export class PlanetaPorFecha implements OnInit {
 
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
+     
+    // 🔹 Cambiar el título de la pestaña (SEO Title)
+    this.titleService.setTitle('lista de las Horas Planetarias Para Un Dia A Elecsion | Lista Con Informacon Sobre Todas Las Hora Planetarias De Un Dia A Elecsion.');
+
+    // 🔹 Cambiar la meta description
+    this.metaService.updateTag({
+      name: 'description',
+      content: 'Descubre Informaciion Sobre Las Horas Planetarias Del Un Dia A Elecsion Y El Horden En El Que Rigen.'
+    });
+
+    // (Opcional) otras meta tags útiles
+    this.metaService.updateTag({ name: 'keywords', content: 'Lista De Horas Planetarias, Astrología, Horas Planetarias' });
+    this.metaService.updateTag({ property: 'og:title', content: 'Lista Con Onformacion De los Planetas De Un Dia A Elecsion' });
+    this.metaService.updateTag({ property: 'og:description', content: 'Lista Con Informcion Sobre Los Planeta Segun Astrologia Y A Que Horas Rigen En Una Fecha.' });
+
     // Intenta recuperar la última fecha consultada desde localStorage
     const fechaGuardada = localStorage.getItem('ultimaFechaConsultada');
 

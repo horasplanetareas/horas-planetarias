@@ -3,6 +3,7 @@ import { PlanetaService, Planeta } from '../../services/planeta/planeta.service'
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth/auth';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -26,13 +27,30 @@ export class HomeComponent implements OnInit {
   constructor(
     private planetaService: PlanetaService,
     private authService: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private titleService: Title, 
+    private metaService: Meta
   ) { }
 
   // =========================
   // CICLO DE VIDA
   // =========================
   async ngOnInit() {
+
+    // 🔹 Cambiar el título de la pestaña (SEO Title)
+    this.titleService.setTitle('Horas Planetarias Hoy | Planeta Regente');
+
+    // 🔹 Cambiar la meta description
+    this.metaService.updateTag({
+      name: 'description',
+      content: 'Descubre qué planeta rige  y su influencia en astrología.'
+    });
+
+    // (Opcional) otras meta tags útiles
+    this.metaService.updateTag({ name: 'keywords', content: 'planeta regente, astrología, hoy, Horas Planetarias' });
+    this.metaService.updateTag({ property: 'og:title', content: 'Planeta Regente Hoy' });
+    this.metaService.updateTag({ property: 'og:description', content: 'Acsiones recomendadas para el planeta regente de hoy segun astrologia.' });
+
     // Nos suscribimos al observable de AuthService para detectar cambios en el login
     // Esto nos permite reaccionar si el usuario inicia o cierra sesión
     this.authSub = this.authService.isLoggedIn$.subscribe(status => {

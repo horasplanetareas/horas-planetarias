@@ -10,7 +10,12 @@
   <meta name="application-name" content="Horas Planetarias">
   <meta name="apple-mobile-web-app-title" content="Horas Planetarias">
   <meta name="description" content="Consulta la hora planetaria actual. Calcula tu hora planetaria hoy fácilmente.">
-  <!-- Open Graph (FB / WhatsApp) -->
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://horas-planetarias.vercel.app/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
   <meta property="og:title" content="Horas Planetarias De Hoy">
   <meta property="og:description" content="Consulta qué planeta rige tu hora actual con nuestra tabla interactiva.">
   <meta property="og:image" content="https://horas-planetarias.vercel.app/assets/horas-planetarias.png">
@@ -22,7 +27,23 @@
   <meta name="twitter:description" content="Descubre tu hora planetaria actual.">
   <meta name="twitter:image" content="https://horas-planetarias.vercel.app/assets/horas-planetarias.png">
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXX"></script>
+  <!-- Datos estructurados base (WebSite) -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Horas Planetarias",
+  "url": "https://horas-planetarias.vercel.app",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://horas-planetarias.vercel.app/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXX"></script> -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }

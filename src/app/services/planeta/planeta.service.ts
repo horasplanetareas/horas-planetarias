@@ -81,42 +81,42 @@ export class PlanetaService {
         {
           titulo: 'Asumir el Liderazgo y Tomar Decisiones Importantes',
           descripcion: `La hora más propicia para tomar el mando, dirigir equipos, tomar decisiones ejecutivas importantes y actuar con la autoridad natural que emana de la confianza en uno mismo.`,
-          imagen: 'assets/planetas/sol1.png'
+          imagen: 'assets/planetas/sol1.webp'
         },
         {
           titulo: 'Presentaciones Públicas y Búsqueda de Reconocimiento',
           descripcion: `Momento ideal para ser visto y escuchado: presentaciones, defensas de tesis, audiciones, lanzamientos de producto o cualquier actividad en la que se busque captar atención y reconocimiento, con el carisma personal potenciado.`,
-          imagen: 'assets/planetas/sol2.png'
+          imagen: 'assets/planetas/sol2.webp'
         },
         {
           titulo: 'Expresión Creativa y Actividades Artísticas',
           descripcion: `El Sol rige el impulso creativo que nace del corazón. Excelente para pintura, actuación, música, baile o cualquier práctica que exprese de forma única y gozosa la esencia personal.`,
-          imagen: 'assets/planetas/sol3.png'
+          imagen: 'assets/planetas/sol3.webp'
         },
         {
           titulo: 'Buscar Favores de Figuras de Autoridad',
           descripcion: `La energía solar se asocia con reyes, presidentes, jefes y figuras de poder. Ideal para solicitar un aumento, pedir un favor a un superior o presentar propuestas a personas influyentes, con el carisma y la autoconfianza potenciados.`,
-          imagen: 'assets/planetas/sol4.png'
+          imagen: 'assets/planetas/sol4.webp'
         },
         {
           titulo: 'Fortalecer la Confianza y la Autoestima',
           descripcion: `El Sol es el centro de la autoestima. Momento perfecto para afirmaciones positivas, visualización de éxitos o vestirse de una manera que haga sentir poderoso y radiante.`,
-          imagen: 'assets/planetas/sol5.png'
+          imagen: 'assets/planetas/sol5.webp'
         },
         {
           titulo: 'Actividades al Aire Libre y Carga de Energía Vital',
           descripcion: `El Sol es fuente de vida y energía. Actividades al aire libre, baños de sol (con cuidado) o conectar con la naturaleza revitalizan cuerpo y espíritu, aumentando vitalidad y optimismo.`,
-          imagen: 'assets/planetas/sol6.png'
+          imagen: 'assets/planetas/sol6.webp'
         },
         {
           titulo: 'Iniciar Proyectos Importantes y Personales',
           descripcion: `Momento auspicioso para dar el impulso inicial a proyectos que sean un reflejo directo de quiénes somos y de nuestro propósito vital. Ideal para poner en marcha un emprendimiento con sello personal.`,
-          imagen: 'assets/planetas/sol7.png'
+          imagen: 'assets/planetas/sol7.webp'
         },
         {
           titulo: 'Celebración y Alegría de Vivir',
           descripcion: `El Sol encarna la alegría y la celebración de la vida. Excelente para socializar, organizar una fiesta, jugar con niños —quienes representan la espontaneidad solar— o cualquier actividad que llene de felicidad y entusiasmo.`,
-          imagen: 'assets/planetas/sol8.png'
+          imagen: 'assets/planetas/sol8.webp'
         }
       ]
     },
@@ -128,37 +128,37 @@ export class PlanetaService {
         {
           titulo: 'Introspección y Trabajo con los Sueños',
           descripcion: `Ideal para meditación, journaling, terapia y exploración del subconsciente, descifrando los mensajes oníricos y conectando con emociones reprimidas.`,
-          imagen: 'assets/planetas/luna1.png'
+          imagen: 'assets/planetas/luna1.webp'
         },
         {
           titulo: 'Cuidado Personal y Nutrición',
           descripcion: `Propicio para baños relajantes, tratamientos para la piel, rituales de autocuidado y preparar comidas nutritivas que se disfruten con plena conciencia, honrando el instinto de cuidado maternal.`,
-          imagen: 'assets/planetas/luna2.png'
+          imagen: 'assets/planetas/luna2.webp'
         },
         {
           titulo: 'Actividades Creativas e Imaginativas',
           descripcion: `Favorece la pintura, escritura de poesía, música y cualquier expresión artística que nazca de la imaginación, la sensibilidad emocional y la inspiración íntima.`,
-          imagen: 'assets/planetas/luna3.png'
+          imagen: 'assets/planetas/luna3.webp'
         },
         {
           titulo: 'Fortalecer Vínculos Familiares y Afectivos',
           descripcion: `Tiempo perfecto para conversaciones íntimas, actividades en familia y gestos que refuercen la empatía, el sentido de pertenencia y el calor del hogar.`,
-          imagen: 'assets/planetas/luna4.png'
+          imagen: 'assets/planetas/luna4.webp'
         },
         {
           titulo: 'Desarrollo de la Intuición y Percepción Psíquica',
           descripcion: `Ideal para meditación que agudice la intuición, prácticas como la cartomancia, o simplemente prestar atención a corazonadas y sensaciones internas, conectando con lo oculto.`,
-          imagen: 'assets/planetas/luna5.png'
+          imagen: 'assets/planetas/luna5.webp'
         },
         {
           titulo: 'Planificación y Siembra de Intenciones',
           descripcion: `En sintonía con los ciclos de crecimiento y mengua de la Luna, es el momento de definir proyectos personales que requieran un desarrollo orgánico y visualizar su florecimiento.`,
-          imagen: 'assets/planetas/luna6.png'
+          imagen: 'assets/planetas/luna6.webp'
         },
         {
           titulo: 'Actividades Domésticas y Organización del Hogar',
           descripcion: `Favorece ordenar, limpiar y embellecer el hogar, creando un refugio físico y emocional que brinde seguridad y confort.`,
-          imagen: 'assets/planetas/luna7.png'
+          imagen: 'assets/planetas/luna7.webp'
         }
       ]
     },
@@ -170,42 +170,42 @@ export class PlanetaService {
         {
           titulo: 'Ejercicio Físico Intenso y Deporte',
           descripcion: `Ideal para deportes competitivos, running, levantamiento de pesas, artes marciales o entrenamientos HIIT que exijan gran esfuerzo y resistencia sostenida.`,
-          imagen: 'assets/planetas/marte1.png'
+          imagen: 'assets/planetas/marte1.webp'
         },
         {
           titulo: 'Iniciar Proyectos y Tomar la Iniciativa',
           descripcion: `Momento perfecto para lanzar ideas, dar el primer paso en un nuevo proyecto, hacer esa llamada importante o cualquier acción decisiva que ponga las cosas en marcha.`,
-          imagen: 'assets/planetas/marte2.png'
+          imagen: 'assets/planetas/marte2.webp'
         },
         {
           titulo: 'Asertividad y Defensa de los Propios Derechos',
           descripcion: `Propicio para conversaciones difíciles en las que sea necesario afirmar tu lugar en el mundo, poner límites, defender un punto de vista o reclamar lo que te corresponde.`,
-          imagen: 'assets/planetas/marte3.png'
+          imagen: 'assets/planetas/marte3.webp'
         },
         {
           titulo: 'Competir y Asumir Retos',
           descripcion: `Perfecto para desafíos profesionales, deportivos o personales, cultivando una competencia sana y buscando superarte a ti mismo o a otros.`,
-          imagen: 'assets/planetas/marte4.png'
+          imagen: 'assets/planetas/marte4.webp'
         },
         {
           titulo: 'Actividades que Requieren Coraje y Valentía',
           descripcion: `Marte rige el coraje: este momento es un soporte energético para enfrentar miedos, asumir riesgos calculados o afrontar tareas que normalmente intimidan.`,
-          imagen: 'assets/planetas/marte5.png'
+          imagen: 'assets/planetas/marte5.webp'
         },
         {
           titulo: 'Trabajo Físico y Manual',
           descripcion: `Favorece la construcción, jardinería intensa, reparaciones y labores que requieran fuerza física, uso de herramientas y un esfuerzo corporal considerable.`,
-          imagen: 'assets/planetas/marte6.png'
+          imagen: 'assets/planetas/marte6.webp'
         },
         {
           titulo: 'Expresión de la Sexualidad Activa',
           descripcion: `Marte está ligado al deseo y la libido: momento propicio para encuentros apasionados y expresión activa de la sexualidad.`,
-          imagen: 'assets/planetas/marte7.png'
+          imagen: 'assets/planetas/marte7.webp'
         },
         {
           titulo: 'Toma de Decisiones Rápidas',
           descripcion: `A diferencia de la energía reflexiva de otros planetas, Marte impulsa la acción inmediata: actuar con instinto y determinación en decisiones que no requieren larga deliberación.`,
-          imagen: 'assets/planetas/marte8.png'
+          imagen: 'assets/planetas/marte8.webp'
         }
       ]
     },
@@ -217,42 +217,42 @@ export class PlanetaService {
         {
           titulo: 'Comunicación Crucial y Negociaciones',
           descripcion: `El momento más propicio para llamadas importantes, correos decisivos, negociaciones, contratos o acuerdos, con la claridad mental y la elocuencia potenciadas.`,
-          imagen: 'assets/planetas/mercurio1.png'
+          imagen: 'assets/planetas/mercurio1.webp'
         },
         {
           titulo: 'Aprendizaje y Estudio',
           descripcion: `Facilita el estudio, la lectura, la investigación, la toma de cursos, el aprendizaje de idiomas o cualquier actividad que requiera una mente aguda y receptiva.`,
-          imagen: 'assets/planetas/mercurio2.png'
+          imagen: 'assets/planetas/mercurio2.webp'
         },
         {
           titulo: 'Escritura, Edición y Creación de Contenido',
           descripcion: `Ideal para informes, artículos, libros, publicaciones en redes sociales, edición de textos u organizar ideas por escrito mediante journaling.`,
-          imagen: 'assets/planetas/mercurio3.png'
+          imagen: 'assets/planetas/mercurio3.webp'
         },
         {
           titulo: 'Comercio, Compras y Ventas',
           descripcion: `Favorece todo tipo de transacciones comerciales: vender productos, buscar las mejores ofertas, realizar compras importantes —especialmente de tecnología o libros— y gestionar asuntos financieros con análisis cuidadoso.`,
-          imagen: 'assets/planetas/mercurio4.png'
+          imagen: 'assets/planetas/mercurio4.webp'
         },
         {
           titulo: 'Exámenes y Pruebas Intelectuales',
           descripcion: `Buen momento para afrontar tests y evaluaciones con agilidad mental, memoria clara y rapidez de pensamiento.`,
-          imagen: 'assets/planetas/mercurio5.png'
+          imagen: 'assets/planetas/mercurio5.webp'
         },
         {
           titulo: 'Planificación, Organización y Lluvia de Ideas',
           descripcion: `Propicio para ordenar la agenda, hacer listas, planificar viajes cortos o realizar sesiones de brainstorming que generen soluciones creativas.`,
-          imagen: 'assets/planetas/mercurio6.png'
+          imagen: 'assets/planetas/mercurio6.webp'
         },
         {
           titulo: 'Socialización y Networking',
           descripcion: `Favorable para asistir a eventos, crear nuevos contactos profesionales y disfrutar de conversaciones estimulantes y ligeras.`,
-          imagen: 'assets/planetas/mercurio7.png'
+          imagen: 'assets/planetas/mercurio7.webp'
         },
         {
           titulo: 'Trámites y Papeleo',
           descripcion: `Ideal para formularios, gestiones burocráticas y correspondencia que requieran atención al detalle y comunicación clara.`,
-          imagen: 'assets/planetas/mercurio8.png'
+          imagen: 'assets/planetas/mercurio8.webp'
         }
       ]
     },
@@ -264,42 +264,42 @@ export class PlanetaService {
         {
           titulo: 'Relaciones y Romance',
           descripcion: `La hora más propicia para el romance: ideal para citas, expresar sentimientos, pasar tiempo de calidad en pareja o, si estás soltero, socializar con la intención de conocer a alguien especial.`,
-          imagen: 'assets/planetas/venus1.png'
+          imagen: 'assets/planetas/venus1.webp'
         },
         {
           titulo: 'Actividades Sociales y Diplomacia',
           descripcion: `Perfecto para fiestas, reuniones, mediar conflictos y cualquier interacción donde la gracia social, la diplomacia y el encanto creen armonía.`,
-          imagen: 'assets/planetas/venus2.png'
+          imagen: 'assets/planetas/venus2.webp'
         },
         {
           titulo: 'Cuidado Personal y Embellecimiento',
           descripcion: `Momento para un cambio de look, tratamientos de belleza o compras de ropa y adornos que mejoren la apariencia y aumenten el atractivo personal.`,
-          imagen: 'assets/planetas/venus3.png'
+          imagen: 'assets/planetas/venus3.webp'
         },
         {
           titulo: 'Disfrute de las Artes y la Creatividad',
           descripcion: `Favorece visitas a museos, conciertos, decoración del hogar o prácticas artísticas como pintura, canto, danza o diseño.`,
-          imagen: 'assets/planetas/venus4.png'
+          imagen: 'assets/planetas/venus4.webp'
         },
         {
           titulo: 'Búsqueda del Placer y Goce Sensorial',
           descripcion: `Propicio para disfrutar de buena comida, vino, masajes, música agradable o cualquier experiencia que deleite los cinco sentidos.`,
-          imagen: 'assets/planetas/venus5.png'
+          imagen: 'assets/planetas/venus5.webp'
         },
         {
           titulo: 'Hacer las Paces y Reconciliarse',
           descripcion: `Facilita pedir perdón, resolver malentendidos y restaurar el equilibrio en relaciones que han estado tensas.`,
-          imagen: 'assets/planetas/venus6.png'
+          imagen: 'assets/planetas/venus6.webp'
         },
         {
           titulo: 'Compras de Objetos de Lujo y Belleza',
           descripcion: `Auspicioso para adquirir joyas, obras de arte, ropa de alta calidad o artículos de decoración que aporten belleza y placer a la vida.`,
-          imagen: 'assets/planetas/venus7.png'
+          imagen: 'assets/planetas/venus7.webp'
         },
         {
           titulo: 'Cultivar el Amor y la Autovaloración',
           descripcion: `Excelente para prácticas de amor propio, escribir una lista de cualidades personales, darse un capricho o dedicarse tiempo de calidad sin culpas.`,
-          imagen: 'assets/planetas/venus8.png'
+          imagen: 'assets/planetas/venus8.webp'
         }
       ]
     },
@@ -311,42 +311,42 @@ export class PlanetaService {
         {
           titulo: 'Búsqueda de Sabiduría y Estudios Superiores',
           descripcion: `Ideal para filosofía, espiritualidad, religión, leyes y conocimiento elevado; propicio para iniciar estudios universitarios o buscar el consejo de un mentor o guía sabia.`,
-          imagen: 'assets/planetas/jupiter1.png'
+          imagen: 'assets/planetas/jupiter1.webp'
         },
         {
           titulo: 'Planificación a Gran Escala y Visión de Futuro',
           descripcion: `Momento perfecto para metas a largo plazo, crear un plan de negocios expansivo y visualizar el futuro deseado con confianza.`,
-          imagen: 'assets/planetas/jupiter2.png'
+          imagen: 'assets/planetas/jupiter2.webp'
         },
         {
           titulo: 'Asuntos Legales y Búsqueda de Justicia',
           descripcion: `Propicio para iniciar trámites, solicitar asesoría jurídica o mediar disputas desde una perspectiva justa y ética.`,
-          imagen: 'assets/planetas/jupiter3.png'
+          imagen: 'assets/planetas/jupiter3.webp'
         },
         {
           titulo: 'Generosidad y Actos de Philantropía',
           descripcion: `Excelente para donar, ayudar y compartir recursos —tiempo, conocimiento o dinero— con espíritu abundante y expansivo.`,
-          imagen: 'assets/planetas/jupiter4.png'
+          imagen: 'assets/planetas/jupiter4.webp'
         },
         {
           titulo: 'Iniciar Viajes Largos o al Extranjero',
           descripcion: `Buen momento para comprar pasajes, planificar grandes viajes o iniciar aventuras que expandan la conciencia y el contacto con otras culturas.`,
-          imagen: 'assets/planetas/jupiter5.png'
+          imagen: 'assets/planetas/jupiter5.webp'
         },
         {
           titulo: 'Búsqueda de Oportunidades y Crecimiento Profesional',
           descripcion: `Auspicioso para solicitar ascensos, entrevistas de mayor responsabilidad o presentar proyectos ambiciosos a superiores.`,
-          imagen: 'assets/planetas/jupiter6.png'
+          imagen: 'assets/planetas/jupiter6.webp'
         },
         {
           titulo: 'Cultivar la Fe y el Optimismo',
           descripcion: `Propicio para gratitud, afirmaciones positivas y ceremonias espirituales o religiosas que fortalezcan la confianza en la vida.`,
-          imagen: 'assets/planetas/jupiter7.png'
+          imagen: 'assets/planetas/jupiter7.webp'
         },
         {
           titulo: 'Inversiones y Asuntos Financieros Mayores',
           descripcion: `Favorable para decisiones económicas de largo plazo: iniciar un plan de inversión o buscar financiación para un gran proyecto.`,
-          imagen: 'assets/planetas/jupiter8.png'
+          imagen: 'assets/planetas/jupiter8.webp'
         }
       ]
     },
@@ -358,42 +358,42 @@ export class PlanetaService {
         {
           titulo: 'Trabajo Profundo y Tareas Exigentes',
           descripcion: `Momento perfecto para el deep work: apagar distracciones y concentrarse en las tareas más difíciles que requieren enfoque absoluto y resistencia mental.`,
-          imagen: 'assets/planetas/saturno1.png'
+          imagen: 'assets/planetas/saturno1.webp'
         },
         {
           titulo: 'Planificación a Largo Plazo y Estrategia',
           descripcion: `Propicio para diseñar planes de carrera, estrategias de negocio, planes de jubilación o proyectos que requieran bases sólidas y una hoja de ruta clara.`,
-          imagen: 'assets/planetas/saturno2.png'
+          imagen: 'assets/planetas/saturno2.webp'
         },
         {
           titulo: 'Asumir Responsabilidades y Cumplir con Deberes',
           descripcion: `Tiempo de hacerse cargo de obligaciones pendientes, demostrar madurez y fiabilidad en compromisos asumidos.`,
-          imagen: 'assets/planetas/saturno3.png'
+          imagen: 'assets/planetas/saturno3.webp'
         },
         {
           titulo: 'Establecer Límites y Decir “No”',
           descripcion: `Ideal para marcar fronteras saludables en relaciones personales y profesionales, protegiendo el tiempo y evitando desvíos de objetivos.`,
-          imagen: 'assets/planetas/saturno4.png'
+          imagen: 'assets/planetas/saturno4.webp'
         },
         {
           titulo: 'Revisión, Edición y Perfeccionamiento',
           descripcion: `Excelente para revisar documentos importantes, editar proyectos y depurar errores buscando resultados impecables.`,
-          imagen: 'assets/planetas/saturno5.png'
+          imagen: 'assets/planetas/saturno5.webp'
         },
         {
           titulo: 'Construcción y Trabajo con Estructuras',
           descripcion: `Favorece la arquitectura, la ingeniería, la carpintería y la edificación de las estructuras de nuestra vida: carrera, familia y proyectos duraderos.`,
-          imagen: 'assets/planetas/saturno6.png'
+          imagen: 'assets/planetas/saturno6.webp'
         },
         {
           titulo: 'Conectar con la Tradición y los Ancestros',
           descripcion: `Momento para honrar la historia familiar, aprender de los mayores y preservar costumbres valiosas.`,
-          imagen: 'assets/planetas/saturno7.png'
+          imagen: 'assets/planetas/saturno7.webp'
         },
         {
           titulo: 'Disciplina y Práctica Sostenida',
           descripcion: `Perfecto para cultivar hábitos que conduzcan a la maestría: práctica constante en una habilidad, entrenamiento físico o estudio especializado.`,
-          imagen: 'assets/planetas/saturno8.png'
+          imagen: 'assets/planetas/saturno8.webp'
         }
       ]
     },
