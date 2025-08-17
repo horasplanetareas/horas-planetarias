@@ -15,10 +15,10 @@ export class AdsenseBannerComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const esLocalhost = window.location.hostname === 'localhost';
-      const estaLogueado = !!localStorage.getItem('token'); // o 'usuario', según cómo guardes el login
+      const estaLogueado = !!localStorage.getItem('token'); // cambiar cuando se haga los pagos si poago que no se muestre
 
-      // Mostrar solo si NO está en localhost y NO está logueado
-      this.mostrarBanner = !esLocalhost && !estaLogueado;
+      // Mostrar solo si NO está en localhost
+      this.mostrarBanner = !esLocalhost;
 
       if (this.mostrarBanner) {
         try {
