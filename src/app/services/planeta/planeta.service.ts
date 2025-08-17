@@ -8,7 +8,6 @@ export interface Actividad {
   descripcion: string;
   imagen: string;  // ruta a la imagen específica de la actividad
 }
-
 export interface Planeta {
   nombre: string;          // 'SOL', 'MARTE', etc. (en mayúsculas lo estás devolviendo)
   tipo?: string;            // 'Hora Planetaria'
