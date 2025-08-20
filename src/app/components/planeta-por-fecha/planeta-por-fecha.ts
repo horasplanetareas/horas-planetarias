@@ -75,6 +75,8 @@ export class PlanetaPorFecha implements OnInit {
       this.fechaSeleccionada = fechaGuardada;
       this.planetas = JSON.parse(planetasGuardados);
     }
+
+    
   }
 
   // Método que se ejecuta cuando el usuario presiona "Consultar"

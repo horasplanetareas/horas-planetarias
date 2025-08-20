@@ -73,5 +73,4 @@ export class AuthService {
     return this.hasToken();
   }
 
-  
 }
