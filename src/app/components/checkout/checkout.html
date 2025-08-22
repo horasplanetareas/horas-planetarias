@@ -1,5 +1,7 @@
-<div>
-  <h2>Prueba de pagos</h2>
-  <button (click)="payWithStripe()">Pagar con Stripe</button>
-  <button (click)="payWithMercadoPago()">Pagar con MercadoPago</button>
+<div class="prueba-pagos">
+  <h2>Plan Premium</h2>
+  <div class="botones-pago">
+    <button class="stripe-btn" (click)="payWithStripe()">Pagar con Stripe</button>
+    <button class="mp-btn" (click)="payWithMercadoPago()">Pagar con MercadoPago</button>
+  </div>
 </div>

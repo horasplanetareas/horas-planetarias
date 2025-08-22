@@ -1,0 +1,55 @@
+.prueba-pagos {
+  padding: 1rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  text-align: center;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(59, 30, 84, 0.15);
+
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .botones-pago {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    button {
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(59, 30, 84, 0.2);
+      }
+    }
+
+    .stripe-btn {
+      background-color: #635bff; // color oficial Stripe
+      color: #fff;
+
+      &:hover {
+        background-color: #5046e5;
+      }
+    }
+
+    .mp-btn {
+      background-color: #00a8e0; // color oficial MercadoPago
+      color: #fff;
+
+      &:hover {
+        background-color: #008bbd;
+      }
+    }
+  }
+}

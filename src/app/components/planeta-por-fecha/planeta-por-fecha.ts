@@ -6,6 +6,8 @@ import { PlanetaService } from '../../services/planeta/planeta.service';
 import { AdsenseBannerComponent } from "../adsense-banner/adsense-banner";
 import { Router } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth/auth';
+
 
 // Declaración del componente Angular
 @Component({
@@ -30,6 +32,9 @@ export class PlanetaPorFecha implements OnInit {
   // Indicador de carga para mostrar spinner o mensaje
   cargando: boolean = false;
 
+  isLoggedIn = false;// 🔹 estado de logeo
+  subscriptionActive = false; // 🔹 estado de suscripción
+
   // Constructor con inyecciones de dependencias
   constructor(
     private planetaService: PlanetaService,
@@ -37,7 +42,8 @@ export class PlanetaPorFecha implements OnInit {
     private router: Router,
     private titleService: Title,
     private metaService: Meta,
-  ) {}
+    private authService: AuthService
+  ) { }
 
   // Método que se ejecuta al hacer clic en una tarjeta de planeta
   // Navega a la ruta '/detalle-hora' pasando el planeta como estado
@@ -47,7 +53,7 @@ export class PlanetaPorFecha implements OnInit {
 
   // Método que se ejecuta automáticamente al iniciar el componente
   ngOnInit(): void {
-     
+
     // 🔹 Cambiar el título de la pestaña (SEO Title)
     this.titleService.setTitle('lista de las Horas Planetarias Para Un Dia A Elecsion | Lista Con Informacon Sobre Todas Las Hora Planetarias De Un Dia A Elecsion.');
 
@@ -76,13 +82,28 @@ export class PlanetaPorFecha implements OnInit {
       this.planetas = JSON.parse(planetasGuardados);
     }
 
-    
+    // Suscribirse al estado de login y suscripción
+    this.authService.isLoggedIn$.subscribe(status => {
+    this.isLoggedIn = status;
+
+    if (!status) {
+      this.router.navigate(['/login']);
+    } else {
+      this.authService.isPremium$.subscribe(active => {
+        this.subscriptionActive = active;
+
+        if (active === false && !this.authService.loadingSubscription) {
+          this.router.navigate(['/checkout']);
+        }
+        });
+      }
+    });
   }
 
   // Método que se ejecuta cuando el usuario presiona "Consultar"
   async consultar() {
-    // Si no hay fecha seleccionada, no hace nada
-    if (!this.fechaSeleccionada) return;
+      // Si no hay fecha seleccionada, no hace nada
+      if(!this.fechaSeleccionada) return;
 
     // Verifica si ya hay resultados guardados para esa fecha
     const cache = localStorage.getItem('planetas_' + this.fechaSeleccionada);
