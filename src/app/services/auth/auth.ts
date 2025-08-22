@@ -17,46 +17,45 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   // === ESTADOS REACTIVOS ===
-  private loggedIn = new BehaviorSubject<boolean>(false);   // Estado de login
+  private loggedIn = new BehaviorSubject<boolean>(false);   // ✅ Usuario logueado
   isLoggedIn$ = this.loggedIn.asObservable();
-
-  private premium = new BehaviorSubject<boolean>(false);    // Estado de suscripción
+  private premium = new BehaviorSubject<boolean>(false);    // ✅ Usuario con premium
   isPremium$ = this.premium.asObservable();
-
+  public loadingSubscription: boolean = true;
   // === FIREBASE Y API ===
   private auth?: Auth; 
   private http: HttpClient;
   private BASE_URL = 'https://mi-backend-7c4a.onrender.com'; // 🔗 Tu backend en Render
-
-  // Controla si está cargando el estado premium
-  loadingSubscription = true;
-
+  // Controla si ya se verificó el estado premium (evita requests innecesarios)
+  private premiumChecked = false;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
     http: HttpClient
   ) {
     this.http = http;
-
     if (isPlatformBrowser(this.platformId)) {
-      // Inyecta la instancia de Firebase Auth solo en navegador
+      // ✅ Inyecta Firebase Auth SOLO en el navegador (evita errores en SSR)
       this.auth = inject(Auth);
-
-      // Marca como logueado si ya hay token en localStorage
+      // ✅ Si ya había token, arranca como logueado
       this.loggedIn.next(this.hasToken());
-
-      // Listener de cambios de sesión (login/logout)
-      onAuthStateChanged(this.auth!, (user: User | null) => {
+      // ✅ Listener de cambios de sesión (cuando Firebase detecta login/logout)
+      onAuthStateChanged(this.auth!, async (user: User | null) => {
         if (user) {
-          // Usuario autenticado
           this.loggedIn.next(true);
-
-          // Revisa el estado premium al loguear
-          this.checkPremium(user.uid);
+          // 🔑 Guardamos/actualizamos el token seguro en localStorage
+          const token = await user.getIdToken(true);
+          localStorage.setItem('authToken', token);
+          // ⚡ Verificamos premium SOLO si aún no lo hicimos en esta sesión
+          if (!this.premiumChecked) {
+            this.checkPremium(user.uid, token);
+          }
         } else {
-          // Usuario deslogueado
+          // ✅ Al desloguear, limpiamos todo
           this.loggedIn.next(false);
           this.premium.next(false);
+          this.premiumChecked = false;
+          localStorage.removeItem('authToken');
         }
       });
     }
@@ -67,32 +66,33 @@ export class AuthService {
     return isPlatformBrowser(this.platformId) && !!localStorage.getItem('authToken');
   }
 
-  // === CHEQUEO DE PREMIUM (pide al backend la suscripción activa) ===
-  private checkPremium(uid: string) {
-    this.http.get<{ subscriptionActive: boolean }>(`${this.BASE_URL}/subscription-status/${uid}`)
-      .subscribe({
-        next: (res) => {
-          this.premium.next(res.subscriptionActive);  // Actualiza estado premium
-          this.loadingSubscription = false;
-        },
-        error: (err) => {
-          console.error('Error verificando premium:', err);
-          this.loadingSubscription = false;
-        }
-      });
+  // === CHEQUEO DE PREMIUM (con seguridad: token enviado en headers) ===
+  private checkPremium(uid: string, token: string) {
+    this.http.get<{ subscriptionActive: boolean }>(
+      `${this.BASE_URL}/subscription-status/${uid}`,
+      { headers: { Authorization: `Bearer ${token}` } } // 🔒 Seguridad extra
+    ).subscribe({
+      next: (res) => {
+        this.premium.next(res.subscriptionActive);
+        this.premiumChecked = true; // ✅ Evita repetir la request
+        this.loadingSubscription = false; // Termina el loading
+      },
+      error: (err) => {
+        console.error('Error verificando premium:', err);
+        this.premiumChecked = false; // Permite reintentar si falla
+        this.loadingSubscription = false; // Termina el loading
+      }
+    });
   }
 
   // === REGISTRO DE USUARIO ===
   async register(email: string, password: string) {
     if (!this.auth) return;
     const cred = await createUserWithEmailAndPassword(this.auth, email, password);
-
-    // 🔑 Guarda token en localStorage para persistir sesión
     const token = await cred.user.getIdToken();
     localStorage.setItem('authToken', token);
-
     this.loggedIn.next(true);
-    this.checkPremium(cred.user.uid); // Revisar si es premium
+    this.checkPremium(cred.user.uid, token);
     return cred;
   }
 
@@ -100,12 +100,10 @@ export class AuthService {
   async login(email: string, password: string) {
     if (!this.auth) return;
     const cred = await signInWithEmailAndPassword(this.auth, email, password);
-
     const token = await cred.user.getIdToken();
     localStorage.setItem('authToken', token);
-
     this.loggedIn.next(true);
-    this.checkPremium(cred.user.uid); // Revisar si es premium
+    this.checkPremium(cred.user.uid, token);
     return cred;
   }
 
@@ -113,12 +111,10 @@ export class AuthService {
   async loginWithGoogle() {
     if (!this.auth) return;
     const cred = await signInWithPopup(this.auth, new GoogleAuthProvider());
-
     const token = await cred.user.getIdToken();
     localStorage.setItem('authToken', token);
-
     this.loggedIn.next(true);
-    this.checkPremium(cred.user.uid); // Revisar si es premium
+    this.checkPremium(cred.user.uid, token);
     return cred;
   }
 
@@ -126,13 +122,11 @@ export class AuthService {
   async logout() {
     if (!this.auth) return;
     await signOut(this.auth);
-
     localStorage.removeItem('authToken');
     this.loggedIn.next(false);
     this.premium.next(false);
-
-    // Redirigir al home
-    this.router.navigate(['/']);
+    this.premiumChecked = false;
+    this.router.navigate(['/']); // Redirige al home
   }
 
   // === CONSULTA RÁPIDA: ¿Está autenticado? ===
@@ -140,8 +134,10 @@ export class AuthService {
     return this.hasToken();
   }
 
-  // === REFRESH: Forzar re-chequeo de premium ===
-  refreshPremium(uid: string) {
-    this.checkPremium(uid);
+  // === REFRESH MANUAL: Forzar re-chequeo de premium ===
+  async refreshPremium() {
+    if (!this.auth || !this.auth.currentUser) return;
+    const token = await this.auth.currentUser.getIdToken(true);
+    this.checkPremium(this.auth.currentUser.uid, token);
   }
 }

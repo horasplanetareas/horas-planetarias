@@ -91,7 +91,6 @@ export class PlanetaPorFecha implements OnInit {
     } else {
       this.authService.isPremium$.subscribe(active => {
         this.subscriptionActive = active;
-
         if (active === false && !this.authService.loadingSubscription) {
           this.router.navigate(['/checkout']);
         }
