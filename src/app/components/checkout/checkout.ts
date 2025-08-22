@@ -50,7 +50,7 @@ export class Checkout implements OnInit {
           // Si recibimos session_id (Stripe) o mp_status=success (MercadoPago)
           if (params['session_id'] || params['mp_status'] === 'success') {
             // Refrescar el estado premium en AuthService
-            this.authService.refreshPremium(user.uid);
+            this.authService.refreshPremium();
             // Redirigir a la página de /por-fecha después de actualizar
             this.router.navigate(['/por-fecha']);
           }
