@@ -1,4 +1,4 @@
-<div *ngIf="planeta; else noEncontrado" [ngClass]="['detalle-card', planeta.nombre.toLowerCase()]">
+<div *ngIf="planeta; else noEncontrado" [ngClass]="['detalle-card', planeta.nombre?.toLowerCase()]">
 
   <h3>{{ planeta.nombre }}</h3>
 

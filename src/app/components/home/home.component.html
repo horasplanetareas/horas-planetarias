@@ -7,7 +7,7 @@
     <p class="hora">{{ horaActual }}</p>
   </div>
 <div *ngIf="planeta; else noEncontrado" 
-     [ngClass]="['detalle-card', planeta.nombre.toLowerCase()]">
+     [ngClass]="['detalle-card', planeta.nombre?.toLowerCase()]">
 
   <!-- Nombre y tipo de planeta -->
   <h1>Planeta regente del dia</h1>
