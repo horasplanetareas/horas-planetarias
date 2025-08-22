@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { PaymentService } from '../../services/payment/payment.service';
 import { AuthService } from '../../services/auth/auth';
 import { Auth } from '@angular/fire/auth';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { loadStripe } from '@stripe/stripe-js';
 import { ActivatedRoute, Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-checkout',
@@ -13,10 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class Checkout implements OnInit {
 
-  // ID del precio de Stripe que queremos cobrar
-  priceId = 'price_1RtwFvLhmsJ0GMAZxOonMy8k';
+  priceId = 'price_1RtwFvLhmsJ0GMAZxOonMy8k'; // ID del precio de Stripe
 
-  // Variables para guardar info del usuario logueado
   userEmail: string | null = null;
   userUid: string | null = null;
   subscriptionActive = false; // 🔹 estado de suscripción
@@ -26,11 +25,12 @@ export class Checkout implements OnInit {
     private auth: Auth,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: Object // 👈 Para chequear si estamos en navegador
   ) { }
 
   ngOnInit() {
-    
+    // Suscribirse al estado de premium
     this.authService.isPremium$.subscribe(active => {
       this.subscriptionActive = active;
       if (active) {
@@ -38,26 +38,21 @@ export class Checkout implements OnInit {
       }
     });
 
-    // Escuchar cambios en la sesión de Firebase
+    // Listener de Firebase Auth
     onAuthStateChanged(this.auth, (user: User | null) => {
       if (user) {
-        // Si hay usuario, guardamos email y uid
         this.userEmail = user.email;
         this.userUid = user.uid;
 
-        // Escuchar query params para detectar si venimos de un pago exitoso
+        // Detecta si venimos de un pago exitoso (Stripe o MercadoPago)
         this.route.queryParams.subscribe(params => {
-          // Si recibimos session_id (Stripe) o mp_status=success (MercadoPago)
           if (params['session_id'] || params['mp_status'] === 'success') {
-            // Refrescar el estado premium en AuthService
-            this.authService.refreshPremium();
-            // Redirigir a la página de /por-fecha después de actualizar
-            this.router.navigate(['/por-fecha']);
+            this.authService.refreshPremium(); // Refresca estado premium
+            this.router.navigate(['/por-fecha']); // Redirige
           }
         });
 
       } else {
-        // Si no hay usuario logueado, limpiamos las variables
         this.userEmail = null;
         this.userUid = null;
       }
@@ -70,16 +65,14 @@ export class Checkout implements OnInit {
   async payWithStripe() {
     if (!this.userEmail || !this.userUid) {
       console.error('Usuario no logueado');
-      return; // No se puede pagar si no hay usuario
+      return;
     }
 
-    // Cargar Stripe.js con tu public key
     const stripe = await loadStripe('pk_test_51RtvjCLhmsJ0GMAZVhn9zqqebRDg9GXSu2gIiZNDTCPH51BTth7hGuZSJSCFh0y2adCcC93kz2mgsUSt1OArbfEN00ZRZSFOIo');
-    // Crear la sesión de checkout en el backend
+
     this.paymentService.createStripeCheckout(this.priceId, this.userEmail, this.userUid)
       .subscribe(async (res) => {
         if (stripe) {
-          // Redirigir al checkout de Stripe
           const { error } = await stripe.redirectToCheckout({ sessionId: res.sessionId });
           if (error) console.error('Stripe error:', error.message);
         }
@@ -92,16 +85,16 @@ export class Checkout implements OnInit {
   payWithMercadoPago() {
     if (!this.userUid) {
       console.error('Usuario no logueado');
-      return; // No se puede pagar si no hay usuario
+      return;
     }
 
-    // Crear la preferencia de pago en backend
     this.paymentService.createMercadoPagoCheckout(this.userUid)
       .subscribe({
         next: (res) => {
-          // Redirigir al init_point de MercadoPago
-          window.location.href = res.init_point;
-          // La actualización de premium y la redirección se hace al regresar de success_url
+          // Solo redirigir si estamos en navegador
+          if (isPlatformBrowser(this.platformId)) {
+            window.location.href = res.init_point;
+          }
         },
         error: (err) => console.error(err)
       });
