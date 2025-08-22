@@ -1,22 +1,28 @@
-<div *ngIf="planeta; else noEncontrado" [ngClass]="['detalle-card', planeta.nombre?.toLowerCase()]">
+<div *ngIf="planeta; else noEncontrado" [ngClass]="['detalle-card', planeta.nombre.toLowerCase()]">
 
+  <!-- Nombre del planeta -->
   <h3>{{ planeta.nombre }}</h3>
 
   <!-- Vista logueado -->
   <ng-container *ngIf="isLoggedIn; else vistaNoLogueado">
+    <!-- Descripción del planeta -->
     <p>{{ planeta.descripcion }}</p>
 
-    <div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel" *ngIf="planeta.actividades?.length > 0">
+    <!-- Carrusel de actividades -->
+    <div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel" *ngIf="planeta.actividades.length > 0">
       <div class="carousel-inner">
         <div *ngFor="let act of planeta.actividades; let i = index" [class.carousel-item]="true" [class.active]="i === 0">
 
+          <!-- Imagen -->
           <img [src]="act.imagen" class="d-block w-100" alt="{{act.titulo}}">
 
-          <!-- Texto dentro en PC, debajo en móviles -->
+          <!-- Texto dentro de la imagen en PC -->
           <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
             <h5>{{ act.titulo }}</h5>
             <p>{{ act.descripcion }}</p>
           </div>
+
+          <!-- Texto debajo en móviles -->
           <div class="caption-mobile d-lg-none p-2 text-center bg-dark text-white">
             <h5>{{ act.titulo }}</h5>
             <p>{{ act.descripcion }}</p>
@@ -24,6 +30,7 @@
         </div>
       </div>
 
+      <!-- Botones de navegación -->
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselPlanetaDetalle" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Anterior</span>
@@ -34,27 +41,30 @@
       </button>
     </div>
 
+    <!-- Párrafo final -->
     <p>{{ planeta.parrafoFinal }}</p>
   </ng-container>
 
   <!-- Vista no logueado -->
   <ng-template #vistaNoLogueado>
-    <div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel" *ngIf="planeta.actividades?.length > 0">
+    <div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel" *ngIf="planeta.actividades.length > 0">
       <div class="carousel-inner">
         <div *ngFor="let act of planeta.actividades; let i = index" [class.carousel-item]="true" [class.active]="i === 0">
 
+          <!-- Imagen -->
           <img [src]="act.imagen" class="d-block w-100" alt="{{act.titulo}}">
 
+          <!-- Solo el título en modo no logueado -->
           <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
             <h5>{{ act.titulo }}</h5>
           </div>
           <div class="caption-mobile d-lg-none p-2 text-center bg-dark text-white">
             <h5>{{ act.titulo }}</h5>
           </div>
-
         </div>
       </div>
 
+      <!-- Botones de navegación -->
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselPlanetaDetalle" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Anterior</span>
@@ -68,6 +78,7 @@
 
 </div>
 
+<!-- Si no hay planeta -->
 <ng-template #noEncontrado>
   <p>Planeta no encontrado.</p>
 </ng-template>
