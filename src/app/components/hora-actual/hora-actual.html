@@ -1,24 +1,35 @@
+<!-- Mostrar mensaje mientras carga -->
 <div *ngIf="cargando">Cargando...</div>
 
+<!-- Vista principal: cuando ya cargó y hay planeta actual -->
 <div *ngIf="!cargando && planetaActual" [ngClass]="['detalle-card', planetaActual.nombre.toLowerCase()]">
   
+  <!-- Título e intervalo horario -->
   <h1>Hora de {{ planetaActual.nombre }}</h1>
   <p><strong>Horario:</strong> {{ planetaActual.horaInicio }} - {{ planetaActual.horaFin }}</p>
 
   <!-- Vista logueado -->
   <ng-container *ngIf="isLoggedIn; else vistaNoLogueado">
+    <!-- Descripción completa -->
     <p>{{ planetaActual.descripcion }}</p>
 
+    <!-- Carrusel con actividades -->
     <div id="carouselHoraActual" class="carousel slide" data-bs-ride="carousel" *ngIf="planetaActual.actividades?.length > 0">
       <div class="carousel-inner">
-        <div *ngFor="let act of planetaActual.actividades; let i = index"[class.carousel-item]="true"[class.active]="i === 0">
+        <div *ngFor="let act of planetaActual.actividades; let i = index"
+             [class.carousel-item]="true"
+             [class.active]="i === 0">
+          
+          <!-- Imagen -->
           <img [src]="act.imagen" class="d-block w-100" alt="{{act.titulo}}">
 
-          <!-- Texto dentro en PC, debajo en móviles -->
+          <!-- Texto sobre la imagen (PC) -->
           <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
             <h5>{{ act.titulo }}</h5>
             <p>{{ act.descripcion }}</p>
           </div>
+
+          <!-- Texto debajo de la imagen (Móvil) -->
           <div class="caption-mobile d-lg-none p-2 text-center bg-dark text-white">
             <h5>{{ act.titulo }}</h5>
             <p>{{ act.descripcion }}</p>
@@ -26,6 +37,7 @@
         </div>
       </div>
 
+      <!-- Controles del carrusel -->
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Anterior</span>
@@ -36,6 +48,7 @@
       </button>
     </div>
 
+    <!-- Texto final -->
     <p>{{ planetaActual.parrafoFinal }}</p>
   </ng-container>
 
@@ -46,16 +59,23 @@
         <div *ngFor="let act of planetaActual.actividades; let i = index"
              [class.carousel-item]="true"
              [class.active]="i === 0">
+          
+          <!-- Imagen -->
           <img [src]="act.imagen" class="d-block w-100" alt="{{act.titulo}}">
+
+          <!-- Solo título en PC -->
           <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
             <h5>{{ act.titulo }}</h5>
           </div>
+
+          <!-- Solo título en móvil -->
           <div class="caption-mobile d-lg-none p-2 text-center bg-dark text-white">
             <h5>{{ act.titulo }}</h5>
           </div>
         </div>
       </div>
 
+      <!-- Controles del carrusel -->
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselHoraActual" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Anterior</span>
@@ -68,6 +88,7 @@
   </ng-template>
 </div>
 
+<!-- Cuando no hay planeta actual -->
 <div *ngIf="!cargando && !planetaActual">
   <p>No se encontró la hora planetaria actual.</p>
 </div>

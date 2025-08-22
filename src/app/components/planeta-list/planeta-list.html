@@ -1,25 +1,47 @@
 <div class="contenedor">
   <div class="planetas-wrapper">
+
+    <!-- Estado cargando -->
     <div *ngIf="loading" class="loading">Cargando...</div>
-      <div *ngIf="!loading && planetas.length">
-        <div class="contenedor" *ngFor="let p of planetas">
-          <!-- Caso normal: planeta -->
-          <div *ngIf="!p.esAnuncio" (click)="verDetalle(p)" [ngClass]="['tarjeta', p.nombre.toLowerCase()]">
-            <h2>{{ p.nombre }}</h2> 
-            <p>{{ p.tipo }}</p>
-            <p  class="fecha-con-icono">
-              <span class="texto-fecha">
-                Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }} 
-              </span>
-              <span class="icono" *ngIf="p.dia"><i class="bi bi-brightness-low-fill" style="font-size: 2rem; color: #FFC107;"></i></span> 
-              <span class="icono" *ngIf="!p.dia"><i class="bi bi-moon-stars-fill" style="font-size: 2rem; color: #6C757D" ></i></span>
-            </p>
-          </div>
-          <!-- Caso anuncio -->
-          <div *ngIf="p.esAnuncio" class="tarjeta anuncio">
-            <app-adsense-banner></app-adsense-banner>
-          </div>
+
+    <!-- Lista de planetas -->
+    <div *ngIf="!loading && planetas.length">
+
+      <!-- Iteramos planetas -->
+      <div class="contenedor" *ngFor="let p of planetas">
+
+        <!-- ==================== Caso normal: planeta ==================== -->
+        <div *ngIf="!p.esAnuncio"
+             (click)="verDetalle(p)"
+             [ngClass]="['tarjeta', p.nombre.toLowerCase()]">
+
+          <!-- Nombre y tipo -->
+          <h2>{{ p.nombre }}</h2>
+          <p>{{ p.tipo }}</p>
+
+          <!-- Fecha y horario con icono -->
+          <p class="fecha-con-icono">
+            <span class="texto-fecha">
+              Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }}
+            </span>
+
+            <!-- Icono según sea de día o de noche -->
+            <span class="icono" *ngIf="p.dia">
+              <i class="bi bi-brightness-low-fill"
+                 style="font-size: 2rem; color: #FFC107;"></i>
+            </span>
+            <span class="icono" *ngIf="!p.dia">
+              <i class="bi bi-moon-stars-fill"
+                 style="font-size: 2rem; color: #6C757D;"></i>
+            </span>
+          </p>
+        </div>
+
+        <!-- ==================== Caso anuncio ==================== -->
+        <div *ngIf="p.esAnuncio" class="tarjeta anuncio">
+          <app-adsense-banner></app-adsense-banner>
         </div>
       </div>
+    </div>
   </div>
 </div>
