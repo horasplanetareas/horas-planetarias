@@ -2,36 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { lastValueFrom, BehaviorSubject } from 'rxjs';
-// === MODELOS NUEVOS (puedes moverlos a un archivo models si querés) ===
-export interface Actividad {
-  titulo: string;
-  descripcion: string;
-  imagen: string;  // ruta a la imagen específica de la actividad
-}
-export interface Planeta {
-  nombre: string;          // 'SOL', 'MARTE', etc. (en mayúsculas lo estás devolviendo)
-  tipo?: string;            // 'Hora Planetaria'
-  horaInicio?: string;      // hh:mm
-  horaFin?: string;         // hh:mm
-  descripcion?: string;    // párrafo inicial largo
-  actividades?: Actividad[];  // actividades con imagen
-  parrafoFinal?: string;      // párrafo final
-  fecha?: string;              // dd/mm/aaaa
-  dia?: boolean;               // si pertenece al bloque diurno
-  // Extras operativos que ya traías (los mantenemos)
-  inicioDate?: Date;
-  finDate?: Date;
-  // esAnuncio?: boolean  // sólo en el objeto especial 'ANUNCIO'
-}
-
-// Contenido rico (texto/imágenes) por planeta, sin horas.
-// Para separar responsabilidades, guardamos acá los párrafos y actividades.
-interface ContenidoPlaneta {
-  descripcion: string;
-  parrafoFinal: string;
-  actividades: Actividad[];
-}
-
+import { ContenidoPlaneta, Planeta } from '../../models/planeta.model';
 @Injectable({ providedIn: 'root' })
 export class PlanetaService {
   // Orden tradicional de planetas en astrología clásica
@@ -574,9 +545,19 @@ export class PlanetaService {
    * Objeto separador (lo conservamos igual que tenías).
    * NOTA: Este objeto NO sigue la interfaz Planeta. La vista ya lo contempla con `esAnuncio`.
    */
-  private anuncio(): any {
-    return { nombre: 'ANUNCIO', tipo: 'Ad', esAnuncio: true };
-  }
+  private anuncio(): Planeta {
+  return {
+    nombre: 'ANUNCIO',
+    tipo: 'Ad',
+    descripcion: '',
+    actividades: [], // 👈 array vacío para no romper el template
+    parrafoFinal: '',
+    horaInicio: '',
+    horaFin: '',
+    fecha: '',
+    dia: false,
+  };
+}
 
   /**
    * Devuelve el contenido rico para un planeta (case-insensitive).

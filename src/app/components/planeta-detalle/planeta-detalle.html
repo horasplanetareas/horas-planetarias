@@ -1,6 +1,6 @@
 <!-- Comprobamos si existe un planeta; si no, usamos el template "noEncontrado" -->
 <div *ngIf="planeta; else noEncontrado"
-     [ngClass]="['detalle-card', planeta?.nombre?.toLowerCase() || '']">
+     [ngClass]="['detalle-card', planeta.nombre.toLowerCase() || '']">
      
   <!-- Mostramos el nombre del planeta -->
   <h3>{{ planeta.nombre }}</h3>

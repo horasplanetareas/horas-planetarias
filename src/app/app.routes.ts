@@ -6,7 +6,6 @@ import { PlanetaDetalleComponent } from './components/planeta-detalle/planeta-de
 import { PlanetaPorFecha } from './components/planeta-por-fecha/planeta-por-fecha';
 import { LoginComponent } from './components/user/login/login';
 import { RegisterComponent } from './components/user/register/register';
-import { authGuard } from './guards/auth-guard';
 import { Checkout } from './components/checkout/checkout';
 
 export const routes: Routes = [
