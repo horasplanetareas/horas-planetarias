@@ -15,10 +15,9 @@ import { isPlatformBrowser } from '@angular/common';
 export class Checkout implements OnInit {
 
   priceId = 'price_1RtwFvLhmsJ0GMAZxOonMy8k'; // ID del precio de Stripe
-
   userEmail: string | null = null;
   userUid: string | null = null;
-  subscriptionActive = false; // 🔹 estado de suscripción
+  subscriptionActive = false;
 
   constructor(
     private paymentService: PaymentService,
@@ -26,7 +25,7 @@ export class Checkout implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    @Inject(PLATFORM_ID) private platformId: Object // 👈 Para chequear si estamos en navegador
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   ngOnInit() {
@@ -47,11 +46,10 @@ export class Checkout implements OnInit {
         // Detecta si venimos de un pago exitoso (Stripe o MercadoPago)
         this.route.queryParams.subscribe(params => {
           if (params['session_id'] || params['mp_status'] === 'success') {
-            this.authService.refreshPremium(); // Refresca estado premium
-            this.router.navigate(['/por-fecha']); // Redirige
+            this.authService.refreshPremium();
+            this.router.navigate(['/por-fecha']);
           }
         });
-
       } else {
         this.userEmail = null;
         this.userUid = null;
@@ -72,10 +70,18 @@ export class Checkout implements OnInit {
 
     this.paymentService.createStripeCheckout(this.priceId, this.userEmail, this.userUid)
       .subscribe(async (res) => {
-        if (stripe) {
-          const { error } = await stripe.redirectToCheckout({ sessionId: res.sessionId });
-          if (error) console.error('Stripe error:', error.message);
+        const sessionId = res?.sessionId;
+        if (!sessionId) {
+          console.error('No se recibió sessionId de Stripe');
+          return;
         }
+
+        if (stripe) {
+          const { error } = await stripe.redirectToCheckout({ sessionId });
+          if (error) console.error('Error en Stripe:', error.message);
+        }
+      }, (err) => {
+        console.error('Error al crear checkout de Stripe:', err);
       });
   }
 
@@ -91,12 +97,17 @@ export class Checkout implements OnInit {
     this.paymentService.createMercadoPagoCheckout(this.userUid)
       .subscribe({
         next: (res) => {
-          // Solo redirigir si estamos en navegador
+          const url = res?.init_point;
+          if (!url) {
+            console.error('No se recibió init_point de MercadoPago');
+            return;
+          }
+
           if (isPlatformBrowser(this.platformId)) {
-            window.location.href = res.init_point;
+            window.location.href = url;
           }
         },
-        error: (err) => console.error(err)
+        error: (err) => console.error('Error al crear checkout de MercadoPago:', err)
       });
   }
 }
