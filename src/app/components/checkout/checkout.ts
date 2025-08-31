@@ -29,7 +29,6 @@ export class Checkout implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Suscribirse al estado de premium
     this.authService.isPremium$.subscribe(active => {
       this.subscriptionActive = active;
       if (active) {
@@ -37,13 +36,11 @@ export class Checkout implements OnInit {
       }
     });
 
-    // Listener de Firebase Auth
     onAuthStateChanged(this.auth, (user: User | null) => {
       if (user) {
         this.userEmail = user.email;
         this.userUid = user.uid;
 
-        // Detecta si venimos de un pago exitoso (Stripe o MercadoPago)
         this.route.queryParams.subscribe(params => {
           if (params['session_id'] || params['mp_status'] === 'success') {
             this.authService.refreshPremium();
@@ -58,7 +55,7 @@ export class Checkout implements OnInit {
   }
 
   // =========================
-  // Pago con Stripe
+  // Pago con Stripe (queda igual)
   // =========================
   async payWithStripe() {
     if (!this.userEmail || !this.userUid) {
@@ -86,15 +83,15 @@ export class Checkout implements OnInit {
   }
 
   // =========================
-  // Pago con MercadoPago
+  // Suscripción con MercadoPago
   // =========================
   payWithMercadoPago() {
-    if (!this.userUid) {
+    if (!this.userUid || !this.userEmail) {
       console.error('Usuario no logueado');
       return;
     }
 
-    this.paymentService.createMercadoPagoCheckout(this.userUid)
+    this.paymentService.createMercadoPagoSubscription(this.userUid, this.userEmail)
       .subscribe({
         next: (res) => {
           const url = res?.init_point;
@@ -107,7 +104,7 @@ export class Checkout implements OnInit {
             window.location.href = url;
           }
         },
-        error: (err) => console.error('Error al crear checkout de MercadoPago:', err)
+        error: (err) => console.error('Error al crear suscripción de MercadoPago:', err)
       });
   }
 }
