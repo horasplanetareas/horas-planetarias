@@ -7,6 +7,7 @@ import { PlanetaPorFecha } from './components/planeta-por-fecha/planeta-por-fech
 import { LoginComponent } from './components/user/login/login';
 import { RegisterComponent } from './components/user/register/register';
 import { Checkout } from './components/checkout/checkout';
+import { Info } from './components/info/info';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'hora-actual', pathMatch: 'full' },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'checkout', component: Checkout },
+  { path: 'info', component: Info },
   { path: '**', redirectTo: 'hora-actual' },
 ];
 
