@@ -46,18 +46,30 @@
   }
 
   .tarjeta {
-    display: block;
+    max-width: 500px;         
+    margin: 2rem auto;        
+    padding: 2rem;            
+    border: 3px solid transparent; 
     border-radius: 16px;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: #21232F;
-    box-shadow: 0 4px 12px rgba(59, 30, 84, 0.15);
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-    border: 4px solid transparent;
-    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+    text-align: center;       
+    color: #3B1E54;           
+    background-color: #fff;   
+    transition: border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+
+    h2 {
+      font-size: 2rem;        
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.05rem;     
+      margin: 0.4rem 0;
+    }
 
     strong {
       font-size: 1.2rem;
+      color: #555;
     }
 
     em {
@@ -102,22 +114,20 @@
   }
 
   .fecha-con-icono {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.fecha-con-icono .icono {
-  /* Esto pone el icono a la derecha */
-  font-size: 2rem; /* Opcional, para que el icono se vea un poco más grande */
-}
+  .fecha-con-icono .icono {
+    font-size: 2rem;
+  }
 
-.fecha-con-icono .icono.bi-sun {
-  color: #FFC107;
-}
+  .fecha-con-icono .icono.bi-sun {
+    color: #FFC107;
+  }
 
-.fecha-con-icono .icono.bi-moon {
-  color: #6C757D;
-}
-
+  .fecha-con-icono .icono.bi-moon {
+    color: #6C757D;
+  }
 }

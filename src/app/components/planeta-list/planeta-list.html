@@ -1,31 +1,20 @@
 <div class="contenedor">
   <div class="planetas-wrapper">
-
     <!-- Estado cargando -->
     <div *ngIf="loading" class="loading">Cargando...</div>
-
     <!-- Lista de planetas -->
     <div *ngIf="!loading && planetas.length">
-
-      <!-- Iteramos planetas -->
-      <div class="contenedor" *ngFor="let p of planetas">
-
-        <!-- ==================== Caso normal: planeta ==================== -->
-        <div *ngIf="!p.esAnuncio"
+      <ng-container *ngFor="let p of planetas">
+        <!-- Caso normal: planeta -->
+        <div *ngIf="p.tipo !== 'Ad'"
              (click)="verDetalle(p)"
-             [ngClass]="['tarjeta', p.nombre.toLowerCase()]">
-
-          <!-- Nombre y tipo -->
+             [ngClass]="['tarjeta', p.nombre?.toLowerCase()]">
           <h2>{{ p.nombre }}</h2>
           <p>{{ p.tipo }}</p>
-
-          <!-- Fecha y horario con icono -->
           <p class="fecha-con-icono">
             <span class="texto-fecha">
               Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }}
             </span>
-
-            <!-- Icono según sea de día o de noche -->
             <span class="icono" *ngIf="p.dia">
               <i class="bi bi-brightness-low-fill"
                  style="font-size: 2rem; color: #FFC107;"></i>
@@ -36,12 +25,11 @@
             </span>
           </p>
         </div>
-
-        <!-- ==================== Caso anuncio ==================== -->
-        <div *ngIf="p.esAnuncio" class="tarjeta anuncio">
+        <!-- Caso anuncio: solo banner -->
+        <div *ngIf="p.tipo === 'Ad'" class="tarjeta anuncio">
           <app-adsense-banner></app-adsense-banner>
         </div>
-      </div>
+      </ng-container>
     </div>
   </div>
 </div>
