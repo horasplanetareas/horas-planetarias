@@ -1,4 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes,ExtraOptions } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HoraActualComponent } from './components/hora-actual/hora-actual';
 import { PlanetaList } from './components/planeta-list/planeta-list';
@@ -21,6 +21,11 @@ export const routes: Routes = [
   { path: 'info', component: Info },
   { path: '**', redirectTo: 'hora-actual' },
 ];
+
+const routerOptions: ExtraOptions = {
+  anchorScrolling: 'enabled',           // activa scroll automático al fragmento (#id)
+  scrollPositionRestoration: 'enabled', // recuerda posición al navegar atrás/adelante
+};
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
