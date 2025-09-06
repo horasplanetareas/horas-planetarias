@@ -16,10 +16,8 @@ export class MenuComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    // Suscribirse al estado reactivo del AuthService
-    this.authService.isLoggedIn$.subscribe(status => {
-      this.isLoggedIn = status;
-    });
+    // Mantiene estado reactivo de login
+    this.authService.isLoggedIn$.subscribe(status => this.isLoggedIn = status);
   }
 
   logout() {

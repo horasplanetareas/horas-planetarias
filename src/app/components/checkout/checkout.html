@@ -1,7 +1,22 @@
 <div class="prueba-pagos">
-  <h2>Plan Premium</h2>
+  <h1>Plan Premium Horas Planetarias</h1>
+  <p>
+    Suscríbete al <strong>Plan Premium</strong> y accede a todas las
+    <em>horas planetarias</em> de forma ilimitada. Elige tu forma de pago:
+  </p>
+
   <div class="botones-pago">
-    <button class="stripe-btn" (click)="payWithStripe()">Pagar con Stripe</button>
-    <button class="mp-btn" (click)="payWithMercadoPago()">Pagar con MercadoPago</button>
+    <button class="stripe-btn" (click)="payWithStripe()" aria-label="Pagar suscripción con Stripe">
+      💳 Pagar con Stripe
+    </button>
+    <button class="mp-btn" (click)="payWithMercadoPago()" aria-label="Pagar suscripción con MercadoPago">
+      🪙 Pagar con MercadoPago
+    </button>
   </div>
+
+  <h2>Beneficios del Plan Premium</h2>
+  <ul>
+    <li>Consulta sin publicidad.</li>
+    <li>Funciones exclusivas para calcular las <em>horas planetarias por fecha</em>.</li>
+  </ul>
 </div>

@@ -1,43 +1,30 @@
 <div class="header">
 
-  <!-- ========================= -->
   <!-- Día y subdía -->
-  <!-- ========================= -->
   <h2>{{ diaActual }}</h2>
   <h3 class="subdia">{{ subDia }}</h3>
 
-  <!-- ========================= -->
   <!-- Fecha y hora actual -->
-  <!-- ========================= -->
   <div class="fecha-hora">
     <p class="fecha">{{ fechaActual }}</p>
     <span class="separador">|</span>
     <p class="hora">{{ horaActual }}</p>
   </div>
 
-  <!-- ========================= -->
   <!-- Bloque planeta regente -->
-  <!-- ========================= -->
   <ng-container *ngIf="planeta as p; else noEncontrado">
     <div [ngClass]="['detalle-card', p.nombre.toLowerCase()]">
       <h1>Planeta regente del día</h1>
       <h3>{{ p.nombre }}</h3>
 
-      <!-- ========================= -->
-      <!-- Contenido visible solo para usuarios logueados -->
-      <!-- ========================= -->
       <ng-container *ngIf="isLoggedIn">
-
         <p>{{ p.descripcion }}</p>
 
-        <!-- ========================= -->
         <!-- Carousel con actividades -->
-        <!-- ========================= -->
         <div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel"
              *ngIf="p.actividades.length > 0">
 
           <div class="carousel-inner">
-
             <div *ngFor="let act of p.actividades; let i = index"
                  [class.carousel-item]="true"
                  [class.active]="i === 0">
@@ -55,7 +42,6 @@
                 <h5>{{ act.titulo }}</h5>
                 <p>{{ act.descripcion }}</p>
               </div>
-
             </div>
           </div>
 

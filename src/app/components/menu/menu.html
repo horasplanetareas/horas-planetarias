@@ -1,12 +1,13 @@
 <nav class="menu">
   <ul>
-    <!-- Si NO está logueado -->
+    <!-- Icono login si NO está logueado -->
     <li *ngIf="!isLoggedIn">
       <a routerLink="/login" routerLinkActive="activo" style="margin-left: 1rem;">
         <span class="icon"><i class="bi bi-person-fill"></i></span>
       </a>
     </li>
-    <!-- Si está logueado -->
+
+    <!-- Icono logout si está logueado -->
     <li *ngIf="isLoggedIn">
       <a href="/" (click)="logout(); $event.preventDefault()" style="margin-left: 1rem;">
         <span class="icon"><i class="bi bi-door-open-fill"></i></span>
@@ -25,7 +26,7 @@
       </a>
     </li>
 
-    <!-- Solo si está logueado -->
+    <!-- Solo logueados -->
     <li *ngIf="isLoggedIn">
       <a routerLink="/lista-horas-por-fecha" routerLinkActive="activo">
         <span class="icon"><i class="bi bi-calendar-fill"></i></span>

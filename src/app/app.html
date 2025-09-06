@@ -1,9 +1,15 @@
-<main class="main"></main>
-<app-adsense-banner></app-adsense-banner>
-
 <app-menu></app-menu>
-<app-home></app-home>
 
-<router-outlet></router-outlet>
+<!-- Banner superior -->
 <app-adsense-banner></app-adsense-banner>
+
+<!-- Contenido principal -->
+<main class="main">
+  <app-home></app-home>
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Banner inferior -->
+<app-adsense-banner></app-adsense-banner>
+
 <app-footer></app-footer>

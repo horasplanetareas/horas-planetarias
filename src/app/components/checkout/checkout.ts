@@ -6,6 +6,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { loadStripe } from '@stripe/stripe-js';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { SeoService } from '../../services/seo/seo.service';
 
 @Component({
   selector: 'app-checkout',
@@ -13,8 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./checkout.scss']
 })
 export class Checkout implements OnInit {
-
-  priceId = 'price_1RtwFvLhmsJ0GMAZxOonMy8k'; // ID del precio de Stripe
+  priceId = 'price_1RtwFvLhmsJ0GMAZxOonMy8k';
   userEmail: string | null = null;
   userUid: string | null = null;
   subscriptionActive = false;
@@ -25,15 +25,19 @@ export class Checkout implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private seo: SeoService
   ) { }
 
   ngOnInit() {
+    this.seo.updateMeta(
+      'Plan Premium | Horas Planetarias',
+      'Activa tu suscripción premium y accede a contenido exclusivo.'
+    );
+
     this.authService.isPremium$.subscribe(active => {
       this.subscriptionActive = active;
-      if (active) {
-        this.router.navigate(['/lista-horas-por-fecha']);
-      }
+      if (active) this.router.navigate(['/lista-horas-por-fecha']);
     });
 
     onAuthStateChanged(this.auth, (user: User | null) => {
@@ -54,55 +58,28 @@ export class Checkout implements OnInit {
     });
   }
 
-  // =========================
-  // Pago con Stripe (queda igual)
-  // =========================
   async payWithStripe() {
-    if (!this.userEmail || !this.userUid) {
-      console.error('Usuario no logueado');
-      return;
-    }
+    if (!this.userEmail || !this.userUid) return;
 
     const stripe = await loadStripe('pk_test_51RtvjCLhmsJ0GMAZVhn9zqqebRDg9GXSu2gIiZNDTCPH51BTth7hGuZSJSCFh0y2adCcC93kz2mgsUSt1OArbfEN00ZRZSFOIo');
-
     this.paymentService.createStripeCheckout(this.priceId, this.userEmail, this.userUid)
       .subscribe(async (res) => {
         const sessionId = res?.sessionId;
-        if (!sessionId) {
-          console.error('No se recibió sessionId de Stripe');
-          return;
-        }
-
-        if (stripe) {
-          const { error } = await stripe.redirectToCheckout({ sessionId });
-          if (error) console.error('Error en Stripe:', error.message);
-        }
-      }, (err) => {
-        console.error('Error al crear checkout de Stripe:', err);
-      });
+        if (!sessionId || !stripe) return;
+        const { error } = await stripe.redirectToCheckout({ sessionId });
+        if (error) console.error('Error en Stripe:', error.message);
+      }, (err) => console.error('Error al crear checkout de Stripe:', err));
   }
 
-  // =========================
-  // Suscripción con MercadoPago
-  // =========================
   payWithMercadoPago() {
-    if (!this.userUid || !this.userEmail) {
-      console.error('Usuario no logueado');
-      return;
-    }
+    if (!this.userUid || !this.userEmail) return;
 
     this.paymentService.createMercadoPagoSubscription(this.userUid, this.userEmail)
       .subscribe({
         next: (res) => {
           const url = res?.init_point;
-          if (!url) {
-            console.error('No se recibió init_point de MercadoPago');
-            return;
-          }
-
-          if (isPlatformBrowser(this.platformId)) {
-            window.location.href = url;
-          }
+          if (!url) return;
+          if (isPlatformBrowser(this.platformId)) window.location.href = url;
         },
         error: (err) => console.error('Error al crear suscripción de MercadoPago:', err)
       });

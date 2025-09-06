@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth';
+import { SeoService } from '../../../services/seo/seo.service';
 
 @Component({
   selector: 'app-register',
@@ -19,9 +20,21 @@ export class RegisterComponent implements OnInit {
   codeSent = false;
   codeError = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private auth: AuthService,
+    private seo: SeoService
+  ) { }
 
   ngOnInit(): void {
+    // 🔹 Configuración SEO usando SeoService
+    this.seo.updateMeta(
+      'Registrarse | Horas Planetarias',
+      'Crea tu cuenta para consultar tus horas planetarias personalizadas.'
+      // dejamos image y url undefined para usar la global KAIROS.png
+    );
+
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
@@ -35,9 +48,7 @@ export class RegisterComponent implements OnInit {
     const { email, password } = this.form.value;
 
     this.auth.register(email, password)
-      .then(() => {
-        this.router.navigate(['/login']);
-      })
+      .then(() => this.router.navigate(['/login']))
       .catch(err => {
         console.error(err);
         alert('Error al registrar: ' + err.message);
@@ -67,9 +78,7 @@ export class RegisterComponent implements OnInit {
 
   loginWithGoogle() {
     this.auth.loginWithGoogle()
-      .then(() => {
-        this.router.navigate(['/']);
-      })
+      .then(() => this.router.navigate(['/hora-actual']))
       .catch(err => {
         console.error(err);
         alert('Error con Google: ' + err.message);

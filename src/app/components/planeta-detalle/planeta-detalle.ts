@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth';
 import { Subscription } from 'rxjs';
-import { Title, Meta } from '@angular/platform-browser';
+import { SeoService } from '../../services/seo/seo.service';
 import { Planeta } from '../../models/planeta.model';
 
 @Component({
@@ -15,14 +15,13 @@ import { Planeta } from '../../models/planeta.model';
 })
 export class PlanetaDetalleComponent implements OnInit, OnDestroy {
 
-  // 🔹 Planeta siempre inicializado
   planeta: Planeta = {
     nombre: '',
     tipo: '',
     horaInicio: '',
     horaFin: '',
     descripcion: '',
-    actividades: [],   // 👈 siempre array
+    actividades: [],
     parrafoFinal: '',
     fecha: '',
     dia: false,
@@ -36,26 +35,22 @@ export class PlanetaDetalleComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private titleService: Title,
-    private metaService: Meta
+    private seo: SeoService
   ) {
     const nav = this.router.getCurrentNavigation();
-
-    // Sobreescribimos el planeta vacío con lo que venga de navegación (si hay)
     if (nav?.extras.state?.['planeta']) {
-      this.planeta = { 
-        ...this.planeta,        // 👈 mantiene valores vacíos por defecto
-        ...nav.extras.state['planeta'] 
-      };
+      this.planeta = { ...this.planeta, ...nav.extras.state['planeta'] };
     }
   }
 
   ngOnInit() {
-    this.titleService.setTitle('Detalle De La Hora Planetarias | información sobre una hora planetaria específica');
-    this.metaService.updateTag({
-      name: 'description',
-      content: 'Descubre información profunda sobre la influencia de un planeta según la astrología.'
-    });
+    // Usamos SeoService para actualizar metatags con imagen global
+    this.seo.updateMeta(
+      `Detalle: ${this.planeta.nombre} | Horas Planetarias`,
+      `Información sobre la hora planetaria del planeta ${this.planeta.nombre}`,
+      undefined, // deja que SeoService use defaultImage
+      undefined
+    );
 
     this.authSub = this.authService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;

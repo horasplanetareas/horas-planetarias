@@ -1,10 +1,24 @@
-<footer class="footer-nav"> 
-  <div class="info-footer">
-    <a [routerLink]="['/info']" fragment="que-son">✨ ¿Qué son?</a>
-    <a [routerLink]="['/info']" fragment="origen">🌌 Origen</a>
-    <a [routerLink]="['/info']" fragment="calculo">🧮 Cálculo</a>
-    <a [routerLink]="['/info']" fragment="asociacion">🪐 Planetas</a>
-    <a [routerLink]="['/info']" fragment="uso">🧘‍♀️ Uso</a>
-    <a [routerLink]="['/info']" fragment="aplicaciones">💡 Aplicaciones</a>
-  </div>
+<footer class="footer-nav">
+  <nav aria-label="Enlaces de información sobre horas planetarias">
+    <div class="info-footer">
+      <a [routerLink]="['/info']" fragment="que-son" title="¿Qué son las horas planetarias?">
+        ✨ ¿Qué son?
+      </a>
+      <a [routerLink]="['/info']" fragment="origen" title="Origen de las horas planetarias">
+        🌌 Origen
+      </a>
+      <a [routerLink]="['/info']" fragment="calculo" title="Cómo se calculan las horas planetarias">
+        🧮 Cálculo
+      </a>
+      <a [routerLink]="['/info']" fragment="asociacion" title="Asociación de planetas y horas">
+        🪐 Planetas
+      </a>
+      <a [routerLink]="['/info']" fragment="uso" title="Uso práctico de las horas planetarias">
+        🧘‍♀️ Uso
+      </a>
+      <a [routerLink]="['/info']" fragment="aplicaciones" title="Aplicaciones de las horas planetarias">
+        💡 Aplicaciones
+      </a>
+    </div>
+  </nav>
 </footer>

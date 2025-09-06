@@ -1,14 +1,11 @@
-// Importaciones necesarias para el componente
-import { Component, ChangeDetectorRef, OnInit, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectorRef, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PlanetaService } from '../../services/planeta/planeta.service';
 import { AdsenseBannerComponent } from "../adsense-banner/adsense-banner";
-import { Router } from '@angular/router';
-import { Title, Meta } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth/auth';
-import { PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { SeoService } from '../../services/seo/seo.service';
 
 @Component({
   selector: 'app-planeta-por-fecha',
@@ -19,25 +16,24 @@ import { isPlatformBrowser } from '@angular/common';
     AdsenseBannerComponent
   ],
   templateUrl: './planeta-por-fecha.html',
-  styleUrl: './planeta-por-fecha.scss',
+  styleUrls: ['./planeta-por-fecha.scss'],
 })
 export class PlanetaPorFecha implements OnInit {
 
-  fechaSeleccionada: string = '';      // Fecha seleccionada por el usuario
-  planetas: any[] = [];                // Lista de planetas
-  cargando: boolean = false;           // Indicador de carga
+  fechaSeleccionada: string = '';
+  planetas: any[] = [];
+  cargando: boolean = false;
 
-  isLoggedIn = false;                  // Estado de login
-  subscriptionActive = false;          // Estado de suscripción
+  isLoggedIn = false;
+  subscriptionActive = false;
 
   constructor(
     private planetaService: PlanetaService,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private titleService: Title,
-    private metaService: Meta,
     private authService: AuthService,
-    @Inject(PLATFORM_ID) private platformId: Object // 👈 Necesario para SSR
+    private seo: SeoService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   verDetalle(planeta: any) {
@@ -45,15 +41,12 @@ export class PlanetaPorFecha implements OnInit {
   }
 
   ngOnInit(): void {
-    // 🔹 SEO: Título y Metas
-    this.titleService.setTitle('Lista de las Horas Planetarias Para Un Día a Elección | Lista Con Información Sobre Todas Las Horas Planetarias De Un Día.');
-    this.metaService.updateTag({
-      name: 'description',
-      content: 'Descubre información sobre las horas planetarias de un día a elección y el orden en que rigen.'
-    });
-    this.metaService.updateTag({ name: 'keywords', content: 'Horas Planetarias, Astrología, Lista de Horas Planetarias' });
-    this.metaService.updateTag({ property: 'og:title', content: 'Lista con información de los planetas de un día a elección' });
-    this.metaService.updateTag({ property: 'og:description', content: 'Lista con información sobre los planetas según la astrología y a qué horas rigen en una fecha.' });
+    // 🔹 SEO usando SeoService
+    this.seo.updateMeta(
+      'Horas Planetarias por Fecha | Consulta un día específico',
+      'Descubre la información de las horas planetarias de un día a elección y el orden en que rigen.'
+      // dejamos image y url undefined para usar la global KAIROS.png
+    );
 
     // 🔹 Recuperar cache SOLO en navegador
     if (isPlatformBrowser(this.platformId)) {
