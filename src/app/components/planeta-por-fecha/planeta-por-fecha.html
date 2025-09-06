@@ -6,54 +6,52 @@
   <div class="formulario">
     <label>
       Fecha:
-      <!-- Input tipo fecha enlazado con [(ngModel)] -->
       <input type="date" [(ngModel)]="fechaSeleccionada" />
     </label>
 
-    <!-- Botón que ejecuta la consulta -->
     <button (click)="consultar()">Consultar</button>
   </div>
 
   <!-- Mensaje de carga mientras se obtienen los datos -->
   <div *ngIf="cargando">Cargando...</div>
 
-  <!-- Sección de resultados: solo aparece si ya cargó y hay planetas -->
-  <div *ngIf="!cargando && planetas.length">
-    <!-- Recorremos la lista de planetas (y anuncios intercalados) -->
-    <div *ngFor="let p of planetas">
-      
-      <!-- CASO NORMAL: Planeta -->
-      <div
-        *ngIf="!p.esAnuncio" 
-        (click)="verDetalle(p)" 
-        [ngClass]="['tarjeta', p.nombre?.toLowerCase()]"
-      >
-        <!-- Nombre del planeta -->
-        <h2>{{ p.nombre }}</h2>
-        <!-- Tipo (ej: benéfico, maléfico, etc.) -->
-        <p>{{ p.tipo }}</p>
+  <div class="contenedor">
+  <div class="planetas-wrapper">
+    <!-- Estado cargando -->
+    <div *ngIf="cargando" class="loading">Cargando...</div>
 
-        <!-- Horario del planeta con ícono día/noche -->
-        <p class="fecha-con-icono">
-          <span class="texto-fecha">
-            Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }}
-          </span>
-          <!-- Ícono de sol si es de día -->
-          <span class="icono" *ngIf="p.dia">
-            <i class="bi bi-brightness-low-fill" style="font-size: 2rem; color: #FFC107;"></i>
-          </span>
-          <!-- Ícono de luna si es de noche -->
-          <span class="icono" *ngIf="!p.dia">
-            <i class="bi bi-moon-stars-fill" style="font-size: 2rem; color: #6C757D;"></i>
-          </span>
-        </p>
-      </div>
+    <!-- Lista de planetas y anuncios -->
+    <div *ngIf="!cargando && planetas.length">
+      <ng-container *ngFor="let p of planetas">
+        
+        <!-- Caso normal: planeta -->
+        <div *ngIf="p.tipo !== 'Ad'"
+             (click)="verDetalle(p)"
+             [ngClass]="['tarjeta', p.nombre?.toLowerCase()]">
+          <h2>{{ p.nombre }}</h2>
+          <p>{{ p.tipo }}</p>
+          <p class="fecha-con-icono">
+            <span class="texto-fecha">
+              Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }}
+            </span>
+            <span class="icono" *ngIf="p.dia">
+              <i class="bi bi-brightness-low-fill"
+                 style="font-size: 2rem; color: #FFC107;"></i>
+            </span>
+            <span class="icono" *ngIf="!p.dia">
+              <i class="bi bi-moon-stars-fill"
+                 style="font-size: 2rem; color: #6C757D;"></i>
+            </span>
+          </p>
+        </div>
 
-      <!-- CASO ANUNCIO: muestra un banner de Adsense -->
-      <div *ngIf="p.esAnuncio" class="tarjeta anuncio">
-        <app-adsense-banner></app-adsense-banner>
-      </div>
+        <!-- Caso anuncio: solo banner, igual a tarjeta de planeta -->
+        <div *ngIf="p.tipo === 'Ad'" class="tarjeta anuncio">
+          <app-adsense-banner></app-adsense-banner>
+        </div>
 
+      </ng-container>
     </div>
   </div>
 </div>
+
