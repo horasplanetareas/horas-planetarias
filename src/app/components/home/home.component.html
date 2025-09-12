@@ -17,9 +17,8 @@
       <h1>Planeta regente del día</h1>
       <h3>{{ p.nombre }}</h3>
 
-      <ng-container *ngIf="isLoggedIn">
-        <p>{{ p.descripcion }}</p>
-
+      <ng-container>
+        <ng-container *ngIf="isLoggedIn"><p>{{ p.descripcion }}</p></ng-container>
         <!-- Carousel con actividades -->
         <div id="carouselPlanetaDetalle" class="carousel slide" data-bs-ride="carousel"
              *ngIf="p.actividades.length > 0">
@@ -34,17 +33,16 @@
               <!-- Texto sobre imagen (PC/tablet) -->
               <div class="carousel-caption d-none d-md-block custom-caption rounded p-2">
                 <h5>{{ act.titulo }}</h5>
-                <p>{{ act.descripcion }}</p>
+                <ng-container *ngIf="isLoggedIn"><p>{{ act.descripcion }}</p></ng-container>
               </div>
 
               <!-- Texto debajo (móviles) -->
               <div class="caption-mobile text-center">
                 <h5>{{ act.titulo }}</h5>
-                <p>{{ act.descripcion }}</p>
+                <ng-container *ngIf="isLoggedIn"><p>{{ act.descripcion }}</p></ng-container>
               </div>
             </div>
           </div>
-
           <!-- Controles del carousel -->
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselPlanetaDetalle"
                   data-bs-slide="prev">
@@ -57,8 +55,7 @@
             <span class="visually-hidden">Siguiente</span>
           </button>
         </div>
-
-        <p>{{ p.parrafoFinal }}</p>
+        <ng-container *ngIf="isLoggedIn"><p>{{ p.parrafoFinal }}</p></ng-container>
       </ng-container>
     </div>
   </ng-container>
