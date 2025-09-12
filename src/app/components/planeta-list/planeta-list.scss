@@ -115,12 +115,13 @@
 
   .fecha-con-icono {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    padding: auto;
   }
 
   .fecha-con-icono .icono {
-    font-size: 2rem;
+    font-size: 3rem;
   }
 
   .fecha-con-icono .icono.bi-sun {

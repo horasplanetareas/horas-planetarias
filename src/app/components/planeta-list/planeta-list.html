@@ -13,15 +13,17 @@
           <p>{{ p.tipo }}</p>
           <p class="fecha-con-icono">
             <span class="texto-fecha">
-              Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }}
+              <p>Fecha: {{ p.fecha }}</p>
+              <p>Hora Inicio: {{ p.horaInicio }} </p>
+              <p>Hora Fin: {{ p.horaFin }}</p>
             </span>
             <span class="icono" *ngIf="p.dia">
               <i class="bi bi-brightness-low-fill"
-                 style="font-size: 2rem; color: #FFC107;"></i>
+                 style="color: #FFC107;"></i>
             </span>
             <span class="icono" *ngIf="!p.dia">
               <i class="bi bi-moon-stars-fill"
-                 style="font-size: 2rem; color: #6C757D;"></i>
+                 style="color: #6C757D;"></i>
             </span>
           </p>
         </div>
