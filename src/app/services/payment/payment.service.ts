@@ -12,12 +12,7 @@ export class PaymentService {
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
-
-  // Stripe
-  createStripeCheckout(priceId: string, email: string, uid: string): Observable<{ sessionId: string }> {
-    return this.http.post<{ sessionId: string }>(`${this.BASE_URL}/stripe-checkout`, { priceId, email, uid });
-  }
+  ) { }
 
   // MercadoPago Suscripción
   createMercadoPagoSubscription(uid: string, email: string): Observable<{ init_point: string }> {
@@ -39,12 +34,13 @@ export class PaymentService {
     }
   }
 
-  // Métodos async/await
-  async createStripeCheckoutAsync(priceId: string, email: string, uid: string) {
-    return firstValueFrom(this.createStripeCheckout(priceId, email, uid));
-  }
-
   async createMercadoPagoSubscriptionAsync(uid: string, email: string) {
     return firstValueFrom(this.createMercadoPagoSubscription(uid, email));
   }
+
+  // PayPal Suscripción
+  createPayPalSubscription(uid: string, email: string) {
+    return this.http.post<{ approveUrl: string }>(`${this.BASE_URL}/paypal-subscription`, { uid, email });
+  }
+
 }

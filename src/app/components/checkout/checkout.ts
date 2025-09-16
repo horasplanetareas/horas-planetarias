@@ -3,7 +3,6 @@ import { PaymentService } from '../../services/payment/payment.service';
 import { AuthService } from '../../services/auth/auth';
 import { Auth } from '@angular/fire/auth';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { loadStripe } from '@stripe/stripe-js';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { SeoService } from '../../services/seo/seo.service';
@@ -58,19 +57,6 @@ export class Checkout implements OnInit {
     });
   }
 
-  async payWithStripe() {
-    if (!this.userEmail || !this.userUid) return;
-
-    const stripe = await loadStripe('pk_test_51RtvjCLhmsJ0GMAZVhn9zqqebRDg9GXSu2gIiZNDTCPH51BTth7hGuZSJSCFh0y2adCcC93kz2mgsUSt1OArbfEN00ZRZSFOIo');
-    this.paymentService.createStripeCheckout(this.priceId, this.userEmail, this.userUid)
-      .subscribe(async (res) => {
-        const sessionId = res?.sessionId;
-        if (!sessionId || !stripe) return;
-        const { error } = await stripe.redirectToCheckout({ sessionId });
-        if (error) console.error('Error en Stripe:', error.message);
-      }, (err) => console.error('Error al crear checkout de Stripe:', err));
-  }
-
   payWithMercadoPago() {
     if (!this.userUid || !this.userEmail) return;
 
@@ -84,4 +70,18 @@ export class Checkout implements OnInit {
         error: (err) => console.error('Error al crear suscripción de MercadoPago:', err)
       });
   }
+  payWithPayPal() {
+  if (!this.userUid || !this.userEmail) return;
+
+  this.paymentService.createPayPalSubscription(this.userUid, this.userEmail)
+    .subscribe({
+      next: (res) => {
+        const url = res?.approveUrl;
+        if (!url) return;
+        if (isPlatformBrowser(this.platformId)) window.location.href = url;
+      },
+      error: (err) => console.error("Error al crear suscripción PayPal:", err)
+    });
+}
+
 }
