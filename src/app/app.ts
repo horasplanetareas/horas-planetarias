@@ -12,7 +12,6 @@ import { isPlatformBrowser } from '@angular/common';
   standalone: true,
   imports: [
     RouterOutlet,
-    HomeComponent,
     MenuComponent,
     AdsenseBannerComponent,
     Footer

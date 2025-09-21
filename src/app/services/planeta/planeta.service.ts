@@ -380,6 +380,12 @@ export class PlanetaService {
   async obtenerHorasPlanetarias(): Promise<any[]> {
     const coords = await this.getUbicacion();
     const ahora = new Date();
+    // Si aún no amaneció, usar el día anterior
+    const hoySol = await this.getSolData(coords.lat, coords.lng, ahora);
+    const amanecer = new Date(hoySol.sunrise);
+    if (ahora < amanecer) {
+      ahora.setTime(ahora.getTime() - 86400000);
+    }
     const fechaKey = ahora.toISOString().split('T')[0];
     const ubicacionKey = `${coords.lat}|${coords.lng}`;
 
@@ -428,16 +434,10 @@ export class PlanetaService {
   // =========================
 
   private async calcularHorasPlanetarias(coords: { lat: number; lng: number }, fecha: Date): Promise<any[]> {
-    const hoySol = await this.getSolData(coords.lat, coords.lng, fecha);
-    const amanecer = new Date(hoySol.sunrise);
+    const solDataHoy = await this.getSolData(coords.lat, coords.lng, fecha);
+    const solDataManiana = await this.getSolData(coords.lat, coords.lng, new Date(fecha.getTime() + 86400000));
 
-    // Si aún no amaneció, usar el día anterior para el subdía
-    const usarFecha = fecha < amanecer ? new Date(fecha.getTime() - 86400000) : fecha;
-
-    const solDataHoy = await this.getSolData(coords.lat, coords.lng, usarFecha);
-    const solDataManiana = await this.getSolData(coords.lat, coords.lng, new Date(usarFecha.getTime() + 86400000));
-
-    const subDia = this.obtenerSubDia(usarFecha);
+    const subDia = this.obtenerSubDia(fecha);
     const horasDia = this.generarHorasPlanetarias(new Date(solDataHoy.sunrise), new Date(solDataHoy.sunset), subDia, true);
     const horasNoche = this.generarHorasPlanetarias(new Date(solDataHoy.sunset), new Date(solDataManiana.sunrise), subDia, false);
 
