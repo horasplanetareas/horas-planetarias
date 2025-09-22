@@ -1,14 +1,39 @@
 <app-menu></app-menu>
 
-<!-- Banner superior -->
-<app-adsense-banner></app-adsense-banner>
+<!-- Laterales solo desktop >=1023px -->
+<app-adsterra-side 
+position="left" *ngIf="windowWidth >= 1023"
+  key="a62e36fa17c52d5e8975d96d3641beb0" 
+  [width]="160" 
+  [height]="600"
+  ></app-adsterra-side>
 
-<!-- Contenido principal -->
+<!-- Banner superior -->
+<app-adsterra 
+  key="13233fc8f0ba4b3ca90c788966f2f14c" 
+  [width]="320" 
+  [height]="50">
+</app-adsterra>
+
+
 <main class="main">
   <router-outlet></router-outlet>
 </main>
 
 <!-- Banner inferior -->
-<app-adsense-banner></app-adsense-banner>
+<app-adsterra 
+  key="502a6806b7ce93536910e0372a718d68" 
+  [width]="320" 
+  [height]="250">
+</app-adsterra>
+
+
+<!-- Laterales solo desktop >=1023px -->
+<app-adsterra-side 
+position="right" *ngIf="windowWidth >= 1023"
+  key="1fb5efc8a2326a31b6cda6c9a1d54114" 
+  [width]="160" 
+  [height]="300">
+></app-adsterra-side>
 
 <app-footer></app-footer>

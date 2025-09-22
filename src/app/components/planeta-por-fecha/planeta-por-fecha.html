@@ -32,7 +32,9 @@
           <p>{{ p.tipo }}</p>
           <p class="fecha-con-icono">
             <span class="texto-fecha">
-              Fecha: {{ p.fecha }} - {{ p.horaInicio }} - {{ p.horaFin }}
+              <p>Fecha: {{ p.fecha }}</p>
+              <p>Inicio: {{ p.horaInicio }} </p>
+              <p>Fin: {{ p.horaFin }}</p>
             </span>
             <span class="icono" *ngIf="p.dia">
               <i class="bi bi-brightness-low-fill"
@@ -47,7 +49,7 @@
 
         <!-- Caso anuncio: solo banner, igual a tarjeta de planeta -->
         <div *ngIf="p.tipo === 'Ad'" class="tarjeta anuncio">
-          <app-adsense-banner></app-adsense-banner>
+          <app-adsterra></app-adsterra>
         </div>
 
       </ng-container>

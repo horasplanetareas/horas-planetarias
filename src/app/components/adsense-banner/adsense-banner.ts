@@ -1,41 +1,42 @@
-import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AuthService } from '../../services/auth/auth';
+import { Component, OnInit, ElementRef, Renderer2, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-adsense-banner',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './adsense-banner.html',
+  selector: 'app-adsterra',
+  template: `<div class="ad-banner"></div>`,
+  styleUrls: ['./adsense-banner.scss']
 })
-export class AdsenseBannerComponent implements AfterViewInit {
-  mostrarBanner = false;
+export class AdsterraComponent implements OnInit {
+  @Input() key: string = '';
+  @Input() width: number = 320;
+  @Input() height: number = 50;
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private authService: AuthService
-  ) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
-  ngAfterViewInit(): void {
-  if (isPlatformBrowser(this.platformId)) {
-    const esLocalhost = window.location.hostname === 'localhost';
-    const token = localStorage.getItem('authToken'); // ✅ Detecta si el usuario tiene premium
-
-    // Mostrar solo si NO está en localhost y el usuario NO tiene premium
-    this.mostrarBanner = !esLocalhost && !token;
-
-    if (this.mostrarBanner) {
-      try {
-        // 👇 Asegura que window.adsbygoogle existe y carga el anuncio
-        (window as any).adsbygoogle = (window as any).adsbygoogle || [];
-        (window as any).adsbygoogle.push({});
-      } catch (e) {
-        console.error('Error al cargar AdSense:', e);
-      }
-    } else {
-      console.log('Adsense oculto:', { esLocalhost, tienePremium: !!token });
-    }
+  ngOnInit(): void {
+    this.loadBanner();
   }
-}
 
+  private loadBanner(): void {
+    const container = this.el.nativeElement.querySelector('.ad-banner');
+    if (!container) return;
+
+    const optScript = this.renderer.createElement('script');
+    optScript.type = 'text/javascript';
+    optScript.text = `
+      atOptions = {
+        'key' : '${this.key}',
+        'format' : 'iframe',
+        'height' : ${this.height},
+        'width' : ${this.width},
+        'params' : {}
+      };
+    `;
+
+    const mainScript = this.renderer.createElement('script');
+    mainScript.type = 'text/javascript';
+    mainScript.src = `//www.highperformanceformat.com/${this.key}/invoke.js`;
+
+    this.renderer.appendChild(container, optScript);
+    this.renderer.appendChild(container, mainScript);
+  }
 }

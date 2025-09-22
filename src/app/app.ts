@@ -1,26 +1,34 @@
-import { Component, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, AfterViewInit, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HomeComponent } from "./components/home/home.component";
 import { MenuComponent } from './components/menu/menu';
-import { AdsenseBannerComponent } from "./components/adsense-banner/adsense-banner";
+import { AdsterraComponent } from "./components/adsense-banner/adsense-banner";
 import { Footer } from "./components/footer/footer";
 import { SeoService } from './services/seo/seo.service';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { AdsterraSideComponent } from "./components/adsterra-sidebar-component/adsterra-sidebar-component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    CommonModule,
     RouterOutlet,
     MenuComponent,
-    AdsenseBannerComponent,
-    Footer
+    AdsterraComponent,
+    Footer,
+    AdsterraSideComponent
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
 export class App implements AfterViewInit {
-  protected title = 'Horas';
+
+  windowWidth = window.innerWidth;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.windowWidth = (event.target as Window).innerWidth;
+  }
 
   constructor(
     private seo: SeoService,
@@ -29,7 +37,6 @@ export class App implements AfterViewInit {
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      // Esto actualizará automáticamente los meta tags globales
       this.seo.setGlobalMeta();
     }
   }

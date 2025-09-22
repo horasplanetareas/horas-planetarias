@@ -6,30 +6,32 @@
     <div *ngIf="!loading && planetas.length">
       <ng-container *ngFor="let p of planetas">
         <!-- Caso normal: planeta -->
-        <div *ngIf="p.tipo !== 'Ad'"
-             (click)="verDetalle(p)"
-             [ngClass]="['tarjeta', p.nombre?.toLowerCase()]">
+        <div *ngIf="p.tipo !== 'Ad'" (click)="verDetalle(p)" [ngClass]="['tarjeta', p.nombre?.toLowerCase()]">
           <h2>{{ p.nombre }}</h2>
           <p>{{ p.tipo }}</p>
           <p class="fecha-con-icono">
             <span class="texto-fecha">
               <p>Fecha: {{ p.fecha }}</p>
-              <p>Hora Inicio: {{ p.horaInicio }} </p>
-              <p>Hora Fin: {{ p.horaFin }}</p>
+              <p>Inicio: {{ p.horaInicio }} </p>
+              <p>Fin: {{ p.horaFin }}</p>
             </span>
             <span class="icono" *ngIf="p.dia">
-              <i class="bi bi-brightness-low-fill"
-                 style="color: #FFC107;"></i>
+              <i class="bi bi-brightness-low-fill" style="color: #FFC107;"></i>
             </span>
             <span class="icono" *ngIf="!p.dia">
-              <i class="bi bi-moon-stars-fill"
-                 style="color: #6C757D;"></i>
+              <i class="bi bi-moon-stars-fill" style="color: #6C757D;"></i>
             </span>
           </p>
         </div>
         <!-- Caso anuncio: solo banner -->
         <div *ngIf="p.tipo === 'Ad'" class="tarjeta anuncio">
-          <app-adsense-banner></app-adsense-banner>
+
+          <!-- Banner  -->
+          <app-adsterra 
+          key="ca2df4f9ef669fecefc58ee1e3361956" 
+          [width]="468" 
+          [height]="60">
+          </app-adsterra>
         </div>
       </ng-container>
     </div>

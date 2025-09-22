@@ -3,7 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PlanetaService } from '../../services/planeta/planeta.service';
-import { AdsenseBannerComponent } from "../adsense-banner/adsense-banner";
+import { AdsterraComponent } from "../adsense-banner/adsense-banner";
 import { AuthService } from '../../services/auth/auth';
 import { SeoService } from '../../services/seo/seo.service';
 
@@ -13,7 +13,7 @@ import { SeoService } from '../../services/seo/seo.service';
   imports: [
     CommonModule,
     FormsModule,
-    AdsenseBannerComponent
+    AdsterraComponent
   ],
   templateUrl: './planeta-por-fecha.html',
   styleUrls: ['./planeta-por-fecha.scss'],

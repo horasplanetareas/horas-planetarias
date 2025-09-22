@@ -5,11 +5,12 @@ import { AuthService } from '../../services/auth/auth';
 import { Subscription } from 'rxjs';
 import { SeoService } from '../../services/seo/seo.service';
 import { HomeComponent } from "../home/home.component";
+import { AdsterraComponent } from "../adsense-banner/adsense-banner";
 
 @Component({
   selector: 'app-hora-actual',
   standalone: true,
-  imports: [CommonModule, HomeComponent],
+  imports: [CommonModule, HomeComponent, AdsterraComponent],
   templateUrl: './hora-actual.html',
   styleUrls: ['./hora-actual.scss']
 })
