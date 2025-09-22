@@ -18,15 +18,19 @@ export class AdsterraComponent implements OnInit {
   subscriptionActive = false;
 
   constructor(
-    private el: ElementRef, 
+    private el: ElementRef,
     private renderer: Renderer2,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.authService.isPremium$.subscribe(active => {this.subscriptionActive = active;});
-    console.log('Subscription active:', this.subscriptionActive);
-    this.loadBanner();
+    this.authService.isPremium$.subscribe(active => {
+      this.subscriptionActive = active;
+
+      if (!this.subscriptionActive) {
+        this.loadBanner();
+      }
+    });
   }
 
   private loadBanner(): void {

@@ -28,9 +28,13 @@ export class AdsterraSideComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.isPremium$.subscribe(active => {this.subscriptionActive = active;});
-    console.log('Subscription active:', this.subscriptionActive);
-    this.loadSideAd();
+    this.authService.isPremium$.subscribe(active => {
+      this.subscriptionActive = active;
+
+      if (!this.subscriptionActive) {
+        this.loadSideAd();
+      }
+    });
   }
 
   private loadSideAd(): void {
