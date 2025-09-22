@@ -1,8 +1,12 @@
 import { Component, Input, OnInit, ElementRef, Renderer2 } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth/auth';
 @Component({
   selector: 'app-adsterra-side',
-  template: `<div class="ad-side"></div>`,
+  imports: [
+    CommonModule,
+  ],
+  templateUrl: './adsterra-sidebar-component.html',
   styleUrls: ['./adsterra-sidebar-component.scss'],
   host: {
     '[class.left]': "position === 'left'",
@@ -14,10 +18,18 @@ export class AdsterraSideComponent implements OnInit {
   @Input() key: string = '';
   @Input() width: number = 160;
   @Input() height: number = 600;
+  
+  subscriptionActive = false;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private el: ElementRef, 
+    private renderer: Renderer2,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
+    this.authService.isPremium$.subscribe(active => {this.subscriptionActive = active;});
+    console.log('Subscription active:', this.subscriptionActive);
     this.loadSideAd();
   }
 

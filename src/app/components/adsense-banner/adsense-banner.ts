@@ -1,8 +1,13 @@
 import { Component, OnInit, ElementRef, Renderer2, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-adsterra',
-  template: `<div class="ad-banner"></div>`,
+  imports: [
+    CommonModule,
+  ],
+  templateUrl: './adsense-banner.html',
   styleUrls: ['./adsense-banner.scss']
 })
 export class AdsterraComponent implements OnInit {
@@ -10,9 +15,17 @@ export class AdsterraComponent implements OnInit {
   @Input() width: number = 320;
   @Input() height: number = 50;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  subscriptionActive = false;
+
+  constructor(
+    private el: ElementRef, 
+    private renderer: Renderer2,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
+    this.authService.isPremium$.subscribe(active => {this.subscriptionActive = active;});
+    console.log('Subscription active:', this.subscriptionActive);
     this.loadBanner();
   }
 
