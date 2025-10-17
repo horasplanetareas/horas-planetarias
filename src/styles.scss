@@ -1,0 +1,23 @@
+.ad-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  margin: 10px auto;
+}
+.ad-side {
+  width: 160px;
+  height: 600px;
+  position: fixed;
+  top: 100px;
+  z-index: 9999;
+}
+
+:host(.left) .ad-side {
+  left: 10px;
+}
+
+:host(.right) .ad-side {
+  right: 10px;
+}

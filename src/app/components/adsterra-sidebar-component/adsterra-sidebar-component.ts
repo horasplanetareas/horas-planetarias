@@ -1,63 +1,65 @@
-import { Component, Input, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth/auth';
+
 @Component({
   selector: 'app-adsterra-side',
-  imports: [
-    CommonModule,
-  ],
-  templateUrl: './adsterra-sidebar-component.html',
-  styleUrls: ['./adsterra-sidebar-component.scss'],
-  host: {
-    '[class.left]': "position === 'left'",
-    '[class.right]': "position === 'right'"
-  }
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <div *ngIf="!subscriptionActive"
+         class="ad-side"
+         [id]="'ad-container-' + key"
+         [style.width.px]="width"
+         [style.height.px]="height">
+    </div>
+  `
 })
 export class AdsterraSideComponent implements OnInit {
-  @Input() position: 'left' | 'right' = 'left';
   @Input() key: string = '';
   @Input() width: number = 160;
   @Input() height: number = 600;
-  
+
   subscriptionActive = false;
 
   constructor(
-    private el: ElementRef, 
+    private el: ElementRef,
     private renderer: Renderer2,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.authService.isPremium$.subscribe(active => {
       this.subscriptionActive = active;
-
       if (!this.subscriptionActive) {
-        this.loadSideAd();
+        setTimeout(() => this.loadBanner(), 500);
       }
     });
   }
 
-  private loadSideAd(): void {
-    const container = this.el.nativeElement.querySelector('.ad-side');
-    if (!container) return;
+  private loadBanner(): void {
+    const containerId = `ad-container-${this.key}`;
+    const adDiv = document.getElementById(containerId);
+    if (!adDiv) return;
 
-    const optScript = this.renderer.createElement('script');
-    optScript.type = 'text/javascript';
-    optScript.text = `
-      atOptions = {
-        'key' : '${this.key}',
-        'format' : 'iframe',
-        'height' : ${this.height},
-        'width' : ${this.width},
-        'params' : {}
-      };
+    const script = this.renderer.createElement('script');
+    script.type = 'text/javascript';
+    script.text = `
+      (function() {
+        var atOptions = {
+          'key' : '${this.key}',
+          'format' : 'iframe',
+          'height' : ${this.height},
+          'width' : ${this.width},
+          'params' : {}
+        };
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = '//www.highperformanceformat.com/${this.key}/invoke.js';
+        s.async = true;
+        document.getElementById('${containerId}').appendChild(s);
+      })();
     `;
-
-    const mainScript = this.renderer.createElement('script');
-    mainScript.type = 'text/javascript';
-    mainScript.src = '//www.highperformanceformat.com/a62e36fa17c52d5e8975d96d3641beb0/invoke.js';
-
-    this.renderer.appendChild(container, optScript);
-    this.renderer.appendChild(container, mainScript);
+    this.renderer.appendChild(adDiv, script);
   }
 }

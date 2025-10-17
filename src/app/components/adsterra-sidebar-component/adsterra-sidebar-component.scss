@@ -1,15 +1,27 @@
+.ad-banner,
 .ad-side {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  margin: 12px auto;
+  box-sizing: border-box;
+  min-height: 50px; // asegura que el contenedor no colapse antes de que cargue el anuncio
+
+  // Estilos opcionales para centrar el iframe si lo hay
+  iframe {
+    display: block;
+    margin: 0 auto;
+    border: none;
+  }
+}
+
+// Estilos específicos para banners laterales
+.ad-side {
+  min-height: 300px;
   width: 160px;
-  height: 600px;
-  position: fixed;
-  top: 100px;
-  z-index: 9999;
-}
 
-:host(.left) .ad-side {
-  left: 10px;
-}
-
-:host(.right) .ad-side {
-  right: 10px;
+  @media (max-width: 1022px) {
+    display: none; // ocultar en mobile
+  }
 }

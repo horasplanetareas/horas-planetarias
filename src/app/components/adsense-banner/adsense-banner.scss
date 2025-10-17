@@ -1,8 +1,18 @@
 .ad-banner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: auto;
-  height: auto;
-  margin: 10px auto;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  margin: 12px auto;
+  box-sizing: border-box;
+  min-height: 50px;
+
+  iframe {
+    display: block;
+    margin: 0 auto;
+    border: none;
+    pointer-events: auto;
+    z-index: 1;
+    position: relative;
+  }
 }

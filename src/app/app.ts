@@ -5,6 +5,7 @@ import { AdsterraComponent } from "./components/adsense-banner/adsense-banner";
 import { Footer } from "./components/footer/footer";
 import { SeoService } from './services/seo/seo.service';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { AuthService } from './services/auth/auth';
 import { AdsterraSideComponent } from "./components/adsterra-sidebar-component/adsterra-sidebar-component";
 
 @Component({
@@ -16,13 +17,14 @@ import { AdsterraSideComponent } from "./components/adsterra-sidebar-component/a
     MenuComponent,
     AdsterraComponent,
     Footer,
-    AdsterraSideComponent
+    //AdsterraSideComponent
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
 export class App implements AfterViewInit {
 
+  subscriptionActive = false;
   windowWidth = window.innerWidth;
 
   @HostListener('window:resize', ['$event'])
@@ -32,8 +34,15 @@ export class App implements AfterViewInit {
 
   constructor(
     private seo: SeoService,
+        private authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  ngOnInit(): void {
+    this.authService.isPremium$.subscribe(active => {
+      this.subscriptionActive = active;
+    });
+  }
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
