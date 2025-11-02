@@ -8,13 +8,13 @@ import { AuthService } from '../../services/auth/auth';
   imports: [CommonModule],           // 👉 Importa CommonModule para usar directivas como *ngIf
   template: `
     <!-- Contenedor del banner -->
-    <!-- Solo se muestra si el usuario NO es premium -->
+    <!-- Solo se muestra si el usuario NO es premium 
     <div *ngIf="!subscriptionActive"
          class="ad-banner"
          [id]="'ad-container-' + key"   
          [style.width.px]="width"       
          [style.height.px]="height">    
-    </div>
+    </div>-->
   `,
   styleUrls: ['./adsense-banner.scss'] // 👉 Estilos específicos del banner
 })
